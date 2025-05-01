@@ -4,7 +4,7 @@ import Image from "next/image";
 const HeroSection = () => {
     return (
         <div>
-            <Image src={bgImage} alt="bgImage" className="max-h-screen object-cover"></Image>
+            <Image src={bgImage} alt="bgImage" className="max-h-[calc(100vh-124px)] object-cover"></Image>
         </div>
     );
 };

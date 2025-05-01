@@ -1,0 +1,236 @@
+"use client";
+import { useState, useRef } from "react";
+import { CalendarIcon, ChevronDown, MapPin} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { LoadScript, Autocomplete } from "@react-google-maps/api";
+import { Input } from "@/components/ui/input";
+import Container from "@/components/shared/Container";
+import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+
+// You'll need to add your Google Maps API key as an environment variable
+const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
+
+// Libraries we need to load
+const libraries = ["places"];
+
+interface PlaceType {
+  formatted_address?: string;
+  name?: string;
+  place_id?: string;
+}
+
+export default function RentCar() {
+  const [pickupDate, setPickupDate] = useState<Date>(new Date(2024, 9, 1)); // Oct 1, 2024
+  const [returnDate, setReturnDate] = useState<Date>(new Date(2024, 9, 7)); // Oct 7, 2024
+  const [pickupLocation, setPickupLocation] = useState<PlaceType | null>(null);
+  const [dropoffLocation, setDropoffLocation] = useState<PlaceType | null>(
+    null
+  );
+
+  // Input display values
+  const [pickupInputValue, setPickupInputValue] = useState("New York, USA");
+  const [dropoffInputValue, setDropoffInputValue] = useState("Delaware, USA");
+
+  // Refs for the autocomplete instances
+  const pickupAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(
+    null
+  );
+  const dropoffAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(
+    null
+  );
+
+  // Handle place selection for pickup location
+  const handlePickupPlaceSelect = () => {
+    if (pickupAutocompleteRef.current) {
+      const place = pickupAutocompleteRef.current.getPlace();
+      if (place) {
+        setPickupLocation({
+          formatted_address: place.formatted_address,
+          name: place.name,
+          place_id: place.place_id,
+        });
+        setPickupInputValue(place.formatted_address || place.name || "");
+      }
+    }
+  };
+
+  // Handle place selection for dropoff location
+  const handleDropoffPlaceSelect = () => {
+    if (dropoffAutocompleteRef.current) {
+      const place = dropoffAutocompleteRef.current.getPlace();
+      if (place) {
+        setDropoffLocation({
+          formatted_address: place.formatted_address,
+          name: place.name,
+          place_id: place.place_id,
+        });
+        setDropoffInputValue(place.formatted_address || place.name || "");
+      }
+    }
+  };
+
+  // Handle pickup autocomplete load
+  const onPickupAutocompleteLoad = (
+    autocomplete: google.maps.places.Autocomplete
+  ) => {
+    pickupAutocompleteRef.current = autocomplete;
+  };
+
+  // Handle dropoff autocomplete load
+  const onDropoffAutocompleteLoad = (
+    autocomplete: google.maps.places.Autocomplete
+  ) => {
+    dropoffAutocompleteRef.current = autocomplete;
+  };
+
+  return (
+    <LoadScript
+      googleMapsApiKey={GOOGLE_MAPS_API_KEY}
+      libraries={libraries as any}
+      loadingElement={<div className="flex justify-center">Loading Google Maps...</div>}
+    >
+      <Container>
+        <div className="w-full  bg-white rounded-lg  border p-6">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+            <h2 className="text-xl font-medium text-primary-black-gray">
+              Need to rent a luxury car?
+            </h2>
+            <span className="text-sm text-primary-gray">
+              Need more information?
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-5 items-center  gap-4 border p-5 rounded-lg">
+            {/* Pick Up Location */}
+            <div className="space-y-2 border-r">
+              <label className="text-sm  font-bold text-primary-gray ">
+                Pick Up Location
+              </label>
+              <div className="relative">
+                <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+                  <MapPin className="h-4 w-4 text-gray-500" />
+                </div>
+                <Autocomplete
+                  onLoad={onPickupAutocompleteLoad}
+                  onPlaceChanged={handlePickupPlaceSelect}
+                  options={{
+                    types: ["(cities)"],
+                    componentRestrictions: { country: "us" },
+                  }}
+                >
+                  <Input
+                    className="pl-5 h-12 border-none shadow-none"
+                    placeholder="Enter pickup location "
+                    value={pickupInputValue}
+                    onChange={(e) => setPickupInputValue(e.target.value)}
+                  />
+                </Autocomplete>
+              </div>
+            </div>
+
+            {/* Drop Off Location */}
+            <div className="space-y-2  border-r">
+            <label className="text-sm  font-bold text-primary-gray ">
+                Drop Off Location
+              </label>
+              <div className="relative">
+                <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+                  <MapPin className="h-4 w-4 text-gray-500" />
+                </div>
+                <Autocomplete
+                  onLoad={onDropoffAutocompleteLoad}
+                  onPlaceChanged={handleDropoffPlaceSelect}
+                  options={{
+                    types: ["(cities)"],
+                    componentRestrictions: { country: "us" },
+                  }}
+                >
+                  <Input
+                    className="pl-5 h-12 border-none shadow-none "
+                    placeholder="Enter dropoff location border-none "
+                    value={dropoffInputValue}
+                    onChange={(e) => setDropoffInputValue(e.target.value)}
+                  />
+                </Autocomplete>
+              </div>
+            </div>
+
+            {/* Pick Up Date & Time */}
+            <div className="space-y-2  border-r">
+            <label className="text-sm  font-bold text-primary-gray ">
+                Pick Up Date & Time
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start text-left font-normal h-12  border-none shadow-none px-0"
+                  >
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="h-4 w-4 text-gray-500" />
+                      <span>{format(pickupDate, "EEE, MMM dd yyyy")}</span>
+                      <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
+                    </div>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 " align="start">
+                  <Calendar
+                    mode="single"
+                    selected={pickupDate}
+                    onSelect={(date) => date && setPickupDate(date)}
+                    initialFocus
+                    
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* Return Date & Time */}
+            <div className="space-y-2  border-r">
+            <label className="text-sm  font-bold text-primary-gray ">
+                Return Date & Time
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start text-left font-normal h-12 border-none shadow-none px-0"
+                  >
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="h-4 w-4 text-gray-500" />
+                      <span>{format(returnDate, "EEE, MMM dd yyyy")}</span>
+                      <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
+                    </div>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={returnDate}
+                    onSelect={(date) => date && setReturnDate(date)}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* Rent a Car Button */}
+            <Button className="bg-primary-cyan cursor-pointer hover:bg-cyan-600 text-white px-6 py-2 h-12 rounded-md group">
+              Rent a Car
+              <AnimatedArrow></AnimatedArrow>
+            </Button>
+          </div>
+
+          <div className="flex justify-end mt-6"></div>
+        </div>
+      </Container>
+    </LoadScript>
+  );
+}
