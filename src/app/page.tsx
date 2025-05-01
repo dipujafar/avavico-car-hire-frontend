@@ -1,7 +1,10 @@
 import CarBrands from "@/components/modules/home/CarBrands";
 import Destinations from "@/components/modules/home/Destinations";
 import HeroSection from "@/components/modules/home/HeroSection";
+import RentalSteps from "@/components/modules/home/RentalSteps";
 import RentCar from "@/components/modules/home/RentCar";
+import StaticSection from "@/components/modules/home/StaticSection";
+import VehicleFleet from "@/components/modules/home/VehicleFleet";
 
 export default function Home() {
   return (
@@ -17,6 +20,9 @@ export default function Home() {
       </div>
 
       <Destinations></Destinations>
+      <StaticSection></StaticSection>
+      <VehicleFleet></VehicleFleet>
+      <RentalSteps></RentalSteps>
     </div>
   );
 }

@@ -1,5 +1,8 @@
 import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
+import destinationSectionImage from "@/assets/images/destination_section_bg.png";
+import Image from "next/image";
+
 const featuredDestinations = [
   {
     title: "Unbeatable Price",
@@ -45,6 +48,15 @@ const Destinations = () => {
           </div>
         ))}
       </div>
+
+      {/* destination section image */}
+      <Image
+        src={destinationSectionImage}
+        alt="destinationSectionImage"
+        width={1200}
+        height={1200}
+        className="mt-2 w-full rounded-md object-cover object-center"
+      ></Image>
     </Container>
   );
 };
