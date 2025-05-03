@@ -42,15 +42,15 @@ const rentalStepsData = [
 
 export default function RentalSteps() {
   return (
-    <div className="flex flex-col md:flex-row w-full overflow-hidden rounded-lg bg-black text-white">
+    <div className="flex flex-col lg:flex-row w-full overflow-hidden rounded-lg bg-black text-white">
       {/* Left side - Image */}
-      <div className="relative w-full md:w-1/2 h-[300px] md:h-auto">
+      <div className="relative w-full lg:w-1/2 h-[300px] lg:h-auto">
         <Image src={"/rent_steps_lmage.png"} alt="Car rental" fill className="object-cover" priority />
       </div>
 
       {/* Right side - Content */}
-      <div className="w-full md:w-1/2 px-20 py-10 bg-[#161618]">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8">Rent your car in 3 easy steps</h2>
+      <div className="w-full lg:w-1/2 xl:px-20 px-5 xl:py-20 py-12 bg-[#161618]">
+        <h2 className="md:text-3xl text-xl xl:text-4xl font-bold mb-8">Rent your car in 3 easy steps</h2>
 
         <div className="space-y-6">
           {rentalStepsData.map((step) => (
@@ -59,7 +59,7 @@ export default function RentalSteps() {
                 {step.number}
               </div>
               <div>
-                <h3 className="font-semibold text-lg">{step.title}</h3>
+                <h3 className="font-semibold md:text-xl">{step.title}</h3>
                 <p className="text-sm text-gray-300 mt-1">{step.description}</p>
               </div>
             </div>

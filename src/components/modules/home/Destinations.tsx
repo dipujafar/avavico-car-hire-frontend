@@ -55,7 +55,7 @@ const Destinations = () => {
         alt="destinationSectionImage"
         width={1200}
         height={1200}
-        className="mt-2 w-full rounded-md object-cover object-center"
+        className="mt-2 w-full rounded-md object-cover object-center max-h-[740px] origin-center"
       ></Image>
     </Container>
   );

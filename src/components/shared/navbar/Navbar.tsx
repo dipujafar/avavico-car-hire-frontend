@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <header className="w-full  ">
       <Container>
-        <div className=" mx-auto px-4 py-3 flex items-center justify-between">
+        <div className=" mx-auto px-4 lg:py-3 py-1 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <Image
@@ -47,20 +47,20 @@ export default function Navbar() {
               width={1200}
               quality={100}
               height={1200}
-              className="h-auto  w-auto max-w-[100px]"
+              className="h-auto  w-auto md:max-w-[100px] max-w-[70px]"
             />
           </Link>
           <div className="flex items-center lg:gap-x-10 gap-x-6">
             {/* Mobile menu button */}
             <button
-              className="md:hidden flex items-center"
+              className="lg:hidden flex items-center"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-8">
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative group">
                   <Link
@@ -74,9 +74,9 @@ export default function Navbar() {
                   >
                     <span
                       className={cn(
-                        "flex items-center group text-base font-bold hover:text-primary-cyan duration-500 z-10 ",
+                        "flex items-center group text-base font-bold hover:text-primary-cyan duration-500 z-10  ",
                         item.href === currentPathName &&
-                          "border-b-2 border-primary-cyan text-primary-cyan font-extrabold"
+                          "border-b-2 border-primary-cyan text-primary-cyan font-extrabold "
                       )}
                     >
                       {item.name}
@@ -116,7 +116,7 @@ export default function Navbar() {
             </nav>
 
             {/* Action Buttons */}
-            <div className="hidden md:flex items-center space-x-3">
+            <div className="hidden lg:flex items-center space-x-3">
               <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md">
                 Join Now
               </Button>
@@ -131,7 +131,7 @@ export default function Navbar() {
 
           {/* Mobile Navigation */}
           {isOpen && (
-            <div className="absolute top-20 left-0 right-0 bg-white shadow-lg z-20 md:hidden">
+            <div className="absolute top-20 left-0 right-0 bg-white shadow-lg z-20 lg:hidden">
               <div className="px-4 py-2 space-y-1">
                 {navigationItems.map((item) => (
                   <div key={item.name}>
