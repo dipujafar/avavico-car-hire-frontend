@@ -2,6 +2,7 @@ import Container from "@/components/shared/Container";
 import PageTopBanner from "@/components/shared/PageTopBanner";
 import SectionTitle from "@/components/shared/SectionTitle";
 import React from "react";
+import CarFleetContainer from "./_components/CarFleetContainer";
 
 const CarFleetPage = () => {
   return (
@@ -14,9 +15,9 @@ const CarFleetPage = () => {
       <Container className="mt-16">
         <SectionTitle
           title="Our Vehicle Fleet"
-          subtitle="Turning dreams into reality with versatile vehicles.
-"
+          subtitle="Turning dreams into reality with versatile vehicles."
         ></SectionTitle>
+        <CarFleetContainer></CarFleetContainer>
       </Container>
     </div>
   );
