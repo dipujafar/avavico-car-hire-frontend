@@ -1,5 +1,5 @@
 import CarBrands from "@/components/modules/home/CarBrands";
-import CustomersFeedbacks from "@/components/modules/home/CustomersFeedbacks";
+import CustomersFeedbacks from "@/components/shared/CustomersFeedbacks";
 import Destinations from "@/components/modules/home/Destinations";
 import HeroSection from "@/components/modules/home/HeroSection";
 import RentalSteps from "@/components/modules/home/RentalSteps";

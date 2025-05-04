@@ -26,8 +26,8 @@ const staticSectionData = [
 
 const StaticSection = () => {
   return (
-    <div className="bg-[url('/static_section_bg.png')]  bg-cover origin-center py-20">
-      <Container className="flex flex-col xl:flex-row gap-y-2 justify-between gap-x-10 text-white">
+    <div>
+      <Container className="flex flex-col xl:flex-row justify-between gap-x-10 gap-y-2 text-[#333]">
         <div className="flex-1">
           <h1 className=" text-[32px] font-bold max-w-2xl">
             We offer customers a wide range of{" "}
@@ -36,7 +36,7 @@ const StaticSection = () => {
             occasion.
           </h1>
         </div>
-        <p className="flex-1 font-medium text-lg">
+        <p className="flex-1 font-medium text-lg text-[#545454]">
           At our car rental company, we believe everyone deserves the joy of
           driving a reliable and comfortable vehicle no matter their budget. Our
           diverse fleet includes everything from sleek sedans to spacious SUVs,
@@ -46,11 +46,11 @@ const StaticSection = () => {
         </p>
       </Container>
 
-      <Container className="xl:mt-24 md:mt-20 mt-16 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 xl:gap-8 gap-4 text-white">
+      <Container className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 xl:gap-8 gap-4 text-[#8A8A8A]">
         {staticSectionData.map((item) => (
           <div
             key={item._id}
-            className="flex flex-col items-center gap-x-4 bg-[#121212] px-16 py-8 rounded-lg"
+            className="flex flex-col items-center gap-x-4 bg-[#F4F4F4] px-16 py-8 rounded-lg"
           >
             <p className="text-[32px] text-primary-cyan font-bold">
               <CCountUp end={item?.number}  />+

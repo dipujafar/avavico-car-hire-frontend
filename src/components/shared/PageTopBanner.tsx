@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 import Container from "./Container";
 import { motion } from "motion/react";
 import { fadeUpVariants } from "@/animation/motionVariant";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 type TPropsType = {
   backgroundImage?: string;
   image: string;
@@ -10,6 +12,7 @@ type TPropsType = {
   description?: string;
   className?: string;
   style?: Record<string, any>;
+  pathsData?: Record<string, string | boolean>[];
 };
 
 const PageTopBanner = ({
@@ -19,12 +22,12 @@ const PageTopBanner = ({
   description,
   className,
   style,
+  pathsData
 }: TPropsType) => {
   return (
     <div
       className={cn(
-        "xl:min-h-[60vh] lg:min-h-[50vh] md:min-h-[40vh] min-h-[30vh]  bg-cover   bg-no-repeat bg-center relative  px-4 ",
-        className
+        "xl:min-h-[60vh] lg:min-h-[50vh] md:min-h-[40vh] min-h-[30vh]  bg-cover   bg-no-repeat bg-center relative  px-4  "
       )}
       style={{
         backgroundImage: backgroundImage || `url(${image})`,
@@ -34,7 +37,9 @@ const PageTopBanner = ({
       <div>
         <Container>
           <div className="overflow-x-hidden">
-            <div className="absolute inset-0 backdrop-blur-[2px]"></div>
+            <div
+              className={cn("absolute inset-0 bg-black opacity-40", className)}
+            ></div>
             <div className="absolute   top-1/2 left-1/2 -translate-x-1/2 transform -translate-y-1/2 w-full ">
               <motion.section
                 variants={fadeUpVariants()}
@@ -61,6 +66,24 @@ const PageTopBanner = ({
           </div>
         </Container>
       </div>
+      {/* relavant paths */}
+      {  pathsData?.length &&
+      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border rounded-md">
+      {
+        pathsData?.map((item, index) => (
+          <div
+            key={index}
+           className="flex items-center gap-x-2.5"
+          >
+            <Link href={item?.href as string} className={cn(" font-medium text-[#4D4D4D]", item?.active && "text-[#101010] font-bold")}>{item?.name}</Link>
+            {
+              index !== pathsData.length - 1 && <ChevronRight color="#737373" size={24} />
+            }
+          </div>
+        ))
+      }
+      </div>
+}
     </div>
   );
 };
