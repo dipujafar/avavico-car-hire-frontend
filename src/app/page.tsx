@@ -9,7 +9,7 @@ import VehicleFleet from "@/components/modules/home/VehicleFleet";
 
 export default function Home() {
   return (
-    <div className="xl:space-y-20 md:space-y-14 space-y-10">
+    <div className="xl:space-y-20 md:space-y-14 space-y-10 md:pb-16  pb-8">
       <div>
         <div className="relative">
           <HeroSection></HeroSection>

@@ -24,7 +24,7 @@ const pathsData =[
 
 const AboutPage = () => {
   return (
-    <div className="xl:space-y-20 md:space-y-12 space-y-8 ">
+    <div className="xl:space-y-20 md:space-y-12 space-y-8 md:pb-16  pb-8 bg-[#F8F9FA] ">
       <PageTopBanner
         image="/about_page_bg.png"
         title="About Us"

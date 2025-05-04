@@ -17,7 +17,7 @@ export default function HowItWorks() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:gap-8 gap-4">
           {/* Step 1 */}
-          <div className="flex flex-col items-center text-center p-6 bg-[#F8F9FA] rounded-md">
+          <div className="flex flex-col items-center text-center p-6 bg-white rounded-md">
             <CarIcon></CarIcon>
             <h4 className="text-lg font-bold mb-2 text-[#101010]">
               Choose A Car
@@ -29,7 +29,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Step 2 */}
-          <div className="flex flex-col items-center text-center p-6 bg-[#F8F9FA] rounded-md">
+          <div className="flex flex-col items-center text-center p-6 bg-white rounded-md">
             <MoneyIcon></MoneyIcon>
             <h4 className="text-lg font-bold mb-2 text-[#101010]">
               Customize Your Booking
@@ -41,7 +41,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Step 3 */}
-          <div className="flex flex-col items-center text-center p-6 bg-[#F8F9FA] rounded-md">
+          <div className="flex flex-col items-center text-center p-6 bg-white rounded-md">
             <ClickIcon></ClickIcon>
             <h4 className="text-lg font-bold mb-2 text-[#101010]">
               Confirm & Drive

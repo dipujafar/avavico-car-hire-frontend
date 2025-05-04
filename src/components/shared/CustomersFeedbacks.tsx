@@ -100,7 +100,7 @@ const CustomersFeedbacks = () => {
         <CarouselContent>
           {feedBacksData?.map((data) => (
             <CarouselItem key={data?._id}>
-              <Card className={cn("py-6  border-none shadow-none")}>
+              <Card className={cn("py-6  border-none shadow-none bg-transparent")}>
                 <div className="flex flex-col space-y-4">
                   <p className="text-[#333] italic xl:text-3xl lg:text-2xl  md:text-xl leading-relaxed">
                     {data?.comment}

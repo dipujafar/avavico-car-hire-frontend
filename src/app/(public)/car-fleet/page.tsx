@@ -21,7 +21,7 @@ const pathsData =[
 
 const CarFleetPage = () => {
   return (
-    <div>
+    <div className="md:pb-16  pb-8 bg-[#F8F9FA]">
       <PageTopBanner
         image="/carFleetPageBanner.png"
         title="Find Your Perfect Car"
