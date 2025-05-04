@@ -240,3 +240,73 @@ export const carData = [
     vehicleType: "SUV",
   },
 ];
+
+
+
+
+export const blogPosts = [
+  {
+    id: "1",
+    title: "The complete guide to choosing the right rental car for your next adventure",
+    imageUrl: "/blog_image1.png",
+    date: "2024-04-15",
+    category: "Road Trip",
+    slug: "choosing-right-rental-car",
+  },
+  {
+    id: "2",
+    title: "How to plan a stress-free road trip using a reliable rental car service",
+    imageUrl: "/blog_image2.png",
+    date: "2024-04-15",
+    category: "Eco Friendly",
+    slug: "stress-free-road-trip",
+  },
+  {
+    id: "3",
+    title: "Exploring the world of electric & hybrid vehicles in the car rental industry",
+    imageUrl: "/blog_image3.png",
+    date: "2024-04-15",
+    category: "Safe Driving",
+    slug: "electric-hybrid-vehicles",
+  },
+  {
+    id: "4",
+    title: "A closer look at car rental insurance: what it covers and why you need it",
+    imageUrl: "/blog_image4.png",
+    date: "2024-04-15",
+    category: "Road Trip",
+    slug: "car-rental-insurance",
+  },
+  {
+    id: "5",
+    title: "Everything you need to know about booking a rental car for long-term use",
+    imageUrl: "/blog_image6.png",
+    date: "2024-04-15",
+    category: "Eco Friendly",
+    slug: "long-term-rental",
+  },
+  {
+    id: "6",
+    title: "Why renting a car is the most convenient option for travelers & tourists",
+    imageUrl: "/blog_image4.png",
+    date: "2024-04-15",
+    category: "Safe Driving",
+    slug: "convenient-option-travelers",
+  },
+  {
+    id: "7",
+    title: "Why renting a car is the most convenient option for travelers & tourists",
+    imageUrl: "/blog_image2.png",
+    date: "2024-04-15",
+    category: "Safe Driving",
+    slug: "convenient-option-travelers",
+  },
+  {
+    id: "8",
+    title: "Why renting a car is the most convenient option for travelers & tourists",
+    imageUrl: "/blog_image1.png",
+    date: "2024-04-15",
+    category: "Safe Driving",
+    slug: "convenient-option-travelers",
+  },
+]

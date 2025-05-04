@@ -3,6 +3,7 @@ import { Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/footer/Footer";
+import NextTopLoader from "nextjs-toploader";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -25,10 +26,24 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${figtree.className}  antialiased`}>
         <Navbar></Navbar>
-        <div className="min-h-[calc(100vh-124px)] ">
+        <div className="min-h-[calc(100vh-124px)]">
           {children}
         </div>
         <Footer></Footer>
+
+        <NextTopLoader
+              color="#1EC1E2"
+              initialPosition={0.08}
+              crawlSpeed={200}
+              height={3}
+              crawl={true}
+              showSpinner={true}
+              easing="ease"
+              speed={200}
+              shadow="0 0 10px #232323,0 0 5px #EA5326"
+              zIndex={1600}
+              showAtBottom={false}
+            />
       </body>
     </html>
   );

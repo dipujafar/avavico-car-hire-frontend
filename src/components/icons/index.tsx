@@ -1,4 +1,4 @@
-export function FacebookIcon() {
+export function FacebookIcon({className}: {className?: string}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,6 +6,7 @@ export function FacebookIcon() {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
+      className={className}
     >
       <g clipPath="url(#clip0_2001_6522)">
         <rect width="20" height="20" fill="black" />
@@ -23,7 +24,7 @@ export function FacebookIcon() {
   );
 }
 
-export function TwitterIcon() {
+export function TwitterIcon({className}: {className?: string}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +32,7 @@ export function TwitterIcon() {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
+      className={className}
     >
       <rect width="20" height="20" fill="black" />
       <path
@@ -41,7 +43,7 @@ export function TwitterIcon() {
   );
 }
 
-export function InstagramIcon() {
+export function InstagramIcon({className}: {className?: string}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -49,6 +51,7 @@ export function InstagramIcon() {
       height="20"
       viewBox="0 0 18 20"
       fill="none"
+      className={className}
     >
       <g clipPath="url(#clip0_2001_6530)">
         <rect width="17.5" height="20" fill="black" />
@@ -66,7 +69,7 @@ export function InstagramIcon() {
   );
 }
 
-export function LinkedInIcon() {
+export function LinkedInIcon({className}: {className?: string}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -74,6 +77,7 @@ export function LinkedInIcon() {
       height="20"
       viewBox="0 0 18 20"
       fill="none"
+      className={className}
     >
       <g clipPath="url(#clip0_2001_6534)">
         <rect

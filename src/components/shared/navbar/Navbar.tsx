@@ -19,9 +19,12 @@ const navigationItems = [
     href: "#",
     hasDropdown: true,
     dropdownItems: [
-      { name: "FAQ", href: "/faq" },
-      { name: "Testimonials", href: "/testimonials" },
-      { name: "Contact", href: "/contact" },
+      { name: "Blogs", href: "/blogs" },
+      { name: "Reviews", href: "/reviews" },
+      { name: "FAQs", href: "/faq" },
+      { name: "Contact Us", href: "/contact-us" },
+      { name: "Terms & Conditions", href: "/terms-conditions" },
+      { name: "Privacy Policy", href: "/privacy-policy" },
     ],
   },
 ];

@@ -5,6 +5,15 @@ import { motion } from "motion/react";
 import { fadeUpVariants } from "@/animation/motionVariant";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+
+type TPathsData = {
+  
+    name: string
+    href: string
+    active: boolean,
+    hasDropdown?: boolean,
+}
+
 type TPropsType = {
   backgroundImage?: string;
   image: string;
@@ -12,8 +21,17 @@ type TPropsType = {
   description?: string;
   className?: string;
   style?: Record<string, any>;
-  pathsData?: Record<string, string | boolean>[];
+  pathsData?: TPathsData[];
 };
+
+const dropdownPages = [
+  { name: "Blogs", href: "/blogs" },
+  { name: "Reviews", href: "/reviews" },
+  { name: "FAQs", href: "/faq" },
+  { name: "Contact Us", href: "/contact-us" },
+  { name: "Terms & Conditions", href: "/terms-conditions" },
+  { name: "Privacy Policy", href: "/privacy-policy" },
+];
 
 const PageTopBanner = ({
   backgroundImage,
@@ -22,7 +40,7 @@ const PageTopBanner = ({
   description,
   className,
   style,
-  pathsData
+  pathsData,
 }: TPropsType) => {
   return (
     <div
@@ -67,23 +85,41 @@ const PageTopBanner = ({
         </Container>
       </div>
       {/* relavant paths */}
-      {  pathsData?.length &&
-      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border rounded-md">
-      {
-        pathsData?.map((item, index) => (
-          <div
-            key={index}
-           className="flex items-center gap-x-2.5"
-          >
-            <Link href={item?.href as string} className={cn(" font-medium text-[#4D4D4D]", item?.active && "text-[#101010] font-bold")}>{item?.name}</Link>
-            {
-              index !== pathsData.length - 1 && <ChevronRight color="#737373" size={24} />
-            }
-          </div>
-        ))
-      }
-      </div>
-}
+      {pathsData?.length && (
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border rounded-md">
+          {pathsData?.map((item, index) => (
+            <div key={index} className="relative group">
+              <div className="flex items-center gap-x-2.5">
+                <Link
+                  href={item?.href as string}
+                  className={cn(
+                    " font-medium text-[#4D4D4D]",
+                    item?.active && "text-[#101010] font-bold"
+                  )}
+                >
+                  {item?.name}
+                </Link>
+                {index !== pathsData.length - 1 && (
+                  <ChevronRight color="#737373" size={24} />
+                )}
+              </div>
+              {item.hasDropdown && (
+                <div className="absolute -left-10 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                  {dropdownPages?.map((dropdownItem) => (
+                    <Link
+                      key={dropdownItem.name}
+                      href={dropdownItem.href}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-cyan"
+                    >
+                      {dropdownItem.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -38,19 +38,19 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-x-4 mt-5">
-              <Link href={"#"}>
-                <FacebookIcon></FacebookIcon>
+              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+                <FacebookIcon className="rounded-full" ></FacebookIcon>
               </Link>
 
-              <Link href={"#"}>
-                <TwitterIcon></TwitterIcon>
+              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+                <TwitterIcon className="rounded-full"></TwitterIcon>
               </Link>
-              <Link href={"#"}>
-                <InstagramIcon></InstagramIcon>
+              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+                <InstagramIcon className="rounded-full"></InstagramIcon>
               </Link>
 
-              <Link href={"#"}>
-                <LinkedInIcon></LinkedInIcon>
+              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+                <LinkedInIcon className="rounded-full"></LinkedInIcon>
               </Link>
             </div>
           </div>

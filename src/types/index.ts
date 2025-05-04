@@ -15,3 +15,13 @@ export type TCar = {
     vehicleType: "";
   };
   
+
+  export type TBlogPost =  {
+    id: string
+    title: string
+    imageUrl: string
+    date: string
+    category: "Road Trip" | "Eco Friendly" | "Safe Driving"
+    slug: string
+  }
+  
