@@ -86,14 +86,14 @@ const PageTopBanner = ({
       </div>
       {/* relavant paths */}
       {pathsData?.length && (
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border rounded-md">
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border rounded-md z-10">
           {pathsData?.map((item, index) => (
             <div key={index} className="relative group">
               <div className="flex items-center gap-x-2.5">
                 <Link
                   href={item?.href as string}
                   className={cn(
-                    " font-medium text-[#4D4D4D]",
+                    " font-medium text-[#4D4D4D] hover:text-primary-cyan duration-300",
                     item?.active && "text-[#101010] font-bold"
                   )}
                 >

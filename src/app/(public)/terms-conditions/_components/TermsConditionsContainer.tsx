@@ -7,7 +7,7 @@ import Container from "@/components/shared/Container";
 const TermsConditionsContainer = () => {
   return (
     <Container>
-      <SectionTitle title="Terms & Conditions"></SectionTitle>
+      <SectionTitle title="Terms & Conditions" className="mb-8"></SectionTitle>
 
       <TermsSection title="Introduction">
         <p className="mb-4">
@@ -57,9 +57,7 @@ const TermsConditionsContainer = () => {
           attachment him his for sympathize. Large above be to means. Dashwood
           does provide stronger is.
         </p>
-        <p className="mb-4 text-blue-600 underline">
-          The instrument experienced admiration everything.
-        </p>
+       
       </TermsSection>
 
       <TermsSection title="Communications">
