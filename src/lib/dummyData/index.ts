@@ -310,3 +310,50 @@ export const blogPosts = [
     slug: "convenient-option-travelers",
   },
 ]
+
+
+// Dummy data for testimonials
+export const testimonials = [
+  {
+    id: 1,
+    avatarSrc: "/user_image3.png",
+    testimonial:
+      "I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results. Highly recommended!",
+    name: "John D.",
+  },
+  {
+    id: 2,
+    avatarSrc: "/user_image3.png",
+    testimonial:
+      "I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results. Highly recommended!",
+    name: "John D.",
+  },
+  {
+    id: 3,
+    avatarSrc: "/user_image3.png",
+    testimonial:
+      "I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results. Highly recommended!",
+    name: "John D.",
+  },
+  {
+    id: 4,
+    avatarSrc: "/user_image3.png",
+    testimonial:
+      "I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results. Highly recommended!",
+    name: "John D.",
+  },
+  {
+    id: 5,
+    avatarSrc: "/user_image3.png",
+    testimonial:
+      "I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results. Highly recommended!",
+    name: "John D.",
+  },
+  {
+    id: 6,
+    avatarSrc: "/user_image3.png",
+    testimonial:
+      "I've been consistently impressed with the quality of service provided by this website. They have exceeded my expectations and delivered exceptional results. Highly recommended!",
+    name: "John D.",
+  },
+]

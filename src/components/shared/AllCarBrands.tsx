@@ -23,7 +23,7 @@ const AllCarBrands = () => {
             height={1200}
             className="w-[60px] h-[40px]"
           ></Image>
-          <h3 className="text-center">{brand.name}</h3>
+          <h3 className="text-center">{brand?.name}</h3>
         </div>
       ))}
     </Marquee>
