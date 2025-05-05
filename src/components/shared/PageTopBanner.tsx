@@ -100,7 +100,7 @@ const PageTopBanner = ({
                   {item?.name}
                 </Link>
                 {index !== pathsData.length - 1 && (
-                  <ChevronRight color="#737373" size={24} />
+                  <ChevronRight color="#737373" size={20} />
                 )}
               </div>
               {item.hasDropdown && (

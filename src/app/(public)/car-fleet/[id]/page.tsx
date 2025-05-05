@@ -1,3 +1,4 @@
+import AllCarBrands from "@/components/shared/AllCarBrands";
 import DetailsPageContainer from "./_components/DetailsPageContainer";
 
 export const metadata = {
@@ -7,8 +8,9 @@ export const metadata = {
 
 const CarFleetPage = () => {
     return (
-        <div>
+        <div className="xl:space-y-20 md:space-y-12 space-y-8 bg-[#F8F9FA] md:py-12  py-8">
             <DetailsPageContainer></DetailsPageContainer>
+            <AllCarBrands></AllCarBrands>
         </div>
     );
 };

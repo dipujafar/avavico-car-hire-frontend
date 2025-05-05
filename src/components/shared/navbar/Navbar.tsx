@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <header className="w-full  ">
       <Container>
-        <div className=" mx-auto px-4 lg:py-3 py-1 flex items-center justify-between">
+        <div className=" mx-auto px-4 py-1 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <Image
