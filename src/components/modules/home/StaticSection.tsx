@@ -29,7 +29,7 @@ const StaticSection = () => {
     <div className="bg-[url('/static_section_bg.png')]  bg-cover origin-center py-20">
       <Container className="flex flex-col xl:flex-row gap-y-2 justify-between gap-x-10 text-white">
         <div className="flex-1">
-          <h1 className=" text-[32px] font-bold max-w-2xl">
+          <h1 className=" text-[32px] font-bold max-w-2xl line">
             We offer customers a wide range of{" "}
             <span className="text-primary-cyan"> commercial cars </span> and{" "}
             <span className="text-primary-cyan"> luxury cars </span> for any

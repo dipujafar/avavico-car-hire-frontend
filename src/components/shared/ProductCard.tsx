@@ -6,7 +6,7 @@ import { TCar } from "@/types";
 
 export default function ProductCard({ data }: { data: TCar }) {
   return (
-    <Card className=" overflow-hidden border rounded-lg py-0 gap-0 hover:shadow-xl duration-500 transition-all ">
+    <Card className=" overflow-hidden border rounded-lg py-0 gap-0 hover:shadow-md duration-500 transition-all ">
       <div className="relative w-full z-0">
         <Image
           src={data?.imageUrl}
@@ -62,7 +62,7 @@ export default function ProductCard({ data }: { data: TCar }) {
         <div>
           <p className="xl:text-2xl text-xl font-bold">$498.25</p>
         </div>
-        <Button className="hover:bg-primary-cyan bg-primary-gray duration-300">
+        <Button className="hover:bg-primary-cyan bg-[#F2F4F6] text-black font-bold duration-300">
           Rent Now
         </Button>
       </CardFooter>

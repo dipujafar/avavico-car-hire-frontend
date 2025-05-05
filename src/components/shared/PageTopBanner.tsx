@@ -27,7 +27,7 @@ type TPropsType = {
 const dropdownPages = [
   { name: "Blogs", href: "/blogs" },
   { name: "Reviews", href: "/reviews" },
-  { name: "FAQs", href: "/faq" },
+  { name: "FAQs", href: "/faqs" },
   { name: "Contact Us", href: "/contact-us" },
   { name: "Terms & Conditions", href: "/terms-conditions" },
   { name: "Privacy Policy", href: "/privacy-policy" },
