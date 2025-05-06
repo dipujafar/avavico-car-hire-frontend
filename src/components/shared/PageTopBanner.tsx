@@ -7,12 +7,11 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 type TPathsData = {
-  
-    name: string
-    href: string
-    active: boolean,
-    hasDropdown?: boolean,
-}
+  name: string;
+  href: string;
+  active: boolean;
+  hasDropdown?: boolean;
+};
 
 type TPropsType = {
   backgroundImage?: string;
@@ -84,23 +83,23 @@ const PageTopBanner = ({
           </div>
         </Container>
       </div>
-      {/* relavant paths */}
+      {/* relevant paths */}
       {pathsData?.length && (
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border rounded-md z-10">
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform  bg-white flex  gap-x-2.5 w-fit px-5 py-2 border min-w-max rounded-md z-10">
           {pathsData?.map((item, index) => (
             <div key={index} className="relative group">
-              <div className="flex items-center gap-x-2.5">
+              <div className="flex items-center md:gap-x-2.5 gap-x-0.5">
                 <Link
                   href={item?.href as string}
                   className={cn(
-                    " font-medium text-[#4D4D4D] hover:text-primary-cyan duration-300",
+                    " font-medium text-[#4D4D4D] hover:text-primary-cyan duration-300 md:text-base text-xs ",
                     item?.active && "text-[#101010] font-bold"
                   )}
                 >
                   {item?.name}
                 </Link>
                 {index !== pathsData.length - 1 && (
-                  <ChevronRight color="#737373" size={20} />
+                  <ChevronRight color="#737373" className="md:size-5 size-4 " />
                 )}
               </div>
               {item.hasDropdown && (

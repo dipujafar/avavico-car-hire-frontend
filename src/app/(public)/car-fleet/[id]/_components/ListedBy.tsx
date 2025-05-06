@@ -23,8 +23,11 @@ export default function ListedBy({
 }: Partial<ListedByProps>) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-      <h3 className="mb-3 text-sm font-medium text-[#101010]">Listed by</h3>
-      <div className="mb-4 flex items-center gap-3">
+      <h3 className="text-xl font-bold  border-b py-2 text-[#101010]">
+      Listed by
+      </h3>
+
+      <div className="mb-4 pt-2 flex items-center gap-3">
         <Image
           src={logo}
           alt={`${companyName} logo`}
@@ -40,19 +43,31 @@ export default function ListedBy({
         <div className="flex items-center gap-2">
           <PhoneIcon2></PhoneIcon2>
           <span>
-            <span className="font-bold">Mobile:</span> <Link target="_blank" href={`tel:${mobile}`}> {mobile}</Link>
+            <span className="font-bold">Mobile:</span>{" "}
+            <Link target="_blank" href={`tel:${mobile}`}>
+              {" "}
+              {mobile}
+            </Link>
           </span>
         </div>
         <div className="flex items-center gap-2">
           <MailIcon2></MailIcon2>
           <span>
-            <span className="font-bold">Email: </span> <Link target="_blank" href={`mailto:${email}`}>  {email}</Link>
+            <span className="font-bold">Email: </span>{" "}
+            <Link target="_blank" href={`mailto:${email}`}>
+              {" "}
+              {email}
+            </Link>
           </span>
         </div>
         <div className="flex items-center gap-2">
           <MessageIcon></MessageIcon>
           <span>
-            <span className="font-bold">WhatsApp: </span> <Link target="_blank"  href={`https://wa.me/${whatsapp}`}> {whatsapp} </Link>
+            <span className="font-bold">WhatsApp: </span>{" "}
+            <Link target="_blank" href={`https://wa.me/${whatsapp}`}>
+              {" "}
+              {whatsapp}{" "}
+            </Link>
           </span>
         </div>
       </div>

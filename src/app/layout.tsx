@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/footer/Footer";
 import NextTopLoader from "nextjs-toploader";
+import "react-pagination-bar/dist/index.css";
 
 const figtree = Figtree({
   subsets: ["latin"],

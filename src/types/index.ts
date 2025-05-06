@@ -25,3 +25,12 @@ export type TCar = {
     slug: string
   }
   
+
+  export type TTestimonial = {
+    id: string
+    name: string
+    date: string
+    rating: number
+    comment: string
+    avatar: string
+  }

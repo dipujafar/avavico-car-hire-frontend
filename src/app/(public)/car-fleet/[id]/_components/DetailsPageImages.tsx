@@ -3,7 +3,7 @@ import Image from "next/image";
 const DetailsPageImages = () => {
   return (
     <div className="flex h-full w-full items-center justify-center">
-      <div className="grid h-full w-full gap-4  grid-cols-6 grid-rows-3 ">
+      <div className="grid h-full w-full lg:gap-4 sm:gap-2 gap-1  grid-cols-6 grid-rows-3 ">
         <div className="col-span-4 row-span-2  shadow-md rounded-md  flex items-center justify-center">
           <Image src="/details_image1.png"  alt="details_image1" className="w-full h-full object-cover rounded-md" width={1900} height={1900}></Image>
         </div>

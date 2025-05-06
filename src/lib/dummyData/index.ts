@@ -1,3 +1,5 @@
+import { TTestimonial } from "@/types";
+
 export const carData = [
   {
     id: "car_001",
@@ -357,3 +359,45 @@ export const testimonials = [
     name: "John D.",
   },
 ]
+
+
+
+// Sample data array
+export const testimonialsData: TTestimonial[] = [
+  {
+    id: "1",
+    name: "Sarah Johnson",
+    date: "December 4, 2024 at 3:12 pm",
+    rating: 5,
+    comment:
+      "The views from The High Roller were absolutely stunning! It's a fantastic way to see the Strip and the surrounding area. The cabins are spacious and comfortable, and the audio commentary adds an extra layer of enjoyment. Highly recommend!",
+    avatar: "/user_image1.png",
+  },
+  {
+    id: "2",
+    name: "Michael Smith",
+    date: "December 4, 2024 at 3:12 pm",
+    rating: 5,
+    comment:
+      "We had a fantastic time on The High Roller. The views were amazing, and the ride was very smooth. It's a great way to see Las Vegas from a different perspective. The staff were friendly and helpful. Definitely worth it! The High Roller was one of the highlights of our Las Vegas trip.",
+    avatar: "/user_image2.png",
+  },
+  {
+    id: "3",
+    name: "Sarah Johnson",
+    date: "December 4, 2024 at 3:12 pm",
+    rating: 5,
+    comment:
+      "The views from The High Roller were absolutely stunning! It's a fantastic way to see the Strip and the surrounding area. The cabins are spacious and comfortable, and the audio commentary adds an extra layer of enjoyment. Highly recommend!",
+    avatar: "/user_image1.png",
+  },
+  {
+    id: "4",
+    name: "Michael Smith",
+    date: "December 4, 2024 at 3:12 pm",
+    rating: 5,
+    comment:
+      "We had a fantastic time on The High Roller. The views were amazing, and the ride was very smooth. It's a great way to see Las Vegas from a different perspective. The staff were friendly and helpful. Definitely worth it! The High Roller was one of the highlights of our Las Vegas trip.",
+    avatar: "/user_image2.png",
+  },
+];

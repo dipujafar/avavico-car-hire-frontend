@@ -92,6 +92,9 @@ importers:
       react-hook-form:
         specifier: ^7.56.2
         version: 7.56.2(react@19.1.0)
+      react-pagination-bar:
+        specifier: ^2.0.1
+        version: 2.0.1(react@19.1.0)
       react-phone-number-input:
         specifier: ^3.4.12
         version: 3.4.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2127,6 +2130,12 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  react-pagination-bar@2.0.1:
+    resolution: {integrity: sha512-yOjuGhH/4V2ya0Jw6wQqOD1qDbLVBjRdWPMFkdvAg4i8O9lEN/fMIeUk0Bn05APJn9cK7RVUjfyFLTd5PnIxZQ==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '>=16.8.0'
 
   react-phone-number-input@3.4.12:
     resolution: {integrity: sha512-Raob77KdtLGm49iC6nuOX9qy6Mg16idkgC7Y1mHmvG2WBYoauHpzxYNlfmFskQKeiztrJIwPhPzBhjFwjenNCA==}
@@ -4526,6 +4535,10 @@ snapshots:
       react: 19.1.0
 
   react-is@16.13.1: {}
+
+  react-pagination-bar@2.0.1(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   react-phone-number-input@3.4.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:

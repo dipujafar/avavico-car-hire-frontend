@@ -97,8 +97,8 @@ export default function RentCar() {
       loadingElement={<div className="flex justify-center">Loading Google Maps...</div>}
     >
       <Container>
-        <div className="w-full  bg-white rounded-lg  border p-6">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <div className="w-full  bg-white rounded-lg  border 2xl:p-3 xl:p-3 lg:p-2 md:p-4 p-2">
+          <div className="flex flex-col md:flex-row justify-between items-center 2xl:mb-3 mb-2">
             <h2 className="text-xl font-medium text-primary-black-gray">
               Need to rent a luxury car?
             </h2>
@@ -107,7 +107,7 @@ export default function RentCar() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 items-center  gap-4 border p-5 rounded-lg">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-center  gap-4 md:border 2xl:p-3 p-2 rounded-lg">
             {/* Pick Up Location */}
             <div className="space-y-2 border-r">
               <label className="text-sm  font-bold text-primary-gray ">
@@ -222,7 +222,7 @@ export default function RentCar() {
             </div>
 
             {/* Rent a Car Button */}
-            <Button className="bg-primary-cyan cursor-pointer hover:bg-cyan-600 text-white px-6 py-2 h-12 rounded-md group">
+            <Button className="bg-primary-cyan cursor-pointer hover:bg-cyan-600 text-white px-6 py-2 h-12 rounded-md group sm:col-span-2 lg:col-span-1">
               Rent a Car
               <AnimatedArrow></AnimatedArrow>
             </Button>
