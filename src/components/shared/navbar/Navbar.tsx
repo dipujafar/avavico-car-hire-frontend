@@ -120,15 +120,19 @@ export default function Navbar() {
 
             {/* Action Buttons */}
             <div className="hidden lg:flex items-center space-x-3">
-              <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md">
-                Join Now
-              </Button>
-              <Button
-                variant="outline"
-                className="border-primary-cyan text-primary-cyan hover:bg-cyan-50"
-              >
-                Login
-              </Button>
+              <Link href={"/sign-up"}>
+                <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md">
+                  Join Now
+                </Button>
+              </Link>
+              <Link href={"/sign-in"}>
+                <Button
+                  variant="outline"
+                  className="border-primary-cyan text-primary-cyan hover:bg-cyan-50"
+                >
+                  Login
+                </Button>
+              </Link>
             </div>
           </div>
 

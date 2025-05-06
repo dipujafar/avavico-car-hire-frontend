@@ -401,3 +401,24 @@ export const testimonialsData: TTestimonial[] = [
     avatar: "/user_image2.png",
   },
 ];
+
+
+export const userRoleData = [
+  {
+    _id: 1,
+    image: "/user_role_image1.png",
+    title: "Individual User",
+    description: "This is an account for individuals to rent items.",
+    link: "/user/sign-up",
+    role: "individual_user",
+  },
+  {
+    _id: 2,
+    image: "/user_role_image2.png",
+    title: "Car Rental Company",
+    description:
+      "Manage Your Fleet and Bookings Easily.",
+      link: "/vendor/sign-up",
+    role: "charitable_organization",
+  }
+];
