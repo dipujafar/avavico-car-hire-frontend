@@ -1,0 +1,38 @@
+export const orderData = [
+  {
+    _id: 1,
+    name: "Toyota Corolla",
+    pick_up_location: "New York",
+    drop_off_location: "New York",
+    date: "March 2, 2025",
+    return_date: "March 4, 2025",
+    status: "pending",   
+  },
+  {
+    _id: 2,
+    name: "Toyota Corolla",
+    pick_up_location: "New York",
+    drop_off_location: "New York",
+    date: "March 2, 2025",
+    return_date: "March 4, 2025",
+    status: "completed",   
+  },
+  {
+    _id: 3,
+    name: "Toyota Corolla",
+    pick_up_location: "New York",
+    drop_off_location: "New York",
+    date: "March 2, 2025",
+    return_date: "March 4, 2025",
+    status: "canceled",   
+  },
+  {
+    _id: 4,
+    name: "Toyota Corolla",
+    pick_up_location: "New York",
+    drop_off_location: "New York",
+    date: "March 2, 2025",
+    return_date: "March 4, 2025",
+    status: "scheduled",   
+  },
+];

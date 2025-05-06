@@ -41,21 +41,25 @@ const PhoneInput = React.forwardRef(
 PhoneInput.displayName = "PhoneInput";
 
 //@ts-ignore
-const InputComponent = React.forwardRef(({ className, ...props }, ref) => (
-  <Input
-    className={cn(
-        "focus-visible:ring-1  focus-visible:ring-offset-0 py-5 rounded-r-md rounded-l-none outline-0 bg-transparentf border",
-      className
-    )}
-    {...props}
-    //@ts-ignore
-    ref={ref}
-  />
-));
+const InputComponent = React.forwardRef(
+  // @ts-ignore
+  ({ className, bgColor, ...props }, ref) => (
+    <Input
+      className={cn(
+        "focus-visible:ring-1  focus-visible:ring-offset-0 py-5 rounded-r-md rounded-l-none outline-0 bg-transparent border",
+        className,
+        bgColor && `bg-[${bgColor}]`
+      )}
+      {...props}
+      //@ts-ignore
+      ref={ref}
+    />
+  )
+);
 InputComponent.displayName = "InputComponent";
 
 //@ts-ignore
-const CountrySelect = ({ disabled = false, value, onChange, options }) => {
+const CountrySelect = ({ disabled = false, value, onChange, options, bgColor }) => {
   const handleSelect = React.useCallback(
     //@ts-ignore
     (country) => {
@@ -71,7 +75,7 @@ const CountrySelect = ({ disabled = false, value, onChange, options }) => {
           type="button"
           variant={"outline"}
           className={cn(
-            "flex gap-1 rounded-r-none rounded-l-sm px-3   py-5 bg-transparent  border"
+            "flex gap-1 rounded-r-none rounded-l-sm px-3   py-5 bg-transparent  border", bgColor && `bg-[${bgColor}]`
           )}
           disabled={disabled}
         >

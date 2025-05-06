@@ -409,7 +409,7 @@ export const userRoleData = [
     image: "/user_role_image1.png",
     title: "Individual User",
     description: "This is an account for individuals to rent items.",
-    link: "/user/sign-up",
+    link: "/user-sign-up",
     role: "individual_user",
   },
   {

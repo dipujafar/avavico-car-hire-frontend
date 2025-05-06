@@ -39,7 +39,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="w-full  ">
+    <header className="w-full bg-white  ">
       <Container>
         <div className=" mx-auto px-4 py-1 flex items-center justify-between">
           {/* Logo */}

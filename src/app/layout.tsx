@@ -14,7 +14,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title:{
+  title: {
     default: "AVA VICO CAR HIRE",
     template: "%s | AVA VICO CAR HIRE",
   },
@@ -29,25 +29,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${figtree.className}  antialiased`}>
-        <Navbar></Navbar>
-        <div className="min-h-[calc(100vh-124px)]">
-          {children}
+        <div className="sticky top-0 z-50 ">
+          <Navbar></Navbar>
         </div>
+        <div className="min-h-[calc(100vh-124px)]">{children}</div>
         <Footer></Footer>
 
         <NextTopLoader
-              color="#1EC1E2"
-              initialPosition={0.08}
-              crawlSpeed={200}
-              height={3}
-              crawl={true}
-              showSpinner={true}
-              easing="ease"
-              speed={200}
-              shadow="0 0 10px #232323,0 0 5px #EA5326"
-              zIndex={1600}
-              showAtBottom={false}
-            />
+          color="#1EC1E2"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={true}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #232323,0 0 5px #EA5326"
+          zIndex={1600}
+          showAtBottom={false}
+        />
       </body>
     </html>
   );

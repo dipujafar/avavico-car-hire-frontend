@@ -22,7 +22,7 @@ const UserRoleCard = ({ data }: { data: TUserRoleData }) => {
           <p className="md:text-sm text-xs text-primary-gray text-center">{data?.description}</p>
         </div>
         <Link href={data?.link}>
-          <Button className="w-full md:py-4 bg-primary-cyan group hover:bg-primary-cyan">Join Now <AnimatedArrow></AnimatedArrow></Button>
+          <Button className="w-full md:py-4 bg-primary-cyan group hover:bg-cyan-600">Join Now <AnimatedArrow></AnimatedArrow></Button>
         </Link>
       </CardContent>
     </Card>
