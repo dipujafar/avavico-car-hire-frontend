@@ -6,13 +6,12 @@ import {
   History,
   LayoutDashboard,
   LogOut,
-  Menu,
-  X,
   Settings,
   ShoppingCart,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -25,31 +24,19 @@ export default function DashboardSidebar() {
     {
       key: "dashboard",
       label: "Dashboard",
-      icon: <LayoutDashboard size={25} />,
+      icon: <LayoutDashboard size={22} />,
       href: "/user/profile",
     },
     {
-      key: "orderHistory",
-      label: "Order History",
-      icon: <History size={25} />,
-      href: "/user/order-history",
-    },
-    {
-      key: "wishlist",
-      label: "Wishlist",
-      icon: <Heart size={25} />,
-      href: "/favorite-products",
-    },
-    {
-      key: "shopping-cart",
-      label: "Shopping Cart",
-      icon: <ShoppingCart size={25} />,
-      href: "/shopping-cart",
+      key: "orders",
+      label: "Order",
+      icon: <History size={22} />,
+      href: "/user/orders",
     },
     {
       key: "settings",
       label: "Settings",
-      icon: <Settings size={25} />,
+      icon: <Settings size={22} />,
       href: "/user/account-settings",
     },
   ];
@@ -84,7 +71,7 @@ export default function DashboardSidebar() {
       <div
       style={{boxShadow: "0px 0px 7px 0px rgba(96, 96, 96, 0.16"}}
         id="dashboardSidebar"
-        className={`2xl:w-72 w-64 bg-white rounded-md`}
+        className={`2xl:w-[270px] w-64 bg-white rounded-md`}
       >
         <div className=" bg-white py-5 rounded-md ">
           <h4 className=" px-5 text-xl text-[#262626] font-bold">Navigation</h4>
@@ -95,7 +82,7 @@ export default function DashboardSidebar() {
                 href={link.href}
                 key={link.key}
                 className={cn(
-                  "flex items-center gap-x-3 px-5 py-3 text-lg text-gray-scale-600 transition-all duration-300 ease-in-out text-[#595959]",
+                  "flex items-center gap-x-3 px-5 py-3 text-base text-gray-scale-600 transition-all duration-300 ease-in-out text-[#595959]",
                   pathname === link.href &&
                     "border-l-4 border-l-green-600 bg-[#1EC1E2]/70 text-white",
                   link.href.includes(path) &&
@@ -113,9 +100,9 @@ export default function DashboardSidebar() {
                 router.push("/sign-in");
               }}
               type="button"
-              className="flex items-center gap-x-3 px-5 py-4 text-lg text-[#595959]"
+              className="flex items-center gap-x-3 px-5 py-4 text-lg text-[#595959] cursor-pointer "
             >
-              <LogOut size={25} />
+              <LogOut size={22} />
               <span>{"Logout"}</span>
             </button>
           </div>

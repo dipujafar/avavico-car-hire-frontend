@@ -1,18 +1,8 @@
 "use client";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { userData } from "@/utils/user-data";
 import { orderData } from "@/utils/order-data";
-import { checkPaymentStatus, checkStatus } from "@/utils/check-status";
+import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
+
 
 const TABLE_HEADERS = [
   "Car Name",
@@ -36,60 +26,14 @@ const RecentOrders = () => {
           My Recent Orders
         </h3>
         <Link
-          href="/user/order-history"
+          href="/user/orders"
           type="button"
-          className=" text-primary-cyan underline"
+          className=" text-primary-cyan underline hover:text-cyan-600"
         >
           View All
         </Link>
       </div>
-      <Table>
-        <TableCaption>A list of {userData?.name} recent orders</TableCaption>
-        <TableHeader>
-          <TableRow >
-            {TABLE_HEADERS?.map((header) => (
-              <TableHead key={header} className="text-[#B0B0B0] py-4">
-                {header}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody className="p-6  font-medium">
-          {orderData?.slice(0, 6)?.map((data) => (
-            <TableRow key={data._id}>
-              <TableCell className="py-4">{data?.name}</TableCell>
-              <TableCell className="py-4">{data?.pick_up_location}</TableCell>
-              <TableCell className="py-4">{data?.drop_off_location}</TableCell>
-              <TableCell className="py-4">{data?.date}</TableCell>
-              <TableCell className="py-4">{data?.return_date}</TableCell>
-
-              <TableCell className="py-4">
-                <h5
-                  className={cn(
-                    "capitalize text-white flex justify-center rounded",
-                    data.status === "pending" && "bg-[#5B4373] ",
-                    data.status === "canceled" && "bg-red-600",
-                    data.status === "onTheWay" && "bg-[#2E3559]",
-                    data.status === "scheduled" && "bg-yellow-700",
-                    data.status === "completed" && "bg-green-600"
-                  )}
-                >
-                  {data?.status}
-                </h5>
-                {/* {checkStatus(data.status)} */}
-              </TableCell>
-              <TableCell>
-                <Link
-                  href={`/user/order-history/${data._id}`}
-                  className="underline text-primary-cyan"
-                >
-                  View Details
-                </Link>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <UserDashboardTable data={orderData} showLength={5}/>
     </div>
   );
 };

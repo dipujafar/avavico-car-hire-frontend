@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { TCar } from "@/types";
 import Link from "next/link";
+import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../icons";
 
 export default function ProductCard({ data }: { data: TCar }) {
   return (
@@ -41,20 +42,20 @@ export default function ProductCard({ data }: { data: TCar }) {
           <hr />
 
           <div className="grid grid-cols-2 gap-3 pt-2">
-            <div className="flex items-center">
-              <Gauge className="w-4 h-4 mr-2 text-primary-gray" />
+            <div className="flex items-center gap-x-1">
+              <MiterIcon2 />
               <span className="text-sm">{data?.distanceIncluded}</span>
             </div>
-            <div className="flex items-center">
-              <Cog className="w-4 h-4 mr-2 text-primary-gray" />
+            <div className="flex items-center gap-x-1">
+              <SettingIcon3 />
               <span className="text-sm">{data?.transmission}</span>
             </div>
-            <div className="flex items-center">
-              <Fuel className="w-4 h-4 mr-2 text-primary-gray" />
+            <div className="flex items-center gap-x-1">
+              <PuleIcon2></PuleIcon2>
               <span className="text-sm">{data.fuelType}</span>
             </div>
-            <div className="flex items-center">
-              <Users className="w-4 h-4 mr-2 text-primary-gray" />
+            <div className="flex items-center gap-x-1">
+              <SeatsIcon />
               <span className="text-sm">{data?.seatingCapacity} seats</span>
             </div>
           </div>
