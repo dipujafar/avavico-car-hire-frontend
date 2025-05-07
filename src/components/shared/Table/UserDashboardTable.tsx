@@ -54,7 +54,7 @@ const UserDashboardTable = ({
             <TableCell className="py-4">
               <h5
                 className={cn(
-                  "capitalize text-white flex justify-center rounded-md",
+                  "capitalize text-white flex justify-center rounded-md px-2 py-0.5",
                   data.status === "pending" && "bg-[#5B4373] ",
                   data.status === "canceled" && "bg-red-600",
                   data.status === "onTheWay" && "bg-[#2E3559]",

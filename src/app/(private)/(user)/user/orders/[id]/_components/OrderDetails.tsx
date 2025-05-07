@@ -62,33 +62,33 @@ export default function OrderDetails({
           <div className="flex items-center justify-between">
             <div className="flex items-center text-[#333]">
               <CalendarDays className="h-4 w-4 text-cyan-500 mr-2" />
-              <span className="text-sm">Pick-Up</span>
+              <span className="lg:text-sm text-xs truncate">Pick-Up</span>
             </div>
-            <span className="text-sm">{pickUpDate}</span>
+            <span className="lg:text-sm text-xs truncate">{pickUpDate}</span>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center text-[#333]">
               <CalendarDays className="h-4 w-4 text-cyan-500 mr-2" />
-              <span className="text-sm">Drop-Off</span>
+              <span className="lg:text-sm text-xs truncate">Drop-Off</span>
             </div>
-            <span className="text-sm text-[#333] ">{dropOffDate}</span>
+            <span className="lg:text-sm text-xs truncate text-[#333] ">{dropOffDate}</span>
+          </div>
+
+          <div className="flex items-center justify-between gap-x-2">
+            <div className="flex items-center text-[#333]">
+              <MapPin className="h-4 w-4 text-cyan-500 mr-2" />
+              <span className="lg:text-sm text-xs truncate">Pick-Up Location</span>
+            </div>
+            <span className="lg:text-sm text-xs truncate text-[#333]">{pickUpLocation}</span>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center text-[#333]">
               <MapPin className="h-4 w-4 text-cyan-500 mr-2" />
-              <span className="text-sm">Pick-Up Location</span>
+              <span className="lg:text-sm text-xs truncate">Drop-Off Location</span>
             </div>
-            <span className="text-sm text-[#333]">{pickUpLocation}</span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center text-[#333]">
-              <MapPin className="h-4 w-4 text-cyan-500 mr-2" />
-              <span className="text-sm">Drop-Off Location</span>
-            </div>
-            <span className="text-sm text-[#333]" >{dropOffLocation}</span>
+            <span className="lg:text-sm text-xs truncate text-[#333]" >{dropOffLocation}</span>
           </div>
         </div>
 

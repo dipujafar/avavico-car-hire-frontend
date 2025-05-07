@@ -15,7 +15,7 @@ const OrderPageContainer = () => {
         }}
         className="md:p-5 p-2 bg-white rounded-md "
       >
-        <h3 className="text-2xl font-medium text-[#474747] mb-5">
+        <h3 className="md:text-2xl text-xl font-medium text-[#474747] mb-5">
           Scheduled Orders
         </h3>
 
@@ -28,7 +28,7 @@ const OrderPageContainer = () => {
         }}
         className="md:p-5 p-2 bg-white rounded-md "
       >
-        <h3 className="text-2xl font-medium text-[#474747] mb-5">
+        <h3 className="md:text-2xl text-xl font-medium text-[#474747] mb-5">
           Completed Orders
         </h3>
 
@@ -41,7 +41,7 @@ const OrderPageContainer = () => {
         }}
         className="md:p-5 p-2 bg-white rounded-md "
       >
-        <h3 className="text-2xl font-medium text-[#474747] mb-5">
+        <h3 className="md:text-2xl text-xl font-medium text-[#474747] mb-5">
           Canceled Orders
         </h3>
         {<UserDashboardTable data={canceledOrderData}  showLength={5} />}

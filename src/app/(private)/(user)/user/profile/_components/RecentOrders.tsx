@@ -22,7 +22,7 @@ const RecentOrders = () => {
       className="md:p-5 p-2 bg-white rounded-md "
     >
       <div className="mb-5 flex items-center justify-between ">
-        <h3 className="text-2xl font-medium text-[#474747]">
+        <h3 className="md:text-2xl text-xl font-medium text-[#474747]">
           My Recent Orders
         </h3>
         <Link

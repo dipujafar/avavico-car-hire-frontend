@@ -1,17 +1,31 @@
 "use client";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import {
-  Heart,
-  History,
-  LayoutDashboard,
-  LogOut,
-  Settings,
-  ShoppingCart,
-} from "lucide-react";
+import { History, LayoutDashboard, LogOut, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
+
+export  const SIDEBAR_LINKS = [
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    icon: <LayoutDashboard  className="md:size-6 size-4" />,
+    href: "/user/profile",
+  },
+  {
+    key: "orders",
+    label: "Order",
+    icon: <History  className="md:size-6 size-4" />,
+    href: "/user/orders",
+  },
+  {
+    key: "settings",
+    label: "Settings",
+    icon: <Settings  className="md:size-6 size-4" />,
+    href: "/user/account-settings",
+  },
+];
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -19,27 +33,7 @@ export default function DashboardSidebar() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const router = useRouter();
 
-
-  const SIDEBAR_LINKS = [
-    {
-      key: "dashboard",
-      label: "Dashboard",
-      icon: <LayoutDashboard size={22} />,
-      href: "/user/profile",
-    },
-    {
-      key: "orders",
-      label: "Order",
-      icon: <History size={22} />,
-      href: "/user/orders",
-    },
-    {
-      key: "settings",
-      label: "Settings",
-      icon: <Settings size={22} />,
-      href: "/user/account-settings",
-    },
-  ];
+  
 
   // Toggle the sidebar visibility
   const toggleSidebar = () => {
@@ -67,9 +61,8 @@ export default function DashboardSidebar() {
 
   return (
     <div>
-      
       <div
-      style={{boxShadow: "0px 0px 7px 0px rgba(96, 96, 96, 0.16"}}
+        style={{ boxShadow: "0px 0px 7px 0px rgba(96, 96, 96, 0.16" }}
         id="dashboardSidebar"
         className={`2xl:w-[270px] w-64 bg-white rounded-md`}
       >
@@ -86,7 +79,7 @@ export default function DashboardSidebar() {
                   pathname === link.href &&
                     "border-l-4 border-l-green-600 bg-[#1EC1E2]/70 text-white",
                   link.href.includes(path) &&
-                    "border-l-4 border-l-green-600 bg-[#1EC1E2]/70 text-white ",
+                    "border-l-4 border-l-green-600 bg-[#1EC1E2]/70 text-white "
                 )}
               >
                 {link.icon}
@@ -95,10 +88,7 @@ export default function DashboardSidebar() {
             ))}
 
             <button
-              onClick={() => {
-               
-                router.push("/sign-in");
-              }}
+              onClick={() => router.push("/sign-in")}
               type="button"
               className="flex items-center gap-x-3 px-5 py-4 text-lg text-[#595959] cursor-pointer "
             >

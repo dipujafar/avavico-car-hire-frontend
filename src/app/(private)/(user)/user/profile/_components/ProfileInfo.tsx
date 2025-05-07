@@ -15,8 +15,8 @@ const ProfileInfo = () => {
           Edit Profile
         </Link>
       </h4>
-      <div className=" flex gap-x-5">
-        <Avatar className="xl:size-60 md:size-52 size-32">
+      <div className=" flex flex-col lg:flex-row   gap-x-5">
+        <Avatar className="xl:size-60 md:size-52 size-32 mx-auto mb-5 lg:mb-0">
           <AvatarImage src={"/user_image2.png"} />
           <AvatarFallback className="md:text-5xl text-3xl uppercase">
             {userData?.name?.split(" ").length > 1 ? (
@@ -31,19 +31,19 @@ const ProfileInfo = () => {
         </Avatar>
 
         <div className="md:space-y-4 space-y-3 flex-1">
-          <div className="bg-[#F8F9FA] px-2.5 py-2 rounded border border-[#E6E6E6] text-lg text-black flex items-center gap-x-2 w-full">
+          <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
             <h5>Name :</h5>
             <p>{userData?.name}</p>
           </div>
-          <div className="bg-[#F8F9FA] px-2.5 py-2 rounded border border-[#E6E6E6] text-lg text-black flex items-center gap-x-2 w-full">
+          <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
             <h5>Email :</h5>
             <p>{userData?.email}</p>
           </div>
-          <div className="bg-[#F8F9FA] px-2.5 py-2 rounded border border-[#E6E6E6] text-lg text-black flex items-center gap-x-2 w-full">
+          <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
             <h5>Location :</h5>
             <p>{userData?.address}</p>
           </div>
-          <div className="bg-[#F8F9FA] px-2.5 py-2 rounded border border-[#E6E6E6] text-lg text-black flex items-center gap-x-2 w-full">
+          <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
             <h5>Phone :</h5>
             <p>{userData?.phoneNumber}</p>
           </div>

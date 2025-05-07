@@ -5,7 +5,7 @@ import { RentalDetails } from "./_components/RentalDetails";
 
 const OrderDetailsPage = () => {
   return (
-    <div className="grid grid-cols-2 gap-5 2xl:gap-x-8">
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-5 2xl:gap-x-8">
       <OrderDetails
         title="Mercedes AMG Sports"
         description="Powerful engine, luxurious interiors, perfect for road trips"
