@@ -13,7 +13,7 @@ const DashboardPageTopSection = () => {
         return "Dashboard";
       case "/user/orders":
         return "Orders";
-      case "/account-settings":
+      case "/user/account-settings":
         return "Settings";
       case `${pathName}`:
         return "Order Details";

@@ -1,16 +1,16 @@
 "use client";
-
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useSearchParams } from "next/navigation";
-
-import AnimatedArrowUp from "@/components/animatedArrows/AnimatedArrowUp";
 import { CancelIcon, SuccessIcon } from "@/components/icons";
+import { ReviewModal } from "./ReviewModal";
+import { useState } from "react";
 
 export function OrderStatus() {
   const status = useSearchParams().get("status");
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const onCancel = () => {
     console.log("Cancel");
   };
@@ -29,9 +29,14 @@ export function OrderStatus() {
             Your order has been successfully completed
           </p>
         </div>
-        <Button className="w-full bg-[#10B981] hover:bg-emerald-600 group">
-          Write Review <AnimatedArrow></AnimatedArrow>
+        <Button onClick={() => setIsReviewModalOpen(true)} className="w-full bg-[#10B981] hover:bg-emerald-600 group">
+          Write Review 
         </Button>
+
+        <ReviewModal
+          open={isReviewModalOpen}
+          setOpen={setIsReviewModalOpen}
+        ></ReviewModal>
       </div>
     );
   }
