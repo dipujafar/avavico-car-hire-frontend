@@ -1,7 +1,7 @@
 import React from "react";
-import AccountSettings from "./_components/AccountSettings";
 import { Metadata } from "next";
-import ChangePasswordForm from "./_components/ChangePasswordForm";
+import AccountSettings from "@/app/(private)/(user)/user/account-settings/_components/AccountSettings";
+import ChangePasswordForm from "@/app/(private)/(user)/user/account-settings/_components/ChangePasswordForm";
 
 export const metadata: Metadata = {
   title: "Account Settings",

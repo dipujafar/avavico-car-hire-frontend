@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 const TABLE_HEADERS = [
   "Car Name",
@@ -21,9 +22,11 @@ const TABLE_HEADERS = [
 const UserDashboardTable = ({
   data,
   showLength = data?.length,
+  button,
 }: {
   data: any;
   showLength?: number;
+  button?: ReactNode;
 }) => {
   return (
     <Table>
@@ -39,7 +42,7 @@ const UserDashboardTable = ({
       <TableBody className="p-6  font-medium">
         {data?.slice(0, showLength)?.map((data: any) => (
           <TableRow key={data._id}>
-            <TableCell className="py-4">{data?.name}</TableCell>
+            <TableCell className="py-4"> <Link href={`/car-fleet/${data._id}`}>{data?.name} </Link></TableCell>
             <TableCell className="py-4 text-[#B0B0B0]">
               {data?.pick_up_location}
             </TableCell>
@@ -67,12 +70,16 @@ const UserDashboardTable = ({
               {/* {checkStatus(data.status)} */}
             </TableCell>
             <TableCell>
-              <Link
-                href={`/user/orders/${data._id}?status=${data.status}`}
-                className="underline text-primary-cyan hover:text-cyan-600"
-              >
-                View Details
-              </Link>
+              {button ? (
+                button
+              ) : (
+                <Link
+                  href={`/user/orders/${data._id}?status=${data.status}`}
+                  className="underline text-primary-cyan hover:text-cyan-600"
+                >
+                  View Details
+                </Link>
+              )}
             </TableCell>
           </TableRow>
         ))}

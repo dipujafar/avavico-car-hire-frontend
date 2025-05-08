@@ -11,7 +11,7 @@ const ProfileInfo = () => {
       className="md:p-5 p-2 bg-white rounded-md "
     >
       <h4 className="w-fit ml-auto mb-2 underline text-primary-cyan hover:text-cyan-600">
-        <Link href={"#"} className=" text-end w-full ">
+        <Link href={"/user/account-settings#profile"} className=" text-end w-full ">
           Edit Profile
         </Link>
       </h4>

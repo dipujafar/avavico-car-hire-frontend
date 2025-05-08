@@ -56,7 +56,7 @@ const AccountSettings = () => {
     <div  style={{
       boxShadow: "0px 0px 8.925px 0px rgba(96, 96, 96, 0.16)",
     }} className="bg-white rounded-lg" >
-      <h1 className="px-7 py-5 text-2xl font-medium">Account Settings</h1>
+      <h1 id="profile" className="px-7 py-5 text-2xl font-medium">Account Settings</h1>
       <hr />
       {/* user information */}
       <div id="profile" className="px-7 py-5">

@@ -11,37 +11,37 @@ export  const SIDEBAR_LINKS = [
     key: "dashboard",
     label: "Dashboard",
     icon: <LayoutDashboard  className="md:size-6 size-4" />,
-    href: "/user/profile",
+    href: "/vendor/profile",
   },
   {
     key: "orders",
     label: "Order",
     icon: <History  className="md:size-6 size-4" />,
-    href: "/user/orders",
+    href: "/vendor/orders",
   },
   {
     key: "earning",
     label: "Earning",
     icon: <Wallet   className="md:size-6 size-4" />,
-    href: "/user/earning",
+    href: "/vendor/earning",
   },
   {
     key: "car-list",
     label: "Car List",
     icon: <CarTaxiFront   className="md:size-6 size-4" />,
-    href: "/user/car-list",
+    href: "/vendor/car-list",
   },
   {
     key: "blogs",
     label: "Blogs",
     icon: <FilePenLine   className="md:size-6 size-4" />,
-    href: "/user/blogs",
+    href: "/vendor/blogs",
   },
   {
     key: "settings",
     label: "Settings",
     icon: <Settings  className="md:size-6 size-4" />,
-    href: "/user/account-settings",
+    href: "/vendor/account-settings",
   },
 ];
 

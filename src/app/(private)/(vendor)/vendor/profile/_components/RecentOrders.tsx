@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { orderData } from "@/utils/order-data";
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
+import { Button } from "@/components/ui/button";
 
 
 const TABLE_HEADERS = [
@@ -26,14 +27,21 @@ const RecentOrders = () => {
           My Recent Orders
         </h3>
         <Link
-          href="/user/orders"
+          href="/vendor/orders"
           type="button"
           className=" text-primary-cyan underline hover:text-cyan-600"
         >
           View All
         </Link>
       </div>
-      <UserDashboardTable data={orderData} showLength={5}/>
+      <UserDashboardTable data={orderData} showLength={5} button={<Button
+                style={{ boxShadow: " 0px 1px 2px 0px rgba(0, 0, 0, 0.20)" }}
+                size="sm"
+                onClick={() => console.log("Accept")}
+                className="bg-cyan-500 hover:bg-cyan-600 shadow-2xl"
+              >
+                Accept
+              </Button>} />
     </div>
   );
 };

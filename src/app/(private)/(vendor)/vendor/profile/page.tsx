@@ -1,5 +1,6 @@
 import ProfileContainer from "./_components/ProfileContainer";
 
+
 export const metadata = {
   title: "Profile",
   description: "User profile page",
