@@ -1,6 +1,6 @@
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+import ProductCard from "@/components/shared/cards/ProductCard";
 import Container from "@/components/shared/Container";
-import ProductCard from "@/components/shared/ProductCard";
 import SectionTitle from "@/components/shared/SectionTitle";
 import { carData } from "@/lib/dummyData";
 import React from "react";

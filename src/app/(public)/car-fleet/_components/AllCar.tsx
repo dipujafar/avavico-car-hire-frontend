@@ -1,4 +1,4 @@
-import ProductCard from "@/components/shared/ProductCard";
+import ProductCard from "@/components/shared/cards/ProductCard";
 import { carData } from "@/lib/dummyData";
 import React from "react";
 

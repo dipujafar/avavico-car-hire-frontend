@@ -1,10 +1,10 @@
-import { Star, MapPin, Gauge, Cog, Fuel, Users } from "lucide-react";
+import { Star, MapPin} from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { TCar } from "@/types";
 import Link from "next/link";
-import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../icons";
+import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../../icons";
 
 export default function ProductCard({ data }: { data: TCar }) {
   return (
