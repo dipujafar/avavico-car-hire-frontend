@@ -1,4 +1,4 @@
-import { Star, MapPin} from "lucide-react";
+import { Star, MapPin, Edit, Trash2 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -6,7 +6,13 @@ import { TCar } from "@/types";
 import Link from "next/link";
 import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../../icons";
 
-export default function ProductCard({ data }: { data: TCar }) {
+export default function ProductCard({
+  data,
+  ownCar,
+}: {
+  data: TCar;
+  ownCar?: boolean;
+}) {
   return (
     <Link href={`/car-fleet/${data?.id}`}>
       <Card className=" overflow-hidden border rounded-lg py-0 gap-0 hover:shadow-md duration-500 transition-all ">
@@ -65,9 +71,22 @@ export default function ProductCard({ data }: { data: TCar }) {
           <div>
             <p className="xl:text-2xl text-xl font-bold">$498.25</p>
           </div>
-          <Button className="hover:bg-primary-cyan bg-[#F2F4F6] text-black font-bold duration-300">
-            Rent Now
-          </Button>
+
+          {ownCar && (
+            <div className="flex gap-x-1">
+              <div className="size-7 bg-green-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer">
+                <Edit size={16}></Edit>
+              </div>
+              <div className="size-7 bg-red-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer">
+                <Trash2 size={16}></Trash2>
+              </div>
+            </div>
+          )}
+          {!ownCar && (
+            <Button className="hover:bg-primary-cyan bg-[#F2F4F6] hover:text-white text-black font-bold duration-300">
+              Rent Now
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </Link>

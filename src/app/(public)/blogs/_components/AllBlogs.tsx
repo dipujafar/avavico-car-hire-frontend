@@ -1,8 +1,8 @@
 import BlogCard from "@/components/shared/BlogCard";
 import Container from "@/components/shared/Container";
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import SectionTitle from "@/components/shared/SectionTitle";
 import { blogPosts } from "@/lib/dummyData";
-import React from "react";
 
 const AllBlogs = () => {
   return (
@@ -17,6 +17,7 @@ const AllBlogs = () => {
           <BlogCard key={post.id} post={post} />
         ))}
       </div>
+      <PaginationSection></PaginationSection>
     </Container>
   );
 };

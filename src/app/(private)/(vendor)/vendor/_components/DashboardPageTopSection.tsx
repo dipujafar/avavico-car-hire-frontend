@@ -9,11 +9,17 @@ const DashboardPageTopSection = () => {
 
   const pageTitle = (pathName: string) => {
     switch (pathName) {
-      case "/user/profile":
+      case "/vendor/profile":
         return "Dashboard";
-      case "/user/orders":
+      case "/vendor/orders":
         return "Orders";
-      case "/user/account-settings":
+      case "/vendor/earning":
+        return "Earning";
+      case "/vendor/car-list":
+        return "Car List";
+      case "/vendor/blogs":
+        return "Blogs";
+      case "/vendor/account-settings":
         return "Settings";
       case `${pathName}`:
         return "Order Details";

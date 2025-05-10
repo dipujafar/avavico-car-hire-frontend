@@ -1,5 +1,6 @@
 "use client";
 import { OrderCarRentalCard } from "@/components/shared/cards/OrderCarRentalCard"
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
 const carRentals = [
   {
     id: "1",
@@ -41,7 +42,7 @@ const carRentals = [
 
 export default function Orders({status}: {status: string}) {
   return (
-    <main className="py-4">
+    <div className="py-4">
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
         {carRentals.map((carRental) => (
           <OrderCarRentalCard
@@ -52,6 +53,7 @@ export default function Orders({status}: {status: string}) {
           />
         ))}
       </div>
-    </main>
+      <PaginationSection totalItems={10}></PaginationSection>
+    </div>
   )
 }

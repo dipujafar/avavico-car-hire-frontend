@@ -1,3 +1,4 @@
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import BlogsPageContainer from "./_components/BlogsPageContainer";
 
 export const metadata = {
@@ -9,6 +10,7 @@ const BlogPage = () => {
     return (
         <>
             <BlogsPageContainer></BlogsPageContainer>
+            <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
         </>
     );
 };

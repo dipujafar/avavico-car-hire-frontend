@@ -1,3 +1,4 @@
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import CarListContainer from "./_components/CarListContainer";
 
 export const metadata = {
@@ -9,6 +10,7 @@ const CarListPage = () => {
     return (
         <>
             <CarListContainer></CarListContainer>
+            <PaginationSection totalItems={10}></PaginationSection>
         </>
     );
 };

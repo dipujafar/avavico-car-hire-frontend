@@ -1,6 +1,6 @@
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
 import { orderData } from "@/utils/order-data";
-import React from "react";
 
 const OrderPageContainer = () => {
     const scheduledOrderData = orderData.filter((order) => order.status === "scheduled");
@@ -20,6 +20,7 @@ const OrderPageContainer = () => {
         </h3>
 
         <UserDashboardTable data={scheduledOrderData} showLength={5}  />
+        <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
       </div>
       {/* ALL Scheduled Orders */}
       <div
@@ -33,6 +34,7 @@ const OrderPageContainer = () => {
         </h3>
 
         <UserDashboardTable data={completedOrderData} showLength={5} />
+        <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
       </div>
       {/* ALL Canceled  Orders */}
       <div
@@ -44,7 +46,8 @@ const OrderPageContainer = () => {
         <h3 className="md:text-2xl text-xl font-medium text-[#474747] mb-5">
           Canceled Orders
         </h3>
-        {<UserDashboardTable data={canceledOrderData}  showLength={5} />}
+        <UserDashboardTable data={canceledOrderData}  showLength={5} />
+        <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
       </div>
     </div>
   );
