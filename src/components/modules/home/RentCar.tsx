@@ -1,20 +1,15 @@
 "use client";
 import { useState, useRef } from "react";
-import { CalendarIcon, ChevronDown, MapPin } from "lucide-react";
+import {  MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import Container from "@/components/shared/Container";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { DateTimePicker } from "@/components/ui/date-picker";
 import CarRentalSkeleton from "@/components/Skeletons/CarRentalSkeleton";
+import {motion} from "motion/react";
+import { fadeUpVariants } from "@/animation/motionVariant";
 
 // You'll need to add your Google Maps API key as an environment variable
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
@@ -103,7 +98,13 @@ export default function RentCar() {
       }
     >
       <Container>
-        <div className="w-full  bg-white rounded-lg  border 2xl:p-3 xl:p-3 lg:p-2 md:p-4 p-2">
+     <motion.section
+        variants={fadeUpVariants()}
+        initial="initial"
+        animate="animate"
+        className=" relative"
+      >
+        <motion.div key={"rent-car"} variants={fadeUpVariants(2.0)} className="w-full  bg-white rounded-lg  border 2xl:p-3 xl:p-3 lg:p-2 md:p-4 p-2">
           <div className="flex flex-col md:flex-row justify-between items-center 2xl:mb-3 mb-2">
             <h2 className="text-xl font-medium text-primary-black-gray">
               Need to rent a luxury car?
@@ -192,7 +193,8 @@ export default function RentCar() {
           </div>
 
           <div className="flex justify-end mt-6"></div>
-        </div>
+        </motion.div>
+        </motion.section>
       </Container>
     </LoadScript>
   );

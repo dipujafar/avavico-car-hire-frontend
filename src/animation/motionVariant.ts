@@ -21,3 +21,6 @@ export const fadeUpVariants = (delay = 0) => ({
       opacity: 0,
     },
   });
+
+
+  

@@ -954,3 +954,20 @@ export function CancelIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+export function BorderIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="91"
+      height="15"
+      viewBox="0 0 91 15"
+      fill="none"
+    >
+      <path
+        d="M90.8691 0C37.2891 1.87429 15.0842 7.56481 0 10.3835C0 11.7463 0.287197 12.8447 0.412303 15C40.0437 2.85857 67.7792 2.16218 91 0.912229C90.9794 0.74243 90.931 0.509398 90.8691 0Z"
+        fill="#1EC1E2"
+      />
+    </svg>
+  );
+}
