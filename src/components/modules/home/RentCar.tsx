@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
-import { CalendarIcon, ChevronDown, MapPin} from "lucide-react";
+import { CalendarIcon, ChevronDown, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -13,6 +13,8 @@ import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import Container from "@/components/shared/Container";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+import { DateTimePicker } from "@/components/ui/date-picker";
+import CarRentalSkeleton from "@/components/Skeletons/CarRentalSkeleton";
 
 // You'll need to add your Google Maps API key as an environment variable
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
@@ -27,8 +29,8 @@ interface PlaceType {
 }
 
 export default function RentCar() {
-  const [pickupDate, setPickupDate] = useState<Date>(new Date(2024, 9, 1)); // Oct 1, 2024
-  const [returnDate, setReturnDate] = useState<Date>(new Date(2024, 9, 7)); // Oct 7, 2024
+  const [pickupDate, setPickupDate] = useState<Date | undefined>(undefined);
+  const [returnDate, setReturnDate] = useState<Date | undefined>(undefined);
   const [pickupLocation, setPickupLocation] = useState<PlaceType | null>(null);
   const [dropoffLocation, setDropoffLocation] = useState<PlaceType | null>(
     null
@@ -94,7 +96,11 @@ export default function RentCar() {
     <LoadScript
       googleMapsApiKey={GOOGLE_MAPS_API_KEY}
       libraries={libraries as any}
-      loadingElement={<div className="flex justify-center">Loading Google Maps...</div>}
+      loadingElement={
+        <div>
+          <Container><CarRentalSkeleton></CarRentalSkeleton> </Container>
+          </div>
+      }
     >
       <Container>
         <div className="w-full  bg-white rounded-lg  border 2xl:p-3 xl:p-3 lg:p-2 md:p-4 p-2">
@@ -137,7 +143,7 @@ export default function RentCar() {
 
             {/* Drop Off Location */}
             <div className="space-y-2  border-r">
-            <label className="text-sm  font-bold text-primary-gray ">
+              <label className="text-sm  font-bold text-primary-gray ">
                 Drop Off Location
               </label>
               <div className="relative">
@@ -164,61 +170,18 @@ export default function RentCar() {
 
             {/* Pick Up Date & Time */}
             <div className="space-y-2  border-r">
-            <label className="text-sm  font-bold text-primary-gray ">
+              <label className="text-sm  font-bold text-primary-gray ">
                 Pick Up Date & Time
               </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left font-normal h-12  border-none shadow-none px-0"
-                  >
-                    <div className="flex items-center gap-2">
-                      <CalendarIcon className="h-4 w-4 text-gray-500" />
-                      <span>{format(pickupDate, "EEE, MMM dd yyyy")}</span>
-                      <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
-                    </div>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 " align="start">
-                  <Calendar
-                    mode="single"
-                    selected={pickupDate}
-                    onSelect={(date) => date && setPickupDate(date)}
-                    initialFocus
-                    
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateTimePicker value={pickupDate} onChange={setPickupDate} />
             </div>
 
             {/* Return Date & Time */}
             <div className="space-y-2  border-r">
-            <label className="text-sm  font-bold text-primary-gray ">
+              <label className="text-sm  font-bold text-primary-gray ">
                 Return Date & Time
               </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left font-normal h-12 border-none shadow-none px-0"
-                  >
-                    <div className="flex items-center gap-2">
-                      <CalendarIcon className="h-4 w-4 text-gray-500" />
-                      <span>{format(returnDate, "EEE, MMM dd yyyy")}</span>
-                      <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
-                    </div>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={returnDate}
-                    onSelect={(date) => date && setReturnDate(date)}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateTimePicker value={returnDate} onChange={setReturnDate} />
             </div>
 
             {/* Rent a Car Button */}

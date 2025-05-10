@@ -4,7 +4,6 @@ import { orderData } from "@/utils/order-data";
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
 import { Button } from "@/components/ui/button";
 
-
 const TABLE_HEADERS = [
   "Car Name",
   "Pick Up Location",
@@ -34,14 +33,20 @@ const RecentOrders = () => {
           View All
         </Link>
       </div>
-      <UserDashboardTable data={orderData} showLength={5} button={<Button
-                style={{ boxShadow: " 0px 1px 2px 0px rgba(0, 0, 0, 0.20)" }}
-                size="sm"
-                onClick={() => console.log("Accept")}
-                className="bg-cyan-500 hover:bg-cyan-600 shadow-2xl"
-              >
-                Accept
-              </Button>} />
+      <UserDashboardTable
+        data={orderData}
+        showLength={5}
+        button={
+          <Button
+            style={{ boxShadow: " 0px 1px 2px 0px rgba(0, 0, 0, 0.20)" }}
+            size="sm"
+            onClick={() => console.log("Accept")}
+            className="bg-cyan-500 hover:bg-cyan-600 shadow-2xl"
+          >
+            Accept
+          </Button>
+        }
+      />
     </div>
   );
 };
