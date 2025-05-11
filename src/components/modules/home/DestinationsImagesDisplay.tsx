@@ -3,7 +3,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { scaleUpChildVariant, scaleUpVariant } from "@/animation/motionVariant";
 
-const DisplayBlogImage = () => {
+const DestinationsImagesDisplay = () => {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <motion.div
@@ -16,7 +16,7 @@ const DisplayBlogImage = () => {
       >
         <motion.div key={"destinations_image1"}  variants={scaleUpChildVariant} className="col-span-2 row-span-3  flex items-center justify-center">
           <Image
-            src={"/blog_details_image.png"}
+            src={"/destination_section_bg.png"}
             alt="blog_details_image"
             className="w-full h-full object-cover rounded-md"
             width={1200}
@@ -26,7 +26,7 @@ const DisplayBlogImage = () => {
 
         <motion.div key={"destinations_image2"}  variants={scaleUpChildVariant}  className="col-span-2 row-span-2  flex items-center justify-center">
           <Image
-            src={"/about_page_bg.png"}
+            src={"/reviews_page_bg.png"}
             alt="blog_details_image"
             className="w-full h-full object-cover rounded-md"
             width={1200}
@@ -36,7 +36,7 @@ const DisplayBlogImage = () => {
 
         <motion.div key={"destinations_image3"}  variants={scaleUpChildVariant} className="col-span-2 row-span-3  flex items-center justify-center">
           <Image
-            src={"/carFleetPageBanner.png"}
+            src={"/blog_details_image.png"}
             alt="blog_details_image"
             className="w-full h-full object-cover rounded-md"
             width={1200}
@@ -58,4 +58,4 @@ const DisplayBlogImage = () => {
   );
 };
 
-export default DisplayBlogImage;
+export default DestinationsImagesDisplay;

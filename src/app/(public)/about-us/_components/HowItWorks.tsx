@@ -5,7 +5,7 @@ import { Car, Wallet, Key } from "lucide-react";
 export default function HowItWorks() {
   return (
     <Container>
-      <div className=" px-4 md:px-6 mx-auto">
+      <div>
         <div className="text-left mb-5">
           <h2 className="text-sm font-semibold text-[#333] mb-1">
             How It Works

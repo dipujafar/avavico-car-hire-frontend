@@ -24,12 +24,12 @@ const HeroSection = () => {
         <TextAnimation
           text="AVA VICO Car Hire"
           className=" font-bold text-primary-blue text-2xl md:text-5xl xl:text-7xl text-primary-cyan "
-          initialDelay={0.65}
+          initialDelay={0.5}
         />
         <TextAnimation
           text="Simplifies Your Journey"
           className="xl:text-6xl md:text-3xl text-xl text-white font-medium"
-          initialDelay={1.4}
+          initialDelay={1.3}
         />
 
         <motion.p

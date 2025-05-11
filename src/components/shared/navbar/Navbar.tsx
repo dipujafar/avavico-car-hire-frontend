@@ -154,6 +154,7 @@ export default function Navbar() {
                           "text-gray-700 block w-full",
                           item.name === "Home" && "text-primary-cyan"
                         )}
+                        onClick={ item.href !=="#" ?() => setIsOpen(false): undefined}
                       >
                         {item.name}
                       </Link>
@@ -176,6 +177,7 @@ export default function Navbar() {
                             key={dropdownItem.name}
                             href={dropdownItem.href}
                             className="block py-2 text-sm text-gray-600 hover:text-primary-cyan"
+                            onClick={ dropdownItem?.href !=="#" ?() => setIsOpen(false): undefined}
                           >
                             {dropdownItem.name}
                           </Link>

@@ -3,6 +3,7 @@ import ProductCard from "@/components/shared/cards/ProductCard";
 import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
 import { carData } from "@/lib/dummyData";
+import Link from "next/link";
 import React from "react";
 
 const VehicleFleet = () => {
@@ -15,7 +16,7 @@ const VehicleFleet = () => {
         ></SectionTitle>
 
         <div className="flex items-center cursor-pointer gap-x-1 group">
-          <h5 className="md:font-bold font-semibold">View All</h5>
+          <Link href="/car-fleet" className="md:font-bold font-semibold">View All</Link>
          <AnimatedArrow size={20}></AnimatedArrow>
         </div>
       </div>

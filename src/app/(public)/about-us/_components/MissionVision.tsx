@@ -1,12 +1,13 @@
 import Image from "next/image";
 import aboutPageImage from "@/assets/images/about_page_image.png";
+import Container from "@/components/shared/Container";
 const MissionVision = () => {
   return (
-    <div className="container mx-auto px-4 py-12">
+    <Container>
       <div className="grid grid-cols-1 lg:grid-cols-2 justify-between gap-8 items-center">
         <div className="lg:space-y-8 space-y-5">
           <section className="lg:space-y-4">
-            <h2 className="text-[32px] font-bold text-gray-900">Our Vision</h2>
+            <h2 className="lg:text-[32px] text-2xl font-bold text-gray-900">Our Vision</h2>
             <p className="text-primary-gray leading-relaxed xl:text-xl">
               Pioneering a global standard in car rentals to ensure every
               journey is backed by trust, innovation, and unmatched service. We
@@ -17,7 +18,7 @@ const MissionVision = () => {
           </section>
 
           <section className="lg:space-y-4">
-            <h2 className="text-[32px] font-bold text-gray-900">Our Mission</h2>
+            <h2 className="lg:text-[32px] text-2xl font-bold text-gray-900">Our Mission</h2>
             <p className="text-primary-gray leading-relaxed xl:text-xl">
               Our mission is to provide exceptional car rental services that
               make urban travel easy, affordable, and enjoyable. We aim to
@@ -37,7 +38,7 @@ const MissionVision = () => {
           />
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

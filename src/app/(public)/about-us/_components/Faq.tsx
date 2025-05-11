@@ -63,7 +63,7 @@ export default function Faq() {
 
   return (
     <Container className="2xl:w-[80%] xl:w-[85%] mx-auto">
-      <div className=" flex flex-col  gap-y-2 items-center mb-8">
+      <div className=" flex flex-col  gap-y-2 items-center lg:mb-8 mb-5">
         <Button
           variant="outline"
           className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-md px-4 py-2 text-sm"
@@ -98,7 +98,7 @@ export default function Faq() {
                     showIcon={false}
                     className="flex justify-between items-start py-2 hover:no-underline"
                   >
-                    <h3 className="text-left font-semibold text-xl ">
+                    <h3 className="text-left font-semibold md:text-xl ">
                       {faq.question}
                     </h3>
                     {openItem === faq.id ? (

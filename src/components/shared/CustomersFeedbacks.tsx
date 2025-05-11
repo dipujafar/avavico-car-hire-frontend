@@ -50,10 +50,11 @@ const CustomersFeedbacks = () => {
         <div className="flex flex-shrink-0 items-center -space-x-3  ">
           {feedBacksData.map((data) => (
             <motion.div
-              initial={{ opacity: 0, x: "5%" }}
+              initial={{ opacity: 0, x: "5%", filter: "blur(3px)" }}
               whileInView={{
                 opacity: 1,
                 x: 0,
+                filter: "blur(0px)",
                 transition: {
                   type: "spring",
                   duration: 1,
@@ -73,7 +74,21 @@ const CustomersFeedbacks = () => {
             </motion.div>
           ))}
         </div>
-        <h5 className="font-bold">Testimonials</h5>
+        <motion.h5
+              initial={{ opacity: 0, x: "5%", filter: "blur(3px)" }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  duration: 1,
+                  delay: 0.24
+                },
+              }}
+              viewport={{ once: true }}
+              key={"testimonials"}
+            className="font-bold">Testimonials</motion.h5>
       </div>
       <Carousel
         opts={{
