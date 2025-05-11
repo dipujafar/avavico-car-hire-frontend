@@ -24,6 +24,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AppleIcon, GoogleIcon } from "@/components/icons";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+import { useRouter } from "next/navigation";
+import {  toast } from 'sonner';
+
 
 const formSchema = z.object({
   email: z
@@ -46,6 +49,7 @@ const formSchema = z.object({
 
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +59,15 @@ const SignInForm = () => {
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    if (data.email === "user@gmail.com" && data.password === "12345A@a") {
+      return router.push("/user/profile");
+    }
+    if (data.email === "carrental@gmail.com" && data.password === "12345A@a") {
+      return router.push("/vendor/profile");
+    }
+    else {
+      return toast.error("Invalid email or password");
+    }
   };
 
   return (
@@ -150,7 +162,9 @@ const SignInForm = () => {
               </Link>
             </div>
 
-            <Button className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600">SIGN IN <AnimatedArrow></AnimatedArrow></Button>
+            <Button className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600">
+              SIGN IN <AnimatedArrow></AnimatedArrow>
+            </Button>
 
             <div className="flex items-center justify-center gap-x-2">
               <p className="text-secondary-gray">Don&apos;t have an account?</p>
@@ -170,8 +184,8 @@ const SignInForm = () => {
           <span className="w-16   h-[0.5px] bg-primary-gray"></span>
         </div>
         <div className="flex items-center justify-center gap-x-3">
-         <GoogleIcon/>
-          <AppleIcon/>
+          <GoogleIcon />
+          <AppleIcon />
         </div>
       </CardFooter>
     </Card>

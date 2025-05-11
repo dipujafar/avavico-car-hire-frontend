@@ -418,7 +418,7 @@ export const userRoleData = [
     title: "Car Rental Company",
     description:
       "Manage Your Fleet and Bookings Easily.",
-      link: "/vendor/sign-up",
+      link: "/vendor-sign-up",
     role: "charitable_organization",
   }
 ];

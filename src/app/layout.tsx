@@ -5,6 +5,7 @@ import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/footer/Footer";
 import NextTopLoader from "nextjs-toploader";
 import "react-pagination-bar/dist/index.css";
+import { Toaster } from 'sonner';
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -34,7 +35,7 @@ export default function RootLayout({
         </div>
         <div className="min-h-[calc(100vh-124px)]">{children}</div>
         <Footer></Footer>
-
+        <Toaster />
         <NextTopLoader
           color="#1EC1E2"
           initialPosition={0.08}
