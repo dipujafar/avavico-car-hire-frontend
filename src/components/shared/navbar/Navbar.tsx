@@ -154,7 +154,9 @@ export default function Navbar() {
                           "text-gray-700 block w-full",
                           item.name === "Home" && "text-primary-cyan"
                         )}
-                        onClick={ item.href !=="#" ?() => setIsOpen(false): undefined}
+                        onClick={
+                          item.href !== "#" ? () => setIsOpen(false) : undefined
+                        }
                       >
                         {item.name}
                       </Link>
@@ -177,7 +179,11 @@ export default function Navbar() {
                             key={dropdownItem.name}
                             href={dropdownItem.href}
                             className="block py-2 text-sm text-gray-600 hover:text-primary-cyan"
-                            onClick={ dropdownItem?.href !=="#" ?() => setIsOpen(false): undefined}
+                            onClick={
+                              dropdownItem?.href !== "#"
+                                ? () => setIsOpen(false)
+                                : undefined
+                            }
                           >
                             {dropdownItem.name}
                           </Link>
@@ -188,15 +194,23 @@ export default function Navbar() {
                 ))}
 
                 <div className="pt-4 pb-2 space-y-2">
-                  <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full">
-                    Join Now
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-primary-cyan text-cyan-500 hover:bg-cyan-50 w-full"
+                  <Link
+                    href={"/sign-up"}
+                    className="w-full block"
+                    onClick={() => setIsOpen(false)}
                   >
-                    Login
-                  </Button>
+                    <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full">
+                      Join Now
+                    </Button>
+                  </Link>
+                  <Link href={"/sign-in"} className="w-full block" onClick={() => setIsOpen(false)}>
+                    <Button
+                      variant="outline"
+                      className="border-primary-cyan text-cyan-500 hover:bg-cyan-50 w-full"
+                    >
+                      Login
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
