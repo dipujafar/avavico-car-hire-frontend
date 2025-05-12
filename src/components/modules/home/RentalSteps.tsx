@@ -59,9 +59,15 @@ export default function RentalSteps() {
 
       {/* Right side - Content */}
       <div className="w-full lg:w-1/2 xl:px-20 px-5 xl:py-20 py-12 bg-[#161618]">
-        <h2 className="md:text-3xl text-xl xl:text-4xl font-bold mb-8">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, stiffness: 280, damping: 30, mass: 0.1 }}
+          className="md:text-3xl text-xl xl:text-4xl font-bold mb-8"
+        >
           Rent your car in 3 easy steps
-        </h2>
+        </motion.h2>
 
         <motion.div
           variants={scaleUpVariant}

@@ -33,7 +33,7 @@ const UserDashboardTable = ({
       <TableHeader>
         <TableRow>
           {TABLE_HEADERS?.map((header) => (
-            <TableHead key={header} className="text-[#B0B0B0] py-4">
+            <TableHead key={header} className="text-[#B0B0B0]`">
               {header}
             </TableHead>
           ))}

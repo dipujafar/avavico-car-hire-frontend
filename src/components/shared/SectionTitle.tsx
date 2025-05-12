@@ -7,10 +7,14 @@ const SectionTitle = ({
   title,
   subtitle,
   className,
+  titleClassName,
+  subTitleClassName,
 }: {
   title: string;
   subtitle?: string;
   className?: string;
+  titleClassName?: string;
+  subTitleClassName?: string;
 }) => {
   return (
     <motion.div
@@ -23,14 +27,14 @@ const SectionTitle = ({
       <motion.h4
         key={title}
         variants={fadeUpWithBlurVariants()}
-        className="xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-semibold"
+        className={cn("xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-semibold", titleClassName)}
       >
         {title}
       </motion.h4>
       <motion.p
         key={subtitle}
         variants={fadeUpWithBlurVariants()}
-        className="lg:text-lg text-primary-gray max-w-2xl"
+        className={cn("lg:text-lg text-primary-gray max-w-2xl", subTitleClassName)}
       >
         {subtitle}
       </motion.p>

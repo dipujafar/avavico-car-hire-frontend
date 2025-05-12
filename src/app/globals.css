@@ -156,8 +156,3 @@
 .scroll-hide::-webkit-scrollbar {
   scrollbar-width: none;
 }
-
-
-.scroll-hide::-webkit-scrollbar {
- scrollbar-width: none;
-}

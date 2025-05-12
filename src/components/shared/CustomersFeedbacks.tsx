@@ -105,10 +105,10 @@ const CustomersFeedbacks = () => {
         ]}
       >
         <div className="flex">
-          <SectionTitle title="What Our Customers Say"></SectionTitle>
+          <SectionTitle titleClassName="text-xl" title="What Our Customers Say"></SectionTitle>
           <div>
-            <CarouselPrevious className="top-5  !right-12 size-10 hover:bg-primary-cyan hover:text-white duration-500" />
-            <CarouselNext className="top-5 right-0 size-10 hover:bg-primary-cyan hover:text-white duration-500" />
+            <CarouselPrevious className="top-5  md:!right-12 !right-10 md:size-10 hover:bg-primary-cyan hover:text-white duration-500" />
+            <CarouselNext className="top-5 right-0 md:size-10 hover:bg-primary-cyan hover:text-white duration-500" />
           </div>
         </div>
 
@@ -121,11 +121,11 @@ const CustomersFeedbacks = () => {
                     {data?.comment}
                   </p>
 
-                  <div className="flex items-center mt-4 gap-x-4">
+                  <div className="flex items-center mt-4 md:gap-x-4 gap-x-2">
                     <CustomAvatar
                       img={data?.userImage}
                       name="John Doe"
-                      className="md:size-16 size-14"
+                      className="md:size-16 size-12"
                     ></CustomAvatar>
                     <div>
                       <p className="font-bold md:text-xl text-lg">
