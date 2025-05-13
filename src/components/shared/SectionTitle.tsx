@@ -27,14 +27,20 @@ const SectionTitle = ({
       <motion.h4
         key={title}
         variants={fadeUpWithBlurVariants()}
-        className={cn("xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-semibold", titleClassName)}
+        className={cn(
+          "xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-semibold",
+          titleClassName
+        )}
       >
         {title}
       </motion.h4>
       <motion.p
         key={subtitle}
         variants={fadeUpWithBlurVariants()}
-        className={cn("lg:text-lg text-primary-gray max-w-2xl", subTitleClassName)}
+        className={cn(
+          "lg:text-lg text-primary-gray max-w-2xl",
+          subTitleClassName
+        )}
       >
         {subtitle}
       </motion.p>

@@ -48,14 +48,14 @@ const StaticSection = () => {
     <div>
       <Container className="flex flex-col xl:flex-row justify-between gap-x-10 gap-y-2 text-[#333]">
         <div className="flex-1">
-        <motion.h1 initial={{ opacity: 0, x: "-10%" }} whileInView={{ opacity: 1, x: 0, transition: { duration: 0.8 } }} viewport={{ once: true }} className=" lg:text-[32px] text-xl font-bold max-w-2xl">
+        <motion.h1 initial={{ opacity: 0, x: "-10%", filter: "blur(4px)" }} whileInView={{ opacity: 1, filter: "blur(0px)", x: 0, transition: { duration: 0.8 } }} viewport={{ once: true }} className=" lg:text-[32px] text-xl font-bold max-w-2xl">
             We offer customers a wide range of{" "}
             <span className="text-primary-cyan"> commercial cars </span> and{" "}
             <span className="text-primary-cyan"> luxury cars </span> for any
             occasion.
           </motion.h1>
         </div>
-        <motion.p initial={{ opacity: 0, x: "10%" }} whileInView={{ opacity: 1, x: 0, transition: { duration: 0.8 } }} viewport={{ once: true }} className="flex-1 font-medium lg:text-lg text-[#545454]">
+        <motion.p initial={{ opacity: 0, filter: "blur(4px)", x: "10%" }} whileInView={{ opacity: 1, filter: "blur(0px)", x: 0, transition: { duration: 0.8 } }} viewport={{ once: true }} className="flex-1 font-medium lg:text-lg text-[#545454]">
           At our car rental company, we believe everyone deserves the joy of
           driving a reliable and comfortable vehicle no matter their budget. Our
           diverse fleet includes everything from sleek sedans to spacious SUVs,

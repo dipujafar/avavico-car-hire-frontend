@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
 import CultureImage1 from "@/assets/images/culture_image_1.png"
 import CultureImage2 from "@/assets/images/culture_image_2.png"
 import CultureImage3 from "@/assets/images/culture_image_3.png"
