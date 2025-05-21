@@ -1,6 +1,5 @@
 import Container from "@/components/shared/Container";
 import DashboardSidebar from "./_components/DashboardSidebar";
-import PageTopSection from "@/components/shared/PageTopSection";
 import DashboardPageTopSection from "./_components/DashboardPageTopSection";
 import SmallDeviceSidebar from "./_components/SmallDeviceSidebar";
 
