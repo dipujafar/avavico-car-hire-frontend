@@ -1,7 +1,6 @@
 import React from "react";
 import ContactForm from "./ContactForm";
 import Container from "@/components/shared/Container";
-import ContactLocation from "./ContactLocation";
 
 const ContactPageContainer = () => {
   return (

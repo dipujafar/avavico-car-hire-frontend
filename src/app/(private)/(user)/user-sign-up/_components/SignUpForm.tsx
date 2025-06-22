@@ -20,6 +20,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PhoneInput } from "@/components/ui/phone-input";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+import { useCreateUserMutation } from "@/redux/api/authApi";
+import LoadingSpin from "@/components/ui/loading-spin";
 
 const formSchema = z.object({
   firstName: z
@@ -38,6 +40,9 @@ const formSchema = z.object({
     .string({ required_error: "Email is required" })
     .min(1, { message: "Email is required" })
     .email({ message: "Please enter a valid email address" }),
+  location: z
+    .string({ required_error: "Location is required" })
+    .min(1, { message: "Location is required" }),
   password: z
     .string({ required_error: "Password is required" })
     .min(1, { message: "Password is required" })
@@ -56,6 +61,7 @@ const formSchema = z.object({
 });
 
 const SignUpForm = () => {
+  const [createUser, { isLoading }] = useCreateUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agree, setAgree] = useState(false);
@@ -68,8 +74,40 @@ const SignUpForm = () => {
     },
   });
 
-const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+
+  // ============================ Form Submit to API for Create User ====================================
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    if (data?.password !== data?.confirmPassword) {
+      form.setError("confirmPassword", {
+        type: "manual",
+        message: "Passwords do not match",
+      });
+      return;
+    }
+
+    const formattedData = {
+      data: {
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        userName: data?.userName,
+        email: data?.email,
+        location: data?.location,
+        mobile: data?.phoneNumber,
+        password: data?.password,
+        role: "User",
+        agreeTcp: true,
+      },
+    };
+
+    
+
+    try{
+      const res = await createUser(formattedData).unwrap();
+      console.log(res);
+    }
+    catch(error){
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -194,13 +232,13 @@ const onSubmit = (data: z.infer<typeof formSchema>) => {
 
             <FormField
               control={form.control}
-              name="userName"
+              name="location"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter Your User Name"
+                      placeholder="Enter Your Location"
                       {...field}
                       className="focus-visible:ring-0  focus-visible:ring-offset-0  rounded bg-[#F5F5F5] md:py-5 "
                     />
@@ -328,10 +366,11 @@ const onSubmit = (data: z.infer<typeof formSchema>) => {
             </div>
 
             <Button
-              disabled={!agree}
+              disabled={!agree || isLoading}
               className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600"
             >
               SIGN UP <AnimatedArrow></AnimatedArrow>
+              {isLoading && <LoadingSpin/>}
             </Button>
 
             <div className="flex justify-center gap-x-2">

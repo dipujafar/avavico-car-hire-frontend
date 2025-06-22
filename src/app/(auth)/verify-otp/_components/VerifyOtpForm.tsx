@@ -18,6 +18,9 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+import { useVerifyOtpMutation } from "@/redux/api/authApi";
+import { error } from "console";
+import LoadingSpin from "@/components/ui/loading-spin";
 
 // ✅ Define form validation schema using Zod
 const formSchema = z.object({
@@ -29,6 +32,7 @@ const formSchema = z.object({
 });
 
 const VerifyOtpForm = () => {
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,9 +41,16 @@ const VerifyOtpForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Submitted Data:", data);
-    router.push("/set-new-password");
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const res = await verifyOtp(data).unwrap();
+      console.log(res);
+      // router.push("/set-new-password");
+    } catch (error) {
+      // console.log(error)
+    }
+    // console.log("Submitted Data:", data);
+    // router.push("/set-new-password");
   };
 
   return (
@@ -84,8 +95,12 @@ const VerifyOtpForm = () => {
               )}
             />
 
-            <Button className="w-full bg-primary-cyan group hover:bg-cyan-600">
+            <Button
+              disabled={isLoading}
+              className="w-full bg-primary-cyan group hover:bg-cyan-600"
+            >
               Verify Code <AnimatedArrow></AnimatedArrow>
+              {isLoading && <LoadingSpin />}
             </Button>
           </form>
         </Form>

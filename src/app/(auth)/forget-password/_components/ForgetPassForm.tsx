@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
+import { useForgetPasswordMutation } from "@/redux/api/authApi";
 
 const formSchema = z.object({
   email: z
@@ -24,6 +25,7 @@ const formSchema = z.object({
 });
 
 const ForgetPassForm = () => {
+  const [forgetPass, {isLoading}] = useForgetPasswordMutation(); 
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

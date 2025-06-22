@@ -26,6 +26,8 @@ import { AppleIcon, GoogleIcon } from "@/components/icons";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useRouter } from "next/navigation";
 import {  toast } from 'sonner';
+import { useLoginMutation } from "@/redux/api/authApi";
+import LoadingSpin from "@/components/ui/loading-spin";
 
 
 const formSchema = z.object({
@@ -48,6 +50,7 @@ const formSchema = z.object({
 });
 
 const SignInForm = () => {
+  const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,16 +61,32 @@ const SignInForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (data.email === "user@gmail.com" && data.password === "12345A@a") {
-      return router.push("/user/profile");
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const formattedData = {
+      data: {
+        email: data?.email,
+        password: data?.password,
+      },
     }
-    if (data.email === "carrental@gmail.com" && data.password === "12345A@a") {
-      return router.push("/vendor/profile");
+
+    try {
+      const res = await login(formattedData).unwrap();
+      console.log(res);
+      // router.push("/user/profile");
+    } catch (error) {
+      console.log(error);
+      // toast.error("Invalid email or password");
     }
-    else {
-      return toast.error("Invalid email or password");
-    }
+  
+    // if (data.email === "user@gmail.com" && data.password === "12345A@a") {
+    //   return router.push("/user/profile");
+    // }
+    // if (data.email === "carrental@gmail.com" && data.password === "12345A@a") {
+    //   return router.push("/vendor/profile");
+    // }
+    // else {
+    //   return toast.error("Invalid email or password");
+    // }
   };
 
   return (
@@ -162,8 +181,9 @@ const SignInForm = () => {
               </Link>
             </div>
 
-            <Button className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600">
-              SIGN IN <AnimatedArrow></AnimatedArrow>
+            <Button disabled={isLoading} className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600">
+              SIGN IN <AnimatedArrow></AnimatedArrow> 
+              {isLoading && <LoadingSpin/>}
             </Button>
 
             <div className="flex items-center justify-center gap-x-2">

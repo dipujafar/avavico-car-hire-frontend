@@ -5,7 +5,8 @@ import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/footer/Footer";
 import NextTopLoader from "nextjs-toploader";
 import "react-pagination-bar/dist/index.css";
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
+import Providers from "@/lib/provider/Providers";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -30,25 +31,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${figtree.className}  antialiased`}>
-        <div className="sticky top-0 z-50 ">
-          <Navbar></Navbar>
-        </div>
-        <div className="min-h-[calc(100vh-124px)]">{children}</div>
-        <Footer></Footer>
-        <Toaster />
-        <NextTopLoader
-          color="#1EC1E2"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={true}
-          easing="ease"
-          speed={200}
-          shadow="0 0 10px #232323,0 0 5px #EA5326"
-          zIndex={1600}
-          showAtBottom={false}
-        />
+        <Providers>
+          <div className="sticky top-0 z-50 ">
+            <Navbar></Navbar>
+          </div>
+          <div className="min-h-[calc(100vh-124px)]">{children}</div>
+          <Footer></Footer>
+          <Toaster />
+
+          <NextTopLoader
+            color="#1EC1E2"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={true}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #232323,0 0 5px #EA5326"
+            zIndex={1600}
+            showAtBottom={false}
+          />
+        </Providers>
       </body>
     </html>
   );
