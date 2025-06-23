@@ -25,10 +25,9 @@ import { Button } from "@/components/ui/button";
 import { AppleIcon, GoogleIcon } from "@/components/icons";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useRouter } from "next/navigation";
-import {  toast } from 'sonner';
+import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/api/authApi";
 import LoadingSpin from "@/components/ui/loading-spin";
-
 
 const formSchema = z.object({
   email: z
@@ -39,14 +38,7 @@ const formSchema = z.object({
     .string({ required_error: "Password is required" })
     .min(1, { message: "Password is required" })
     .min(8, { message: " passwords must be at least 8 characters long" })
-    .max(64, { message: " passwords must be at most 64 characters long" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      {
-        message:
-          "password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character",
-      }
-    ),
+    .max(64, { message: " passwords must be at most 64 characters long" }),
 });
 
 const SignInForm = () => {
@@ -67,7 +59,7 @@ const SignInForm = () => {
         email: data?.email,
         password: data?.password,
       },
-    }
+    };
 
     try {
       const res = await login(formattedData).unwrap();
@@ -77,7 +69,7 @@ const SignInForm = () => {
       console.log(error);
       // toast.error("Invalid email or password");
     }
-  
+
     // if (data.email === "user@gmail.com" && data.password === "12345A@a") {
     //   return router.push("/user/profile");
     // }
@@ -181,9 +173,12 @@ const SignInForm = () => {
               </Link>
             </div>
 
-            <Button disabled={isLoading} className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600">
-              SIGN IN <AnimatedArrow></AnimatedArrow> 
-              {isLoading && <LoadingSpin/>}
+            <Button
+              disabled={isLoading}
+              className="w-full group py-5 bg-primary-cyan hover:bg-cyan-600"
+            >
+              SIGN IN <AnimatedArrow></AnimatedArrow>
+              {isLoading && <LoadingSpin />}
             </Button>
 
             <div className="flex items-center justify-center gap-x-2">

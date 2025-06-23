@@ -1,3 +1,4 @@
+"use client";
 import Container from "@/components/shared/Container";
 import React from "react";
 import PathRoutes from "./PathRoutes";
@@ -8,8 +9,16 @@ import { RentVehicle } from "./RentVehicle";
 import ListedBy from "./ListedBy";
 import RatingReviews from "./RatingReviews";
 import { AllTestimonials } from "./Testimonials/AllTestimonials";
+import { useGetSingleCarQuery } from "@/redux/api/carApi";
 
-const DetailsPageContainer = () => {
+const DetailsPageContainer = ({ id }: { id: string }) => {
+  const carId = {
+    data: {
+      carId: id,
+    },
+  };
+  const { data } = useGetSingleCarQuery(carId || undefined);
+
   return (
     <Container className="space-y-10 ">
       <div className="space-y-5">

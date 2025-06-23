@@ -1,3 +1,4 @@
+"use client";
 import Categories from "@/components/shared/categories/Categories";
 import { carAmenitiesFilterData } from "@/lib/carAmenitiesFilterData";
 import { carBrandsFilterData } from "@/lib/carBrandsFilterData";
@@ -9,8 +10,11 @@ import PriceCategory from "./PriceCategory";
 import { FilterSort } from "./FilterSort";
 import { SmallDeviceFilter } from "./SmallDeviceFilter";
 import ReviewCategories from "@/components/shared/categories/ReviewCategories";
+import { useGetAllCarsQuery } from "@/redux/api/carApi";
 
 const CarFleetContainer = () => {
+  const {data, isLoading} = useGetAllCarsQuery(undefined);
+  
   return (
     <div className=" grid grid-cols-1  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5	lg:gap-8 gap-4 xl:mt-8 mt-4">
       <div className=" space-y-3 hidden lg:block">
