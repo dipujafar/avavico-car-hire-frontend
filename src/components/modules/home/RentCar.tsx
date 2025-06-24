@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import Container from "@/components/shared/Container";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { DateTimePicker } from "@/components/ui/date-picker";
-import CarRentalSkeleton from "@/components/Skeletons/CarRentalSkeleton";
+import CarRentalSkeleton from "@/components/skeletons/CarRentalSkeleton";
 import {motion} from "motion/react";
 import { fadeUpVariants } from "@/animation/motionVariant";
 

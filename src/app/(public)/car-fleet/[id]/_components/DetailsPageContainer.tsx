@@ -12,12 +12,8 @@ import { AllTestimonials } from "./Testimonials/AllTestimonials";
 import { useGetSingleCarQuery } from "@/redux/api/carApi";
 
 const DetailsPageContainer = ({ id }: { id: string }) => {
-  const carId = {
-    data: {
-      carId: id,
-    },
-  };
-  const { data } = useGetSingleCarQuery(carId || undefined);
+  const { data } = useGetSingleCarQuery(id, { skip: !id });
+  console.log(data);
 
   return (
     <Container className="space-y-10 ">

@@ -29,7 +29,7 @@ const CarFleetPage = () => {
         className="opacity-25"
         pathsData={pathsData}
       ></PageTopBanner>
-      <Container className="mt-16">
+      <Container id="car-section" className="mt-16">
         <SectionTitle
           title="Our Vehicle Fleet"
           subtitle="Turning dreams into reality with versatile vehicles."

@@ -2,7 +2,7 @@ import { Star, MapPin, Edit, Trash2 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { TCar } from "@/types";
+import { ICar, TCar } from "@/types";
 import Link from "next/link";
 import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../../icons";
 
@@ -10,7 +10,7 @@ export default function ProductCard({
   data,
   ownCar,
 }: {
-  data: TCar;
+  data: ICar;
   ownCar?: boolean;
 }) {
   return (
@@ -18,15 +18,15 @@ export default function ProductCard({
       <Card className=" overflow-hidden border rounded-lg py-0 gap-0 hover:shadow-md duration-500 transition-all ">
         <div className="relative w-full z-0">
           <Image
-            src={data?.imageUrl}
-            alt={`${data?.name} image`}
+            src={data?.carImage?.[0]}
+            alt={`${data?.carImage} image`}
             width={1200}
             height={1200}
             className="object-cover origin-center  "
           />
         </div>
 
-        <CardContent className="px-4 space-y-5 -translate-y-3 bg-white z-10 rounded-2xl ">
+        <CardContent className="px-4 space-y-2 -translate-y-3 bg-white z-10 rounded-2xl ">
           <div className="flex justify-end -translate-y-3">
             <div className="inline-flex items-center px-3 py-1 bg-white rounded-sm border shadow-sm">
               <Star className="w-4 h-4 mr-1 text-primary-cyan fill-primary-cyan" />
@@ -37,11 +37,11 @@ export default function ProductCard({
           </div>
 
           <div className="space-y-2">
-            <h2 className="xl:text-2xl text-xl font-bold">{data?.name}</h2>
+            <h2 className="xl:text-2xl text-xl font-bold truncate">{data?.carName}</h2>
 
             <div className="flex items-center text-primary-gray">
               <MapPin className="w-4 h-4 mr-1" />
-              <span>{data?.location}</span>
+              <span>{data?.rentingLocation}</span>
             </div>
           </div>
 
@@ -50,11 +50,11 @@ export default function ProductCard({
           <div className="grid grid-cols-2 gap-3 pt-2">
             <div className="flex items-center gap-x-1">
               <MiterIcon2 />
-              <span className="text-sm">{data?.distanceIncluded}</span>
+              <span className="text-sm">{data?.mileage?.rate} {data?.mileage?.type}</span>
             </div>
             <div className="flex items-center gap-x-1">
               <SettingIcon3 />
-              <span className="text-sm">{data?.transmission}</span>
+              <span className="text-sm">{data?.gearType}</span>
             </div>
             <div className="flex items-center gap-x-1">
               <PuleIcon2></PuleIcon2>
@@ -62,14 +62,14 @@ export default function ProductCard({
             </div>
             <div className="flex items-center gap-x-1">
               <SeatsIcon />
-              <span className="text-sm">{data?.seatingCapacity} seats</span>
+              <span className="text-sm">{data?.seat} seats</span>
             </div>
           </div>
         </CardContent>
 
         <CardFooter className="flex items-center justify-between p-4  ">
           <div>
-            <p className="xl:text-2xl text-xl font-bold">$498.25</p>
+            <p className="xl:text-2xl text-xl font-bold">${data?.price}</p>
           </div>
 
           {ownCar && (

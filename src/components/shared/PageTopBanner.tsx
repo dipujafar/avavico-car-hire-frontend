@@ -40,7 +40,7 @@ const PageTopBanner = ({
   className,
   style,
   pathsData,
-}: TPropsType) => {
+  }: TPropsType) => {
   return (
     <div
       className={cn(

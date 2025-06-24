@@ -11,12 +11,21 @@ import { FilterSort } from "./FilterSort";
 import { SmallDeviceFilter } from "./SmallDeviceFilter";
 import ReviewCategories from "@/components/shared/categories/ReviewCategories";
 import { useGetAllCarsQuery } from "@/redux/api/carApi";
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
+import { useSearchParams } from "next/navigation";
 
 const CarFleetContainer = () => {
-  const {data, isLoading} = useGetAllCarsQuery(undefined);
+  const limit = useSearchParams()?.get("limit");
+  const page = useSearchParams()?.get("page");
+  const query: Record<string, string | number> = {};
+  query["limit"] = Number(limit) || 9;
+  query["page"] = Number(page) || 1;
   
+
+  const { data: allCardData, isLoading } = useGetAllCarsQuery(query);
+
   return (
-    <div className=" grid grid-cols-1  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5	lg:gap-8 gap-4 xl:mt-8 mt-4">
+    <div  className=" grid grid-cols-1  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5	lg:gap-8 gap-4 xl:mt-8 mt-4">
       <div className=" space-y-3 hidden lg:block">
         <PriceCategory></PriceCategory>
         <Categories title="Car Brands" data={carBrandsFilterData}></Categories>
@@ -36,14 +45,16 @@ const CarFleetContainer = () => {
       <div className="2xl:col-span-4 xl:col-span-3 md:col-span-2 ">
         {/* =============================== categories ========================== */}
         <div className="flex justify-between items-center gap-x-5  mb-4 ">
-          <FilterSort></FilterSort>
+          <FilterSort limit={Number(limit) || 9} totalCars={allCardData?.data?.car?.length}></FilterSort>
 
           <div className="lg:hidden block">
             <SmallDeviceFilter></SmallDeviceFilter>
           </div>
         </div>
         {/* ========================= all products ========================== */}
-        <AllCar></AllCar>
+        <AllCar data={allCardData?.data?.car} isLoading={isLoading}></AllCar>
+
+        <PaginationSection totalItems={allCardData?.data?.meta?.total} id={"car-section"}></PaginationSection>
       </div>
     </div>
   );

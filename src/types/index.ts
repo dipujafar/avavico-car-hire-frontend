@@ -44,3 +44,84 @@ export type TCar = {
     role: string;
   };
   
+
+
+
+  export interface ICar {
+  vendor: Vendor
+  carName: string
+  description: string
+  rentingLocation: string
+  carAmenities: string[]
+  model: string
+  price: number
+  mileage: Mileage
+  seat: number
+  door: number
+  vin: string
+  fuel: number
+  fuelType: string[]
+  gearType: string
+  bodyStyle: string[]
+  carImage: string[]
+  childSeat: ChildSeat
+  additionalDriver: AdditionalDriver
+  youngDriver: YoungDriver
+  oneWayFees: OneWayFees
+  gps: Gps
+  crossBorder: CrossBorder
+  published: boolean
+  isDeleted: boolean
+  createdAt: string
+  updatedAt: string
+  id: string
+}
+
+export interface Vendor {
+  sub: string
+  authProviderName: string
+  email: string
+  role: string
+  isDeleted: boolean
+  __t: string
+  isAuthProvider: boolean
+  passwordUpdatedAt: string
+  createdAt: string
+  updatedAt: string
+  id: string
+}
+
+export interface Mileage {
+  rate: number
+  type: string
+}
+
+export interface ChildSeat {
+  select: number
+  price: number
+}
+
+export interface AdditionalDriver {
+  select: number
+  price: number
+}
+
+export interface YoungDriver {
+  select: number
+  price: number
+}
+
+export interface OneWayFees {
+  select: number
+  price: number
+}
+
+export interface Gps {
+  select: number
+  price: number
+}
+
+export interface CrossBorder {
+  select: number
+  price: number
+}

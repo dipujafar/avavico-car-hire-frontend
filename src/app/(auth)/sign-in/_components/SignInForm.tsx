@@ -28,6 +28,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/api/authApi";
 import LoadingSpin from "@/components/ui/loading-spin";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/authSlice";
+import { jwtDecode } from "jwt-decode";
+import { Error_Modal } from "@/modals";
 
 const formSchema = z.object({
   email: z
@@ -45,6 +49,7 @@ const SignInForm = () => {
   const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,22 +68,22 @@ const SignInForm = () => {
 
     try {
       const res = await login(formattedData).unwrap();
-      console.log(res);
-      // router.push("/user/profile");
-    } catch (error) {
-      console.log(error);
-      // toast.error("Invalid email or password");
+      toast.success("Login Successfully");
+      dispatch(
+        setUser({
+          user: jwtDecode(res?.data?.accessToken),
+          token: res?.data?.accessToken,
+        })
+      );
+      if (res?.data?.user?.role === "User") {
+        router.replace("/user/profile");
+      }
+      if(res?.data?.user?.role === "Vendor"){
+        router.push("/vendor/profile");
+      }
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
     }
-
-    // if (data.email === "user@gmail.com" && data.password === "12345A@a") {
-    //   return router.push("/user/profile");
-    // }
-    // if (data.email === "carrental@gmail.com" && data.password === "12345A@a") {
-    //   return router.push("/vendor/profile");
-    // }
-    // else {
-    //   return toast.error("Invalid email or password");
-    // }
   };
 
   return (

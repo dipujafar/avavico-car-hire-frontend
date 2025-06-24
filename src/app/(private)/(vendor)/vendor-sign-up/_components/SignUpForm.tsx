@@ -22,49 +22,74 @@ import { PhoneInput } from "@/components/ui/phone-input";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useCreateUserMutation } from "@/redux/api/authApi";
 import LoadingSpin from "@/components/ui/loading-spin";
+import { Error_Modal } from "@/modals";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Label } from "@/components/ui/label";
+import CountryStateCitySelector from "@/components/ui/country-state-city-selector";
 
-const formSchema = z.object({
-  firstName: z
-    .string({ required_error: "First Name is required" })
-    .min(1, { message: "First Name is required" }),
-  lastName: z
-    .string({ required_error: "Last Name is required" })
-    .min(1, { message: "Last Name is required" }),
-  userName: z
-    .string({ required_error: "User Name is required" })
-    .min(1, { message: "User Name is required" }),
-  phoneNumber: z
-    .string({ required_error: "Phone Number is required" })
-    .min(1, { message: "Phone Number is required" }),
-  email: z
-    .string({ required_error: "Email is required" })
-    .min(1, { message: "Email is required" })
-    .email({ message: "Please enter a valid email address" }),
-  location: z
-    .string({ required_error: "Location is required" })
-    .min(1, { message: "Location is required" }),
-  password: z
-    .string({ required_error: "Password is required" })
-    .min(1, { message: "Password is required" })
-    .min(8, { message: " passwords must be at least 8 characters long" })
-    .max(64, { message: " passwords must be at most 64 characters long" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      {
-        message:
-          "password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character",
-      }
-    ),
-  confirmPassword: z
-    .string({ required_error: "Confirm Password is required" })
-    .min(1, { message: "Confirm Password is required" }),
-});
+const formSchema = z
+  .object({
+    firstName: z
+      .string({ required_error: "First Name is required" })
+      .min(1, { message: "First Name is required" }),
+    lastName: z
+      .string({ required_error: "Last Name is required" })
+      .min(1, { message: "Last Name is required" }),
+    userName: z
+      .string({ required_error: "User Name is required" })
+      .min(1, { message: "User Name is required" }),
+    companyName: z.string().optional(),
+    phoneNumber: z
+      .string({ required_error: "Phone Number is required" })
+      .min(1, { message: "Phone Number is required" }),
+    email: z
+      .string({ required_error: "Email is required" })
+      .min(1, { message: "Email is required" })
+      .email({ message: "Please enter a valid email address" }),
+    location: z
+      .string({ required_error: "Location is required" })
+      .min(1, { message: "Location is required" }),
+    country: z.string({
+      required_error: "Please select a country.",
+    }),
+    streetAddress: z.string().min(5, {
+      message: "Street address required.",
+    }),
+    city: z.string().optional(),
+    state: z.string({
+      required_error: "Please select a state.",
+    }),
+    zipCode: z.string().min(5, {
+      message: "Zip code must be at least 5 characters.",
+    }),
+    password: z
+      .string({ required_error: "Password is required" })
+      .min(1, { message: "Password is required" })
+      .min(8, { message: " passwords must be at least 8 characters long" })
+      .max(64, { message: " passwords must be at most 64 characters long" })
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        {
+          message:
+            "password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character",
+        }
+      ),
+    confirmPassword: z
+      .string({ required_error: "Confirm Password is required" })
+      .min(1, { message: "Confirm Password is required" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 const SignUpForm = () => {
   const [createUser, { isLoading }] = useCreateUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agree, setAgree] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,52 +99,44 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    if (data?.password !== data?.confirmPassword) {
-      form.setError("confirmPassword", {
-        type: "manual",
-        message: "Passwords do not match",
-      });
-      return;
-    }
+  const { register, setValue, control } = form;
 
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const formattedData = {
       data: {
         firstName: data?.firstName,
         lastName: data?.lastName,
         userName: data?.userName,
+        companyName: data?.companyName,
         email: data?.email,
         location: data?.location,
+        // location: {
+        //   country: data?.country,
+        //   state: data?.state,
+        //   city: data?.city,
+        //   streetAddress: data?.streetAddress,
+        //   zipCode: data?.zipCode,
+        // },
         mobile: data?.phoneNumber,
         password: data?.password,
-        role: "User",
+        role: "Vendor",
         agreeTcp: true,
       },
     };
 
     try {
       const res = await createUser(formattedData).unwrap();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
+      if (res.success) {
+        toast.success("User Created Successfully");
+        toast.success(
+          "Please verify your email with OTP, which has been sent to your email."
+        );
+        router.push("/verify-otp");
+      }
+    } catch (error: any) {
+      Error_Modal({ title: "Error", text: error?.data?.message });
     }
   };
-
-  useEffect(() => {
-    const subscription = form.watch((value, { name }) => {
-      if (name === "confirmPassword" || name === "password") {
-        if (value.confirmPassword && value.password !== value.confirmPassword) {
-          form.setError("confirmPassword", {
-            type: "manual",
-            message: "Passwords do not match",
-          });
-        } else {
-          form.clearErrors("confirmPassword");
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [form]);
 
   return (
     <Card
@@ -227,13 +244,13 @@ const SignUpForm = () => {
 
             <FormField
               control={form.control}
-              name="userName"
+              name="companyName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company Name</FormLabel>
+                  <FormLabel>Company Name (Optional)</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter Your User Name"
+                      placeholder="Enter Your Company Name"
                       {...field}
                       className="focus-visible:ring-0  focus-visible:ring-offset-0  rounded bg-[#F5F5F5] md:py-5 "
                     />
@@ -259,6 +276,60 @@ const SignUpForm = () => {
                 </FormItem>
               )}
             />
+
+            {/* Country, State, City Selector */}
+            <div className="grid w-full  items-center gap-1.5">
+              <Label>Location</Label>
+              <CountryStateCitySelector
+                control={control}
+                setValue={setValue}
+                register={register}
+              />
+              <div className="flex gap-1.5 flex-wrap">
+                {
+                  // @ts-ignore
+                  form.formState.errors?.country && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {form.formState.errors?.country.message}
+                    </p>
+                  )
+                }
+                {
+                  // @ts-ignore
+                  form.formState.errors?.state && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {form.formState.errors?.state.message}
+                    </p>
+                  )
+                }
+
+                {
+                  // @ts-ignore
+                  form.formState.errors?.city && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {form.formState.errors?.city.message}
+                    </p>
+                  )
+                }
+
+                {
+                  // @ts-ignore
+                  form.formState.errors?.streetAddress && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {form.formState.errors?.streetAddress.message}
+                    </p>
+                  )
+                }
+                {
+                  // @ts-ignore
+                  form.formState.errors?.zipCode && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {form.formState.errors?.zipCode.message}
+                    </p>
+                  )
+                }
+              </div>
+            </div>
 
             <FormField
               control={form.control}
