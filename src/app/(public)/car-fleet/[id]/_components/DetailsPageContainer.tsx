@@ -10,10 +10,41 @@ import ListedBy from "./ListedBy";
 import RatingReviews from "./RatingReviews";
 import { AllTestimonials } from "./Testimonials/AllTestimonials";
 import { useGetSingleCarQuery } from "@/redux/api/carApi";
+import CarDetailsImages from "@/components/skeletons/CarDetailsPage/CarDetailsImages";
+import CarDetailSkeleton from "@/components/skeletons/CarDetailsPage/CarDetailSkeleton";
+import InsuranceCoverageSkeleton from "@/components/skeletons/CarDetailsPage/InsuranceCoverageSkeleton";
+import ListedBySkeleton from "@/components/skeletons/CarDetailsPage/ListedBySkeleton";
+import RentVehicleSkeleton from "@/components/skeletons/CarDetailsPage/RentVehicleSkeleton";
 
 const DetailsPageContainer = ({ id }: { id: string }) => {
-  const { data } = useGetSingleCarQuery(id, { skip: !id });
-  console.log(data);
+  const { data: carDetailsData, isLoading } = useGetSingleCarQuery(id, {
+    skip: !id,
+  });
+
+  if (isLoading) {
+    return (
+      <Container className="space-y-10 ">
+        <div className="space-y-5">
+          <PathRoutes></PathRoutes>
+          <CarDetailsImages></CarDetailsImages>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 2xl:gap-x-16 xl:gap-x-10 lg:gap-x-7 gap-y-7">
+          <div className="lg:col-span-2">
+            <CarDetailSkeleton></CarDetailSkeleton>
+            <div className="xl:mt-16 md:mt-10 mt-7 lg:space-y-10 space-y-7 bg-white md:p-8 px-2 py-4 rounded-md border border-[#DDE1DE]">
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          <div className="space-y-7">
+            <InsuranceCoverageSkeleton />
+            <RentVehicleSkeleton />
+            <ListedBySkeleton />
+          </div>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container className="space-y-10 ">
