@@ -3,9 +3,9 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme{
-  --color-primary-cyan: #1EC1E2;
-  --color-primary-gray: #8A8A8A;
+@theme {
+  --color-primary-cyan: #1ec1e2;
+  --color-primary-gray: #8a8a8a;
   --color-primary-black-gray: #333;
 }
 
@@ -128,19 +128,16 @@
 }
 
 @layer components {
- .flex-center{
-  @apply flex items-center justify-center;
- }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
 }
-
-
 
 /* =========== react pagination styles =================== */
 .rpb-item {
   border: 1px solid lightgray !important;
   border-radius: 16px !important;
 }
-
 
 /*  react pagination styles */
 .rpb-item:hover {
@@ -150,9 +147,19 @@
 }
 
 .rpb-item--active {
-  background-color: #1EC1E2 !important;
+  background-color: #1ec1e2 !important;
 }
 
 .scroll-hide::-webkit-scrollbar {
   scrollbar-width: none;
+}
+
+.zoom-in > div {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+.zoom-in > div > div {
+  height: 100% !important;
+  overflow: hidden !important;
 }

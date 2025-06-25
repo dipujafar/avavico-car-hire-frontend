@@ -160,7 +160,7 @@ export function RentVehicle() {
                 ${DAILY_RATE} x {days} days
               </span>
               <span className="ml-auto font-medium">
-                ${baseRental.toFixed(2)}
+                ${baseRental?.toFixed(2)}
               </span>
             </div>
           </div>
@@ -169,24 +169,24 @@ export function RentVehicle() {
         <div className="p-4 border-b">
           <div className="font-medium mb-2">Add Extra:</div>
           <div className="space-y-2">
-            {extras.map((extra) => (
-              <div key={extra.id} className="flex items-center justify-between">
+            {extras?.map((extra) => (
+              <div key={extra?.id} className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     className="border-primary-gray data-[state=checked]:bg-[#00B74A] data-[state=checked]:border-[#00B74A]"
-                    id={extra.id}
-                    checked={extra.checked}
-                    onCheckedChange={() => toggleExtra(extra.id)}
+                    id={extra?.id}
+                    checked={extra?.checked}
+                    onCheckedChange={() => toggleExtra(extra?.id)}
                   />
                   <label
-                    htmlFor={extra.id}
+                    htmlFor={extra?.id}
                     className=" xl:text-base text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#737373]"
                   >
-                    {extra.label}
+                    {extra?.label}
                   </label>
                 </div>
-                <div className="  xl:text-base text-sm">
-                  ${extra.price.toFixed(2)}
+                <div className="xl:text-base text-sm">
+                  ${extra?.price?.toFixed(2)}
                 </div>
               </div>
             ))}
@@ -196,12 +196,12 @@ export function RentVehicle() {
         <div className="p-4 border-b-2">
           <div className="flex items-center justify-between">
             <div className="font-medium">Subtotal</div>
-            <div className="font-medium">${subtotal.toFixed(2)}</div>
+            <div className="font-medium">${subtotal?.toFixed(2)}</div>
           </div>
           <div className="flex items-center justify-between mt-2">
             <div className="font-medium">Discount</div>
             <div className="font-medium text-primary-cyan">
-              -${DISCOUNT.toFixed(2)}
+              -${DISCOUNT?.toFixed(2)}
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@ export function RentVehicle() {
         <div className="px-4 pt-4">
           <div className="flex items-center justify-between">
             <div className="font-medium text-lg">Grand Total</div>
-            <div className="font-bold text-lg">${grandTotal.toFixed(2)}</div>
+            <div className="font-bold text-lg">${grandTotal?.toFixed(2)}</div>
           </div>
         </div>
       </CardContent>

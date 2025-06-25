@@ -11,6 +11,7 @@ const CarFleetPage = async ({params}:{params:Promise<{id:string}>}) => {
     return (
         <div className="xl:space-y-20 md:space-y-12 space-y-8 bg-[#F8F9FA] md:py-12  py-8">
             <DetailsPageContainer id={id}></DetailsPageContainer>
+        
             <AllCarBrands></AllCarBrands>
         </div>
     );

@@ -110,6 +110,9 @@ importers:
       react-hook-form:
         specifier: ^7.56.2
         version: 7.56.2(react@19.1.0)
+      react-medium-image-zoom:
+        specifier: ^5.2.14
+        version: 5.2.14(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-pagination-bar:
         specifier: ^2.0.1
         version: 2.0.1(react@19.1.0)
@@ -2359,6 +2362,12 @@ packages:
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
+
+  react-medium-image-zoom@5.2.14:
+    resolution: {integrity: sha512-nfTVYcAUnBzXQpPDcZL+cG/e6UceYUIG+zDcnemL7jtAqbJjVVkA85RgneGtJeni12dTyiRPZVM6Szkmwd/o8w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-pagination-bar@2.0.1:
     resolution: {integrity: sha512-yOjuGhH/4V2ya0Jw6wQqOD1qDbLVBjRdWPMFkdvAg4i8O9lEN/fMIeUk0Bn05APJn9cK7RVUjfyFLTd5PnIxZQ==}
@@ -5004,6 +5013,11 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@18.3.1: {}
+
+  react-medium-image-zoom@5.2.14(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   react-pagination-bar@2.0.1(react@19.1.0):
     dependencies:
