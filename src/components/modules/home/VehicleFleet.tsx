@@ -6,6 +6,10 @@ import SectionTitle from "@/components/shared/SectionTitle";
 import { carData } from "@/lib/dummyData";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { useGetAllCarsQuery } from "@/redux/api/carApi";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ICar } from "@/types";
+import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
 
 const fadeUpVariants = {
   initial: {
@@ -25,9 +29,37 @@ const fadeUpVariants = {
 };
 
 const VehicleFleet = () => {
+  const { data: allCardData, isLoading } = useGetAllCarsQuery({ limit: 8 });
+
+  if (isLoading) {
+    return (
+      <Container className="lg:space-y-10 space-y-5">
+        <div className="flex flex-wrap gap-y-2 gap-x-2 justify-between">
+          <div className="space-y-1.5 ">
+            <Skeleton className="h-8 md:w-72" />
+            <Skeleton className="h-3 w-52" />
+          </div>
+
+          <div className="flex items-center cursor-pointer gap-x-1 group">
+            <Skeleton className="h-6 w-32" />
+          </div>
+        </div>
+
+        {/* display all cars */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8">
+          {Array(8)
+            .fill(0)
+            .map((_, i) => (
+              <CarCardSkeleton key={i} />
+            ))}
+        </div>
+      </Container>
+    );
+  }
+
   return (
-    <Container className="lg:space-y-10 spy-7">
-      <div className="flex flex-wrap gap-y-2 gap-x-2 justify-between">
+    <Container className="lg:space-y-10 space-y-5">
+      <div className="flex flex-wrap gap-y-2 gap-x-2 justify-between mb-3">
         <SectionTitle
           title="Our Vehicle Fleet"
           subtitle="The world's leading car brands"
@@ -44,14 +76,14 @@ const VehicleFleet = () => {
       {/* display all cars */}
       <motion.div
         variants={fadeUpVariants}
-        key={"cars"}
+        key={allCardData?.data?.car?.length}
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8"
       >
-        {carData?.slice(0, 8)?.map((car) => (
-          <motion.div variants={fadeUpVariants}  key={car.id}  >
+        {allCardData?.data?.car?.map((car: ICar) => (
+          <motion.div variants={fadeUpVariants} key={car.id}>
             {/*  @ts-ignore */}
             <ProductCard data={car}></ProductCard>
           </motion.div>

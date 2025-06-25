@@ -2,9 +2,10 @@ import { Star, MapPin, Edit, Trash2 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ICar, TCar } from "@/types";
+import { ICar } from "@/types";
 import Link from "next/link";
 import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../../icons";
+import { motion } from "motion/react";
 
 export default function ProductCard({
   data,
@@ -29,7 +30,18 @@ export default function ProductCard({
         <CardContent className="px-4 space-y-2 -translate-y-3 bg-white z-10 rounded-2xl ">
           <div className="flex justify-end -translate-y-3">
             <div className="inline-flex items-center px-3 py-1 bg-white rounded-sm border shadow-sm">
-              <Star className="w-4 h-4 mr-1 text-primary-cyan fill-primary-cyan" />
+              <motion.span
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 5,
+                  delay: 0,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              >
+                <Star className="w-4 h-4 mr-1 text-primary-cyan fill-primary-cyan" />
+              </motion.span>
               <span className="text-sm font-medium">
                 {data?.rating} ({data?.reviewCount} reviews)
               </span>
@@ -37,11 +49,16 @@ export default function ProductCard({
           </div>
 
           <div className="space-y-2">
-            <h2 className="xl:text-2xl text-xl font-bold truncate">{data?.carName}</h2>
+            <h2 className="xl:text-2xl text-xl font-bold truncate">
+              {data?.carName}
+            </h2>
 
             <div className="flex items-center text-primary-gray">
               <MapPin className="w-4 h-4 mr-1" />
-              <span>{data?.rentingLocation}</span>
+              <span className="truncate">
+                {data?.rentingLocation?.city},{" "}
+                {data?.rentingLocation?.streetAddress}
+              </span>
             </div>
           </div>
 
@@ -50,7 +67,9 @@ export default function ProductCard({
           <div className="grid grid-cols-2 gap-3 pt-2">
             <div className="flex items-center gap-x-1">
               <MiterIcon2 />
-              <span className="text-sm">{data?.mileage?.rate} {data?.mileage?.type}</span>
+              <span className="text-sm">
+                {data?.mileage?.rate} {data?.mileage?.type}
+              </span>
             </div>
             <div className="flex items-center gap-x-1">
               <SettingIcon3 />
@@ -58,7 +77,7 @@ export default function ProductCard({
             </div>
             <div className="flex items-center gap-x-1">
               <PuleIcon2></PuleIcon2>
-              <span className="text-sm">{data.fuelType}</span>
+              <span className="text-sm">{data.fuelType?.[0]}</span>
             </div>
             <div className="flex items-center gap-x-1">
               <SeatsIcon />
@@ -69,7 +88,10 @@ export default function ProductCard({
 
         <CardFooter className="flex items-center justify-between p-4  ">
           <div>
-            <p className="xl:text-2xl text-xl font-bold">${data?.price}</p>
+            <p className="xl:text-2xl text-xl font-bold">
+              ${data?.price}
+              <span className="text-sm text-black/60">/day</span>
+            </p>
           </div>
 
           {ownCar && (

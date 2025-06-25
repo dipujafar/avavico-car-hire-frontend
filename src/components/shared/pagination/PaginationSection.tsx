@@ -12,7 +12,7 @@ const PaginationSection = ({
   pagePostsLimit?: number;
   totalItems: number;
   className?: string;
-  id: string;
+  id?: string;
 }) => {
   const updateSearchParam = useUpdateSearchParams(id);
   const currentPage = useSearchParams()?.get("page");

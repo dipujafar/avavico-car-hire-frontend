@@ -23,7 +23,7 @@ const DetailsPageContainer = ({ id }: { id: string }) => {
     skip: !id,
   });
 
-  console.log(carDetailsData?.data?.car?.carImage);
+
 
   if (isLoading) {
     return (
@@ -60,7 +60,7 @@ const DetailsPageContainer = ({ id }: { id: string }) => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 2xl:gap-x-16 xl:gap-x-10 lg:gap-x-7 gap-y-7">
         <div className="lg:col-span-2">
-          <CarDetails></CarDetails>
+          <CarDetails data={carDetailsData?.data?.car}></CarDetails>
           <div className="xl:mt-16 md:mt-10 mt-7 lg:space-y-10 space-y-7 bg-white md:p-8 px-2 py-4 rounded-md border border-[#DDE1DE]">
             <RatingReviews />
             <AllTestimonials></AllTestimonials>

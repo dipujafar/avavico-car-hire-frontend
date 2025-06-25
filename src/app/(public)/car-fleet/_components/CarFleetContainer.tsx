@@ -13,39 +13,56 @@ import ReviewCategories from "@/components/shared/categories/ReviewCategories";
 import { useGetAllCarsQuery } from "@/redux/api/carApi";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import { useSearchParams } from "next/navigation";
+import {
+  useGetCarBrandsQuery,
+  useGetFuelTypeQuery,
+} from "@/redux/api/carFilterApi";
 
 const CarFleetContainer = () => {
+  //  ------------------ get filter data ---------------------
+  const { data: filterData, isLoading: filterLoading } =
+    useGetCarBrandsQuery(undefined);
+
+  const { data: fuelTypeData, isLoading: fuelTypeLoading } =
+    useGetFuelTypeQuery(undefined);
+
+    console.log( fuelTypeData?.data);
+
+  // ------------------- get all cars from database ---------------------
   const limit = useSearchParams()?.get("limit");
   const page = useSearchParams()?.get("page");
   const query: Record<string, string | number> = {};
   query["limit"] = Number(limit) || 9;
   query["page"] = Number(page) || 1;
-  
 
   const { data: allCardData, isLoading } = useGetAllCarsQuery(query);
+  // ----------------------------------------------------------------
 
   return (
-    <div  className=" grid grid-cols-1  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5	lg:gap-8 gap-4 xl:mt-8 mt-4">
+    <div className=" grid grid-cols-1  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5	lg:gap-8 gap-4 xl:mt-8 mt-4">
       <div className=" space-y-3 hidden lg:block">
         <PriceCategory></PriceCategory>
-        <Categories title="Car Brands" data={carBrandsFilterData}></Categories>
-        <Categories title="Car type" data={carTypeFilterData}></Categories>
-        <Categories
+        {/* <Categories title="Car Brands" data={carBrandsFilterData}></Categories>
+        <Categories title="Car type" data={carTypeFilterData}></Categories> */}
+        {/* <Categories
           title="Car Amenities"
           data={carAmenitiesFilterData}
-        ></Categories>
-        <Categories title="Fuel Type" data={fuelTypeFilterData}></Categories>
+        ></Categories> */}
+        <Categories title="Fuel Type" data={fuelTypeData?.data} filterName="fuelType"></Categories>
         <ReviewCategories title="Review Score"></ReviewCategories>
-        <Categories
+        {/* <Categories
           title="Renting Location"
           data={rentingLocationFilterData}
-        ></Categories>
+        ></Categories> */}
       </div>
 
       <div className="2xl:col-span-4 xl:col-span-3 md:col-span-2 ">
         {/* =============================== categories ========================== */}
         <div className="flex justify-between items-center gap-x-5  mb-4 ">
-          <FilterSort limit={Number(limit) || 9} totalCars={allCardData?.data?.car?.length}></FilterSort>
+          <FilterSort
+            limit={Number(limit) || 9}
+            totalCars={allCardData?.data?.meta?.total || 0}
+          ></FilterSort>
 
           <div className="lg:hidden block">
             <SmallDeviceFilter></SmallDeviceFilter>
@@ -54,7 +71,10 @@ const CarFleetContainer = () => {
         {/* ========================= all products ========================== */}
         <AllCar data={allCardData?.data?.car} isLoading={isLoading}></AllCar>
 
-        <PaginationSection totalItems={allCardData?.data?.meta?.total} id={"car-section"}></PaginationSection>
+        <PaginationSection
+          totalItems={allCardData?.data?.meta?.total}
+          id={"car-section"}
+        ></PaginationSection>
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
-  console.log(carImages);
   return (
     <div className="flex h-full w-full items-center justify-center">
       <motion.div

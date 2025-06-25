@@ -21,8 +21,6 @@ const AccountSettings = () => {
   const [fileName, setFileName] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  console.log(imageUrl);
-
   // React Hook Form setup
   const {
     register,

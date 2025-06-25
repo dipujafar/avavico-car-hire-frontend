@@ -96,8 +96,10 @@ const formSchema = z.object({
   images: z.array(z.string()).min(1, "At least one image is required"),
   name: z.string().min(1, "Car model is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
+  brand: z.string().min(1, "Brand is required"),
   model: z.string().min(1, "Make is required"),
-  price: z.coerce.number().positive("Price must be a positive number"),
+  price: z.coerce.number().positive("Price must be a positive number").optional(),
+  discount: z.coerce.number().positive("Discount must be a positive number"),
   mileage: z.coerce.number().positive("Mileage must be a positive number"),
   year: z.string().min(1, "Year is required"),
   color: z.string().min(1, "Color is required"),
@@ -168,7 +170,7 @@ export function AddCarModal({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="w-full h-screen overflow-y-auto px-0 scroll-hide">
         <Card className="border-none shadow-none">
           <CardContent className="pt-3">
@@ -231,6 +233,22 @@ export function AddCarModal({
                   )}
                 />
 
+                <FormField
+                  control={form.control}
+                  name="brand"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Car Brand</FormLabel>
+                      <Input
+                        placeholder="Enter car brand name"
+                        {...field}
+                        className="bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 {/* Rest of the form fields remain the same */}
 
                 <FormField
@@ -259,6 +277,24 @@ export function AddCarModal({
                         <Input
                           type="number"
                           placeholder="Enter price for per day"
+                          {...field}
+                          className="bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="discount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Discount (%)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="Enter discount percentage"
                           {...field}
                           className="bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
                         />
@@ -506,7 +542,7 @@ export function AddCarModal({
                                     <FormControl>
                                       <Checkbox
                                         checked={field.value?.includes(item.id)}
-                                         className="bg-[#F8FAFC]"
+                                        className="bg-[#F8FAFC]"
                                         onCheckedChange={(checked) => {
                                           return checked
                                             ? field.onChange([
@@ -672,7 +708,7 @@ export function AddCarModal({
                   type="submit"
                   className="w-full bg-primary-cyan hover:bg-cyan-600 rounded-none py-5"
                 >
-                 Upload
+                  Upload
                 </Button>
               </form>
             </Form>

@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation";
 const DashboardPageTopSection = () => {
   const pathName = usePathname();
 
-  console.log(pathName);
-
   const pageTitle = (pathName: string) => {
     switch (pathName) {
       case "/vendor/profile":

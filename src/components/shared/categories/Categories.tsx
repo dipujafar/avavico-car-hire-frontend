@@ -4,11 +4,14 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { childrenVariants, parentVariants } from "@/animation/FramerMotionValiants";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 
-const Categories = ({ title, data }: { title: string; data: any[] }) => {
+const Categories = ({ title, data, filterName }: { title: string; data: any[], filterName: string }) => {
   const INITIAL_COUNT = 6;
   const [expanded, setExpanded] = useState(false);
+   const updateSearchParam = useUpdateSearchParams();
 
+  console.log(data);
   return (
     <div className="xl:space-y-4 space-y-3 p-4 rounded-xl border border-[#DDE1DE] bg-[#FBFBFB]">
       <div className="py-2 flex items-center justify-between">
@@ -41,16 +44,16 @@ const Categories = ({ title, data }: { title: string; data: any[] }) => {
                 className="flex items-center justify-between"
               >
                 <div className="flex items-center space-x-2">
-                  <Checkbox id={type?.value} className="border-[#D6D7D8]" />
+                  <Checkbox onCheckedChange={() => console.log(type?.title)} value={type?.title} id={type?.title} className="border-[#D6D7D8]" />
                   <label
-                    htmlFor={type?.value}
+                    htmlFor={type?.title}
                     className="text-[#101010] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-base text-sm font-medium"
                   >
-                    {type?.label}
+                    {type?.title}
                   </label>
                 </div>
                 <span className="bg-[#DDE1DE] rounded-full md:px-3 px-2 py-0.5 text-[#101010] md:font-medium md:text-sm text-xs">
-                  {type?.quantity}
+                  {type?.count}
                 </span>
               </motion.div>
             ))}
