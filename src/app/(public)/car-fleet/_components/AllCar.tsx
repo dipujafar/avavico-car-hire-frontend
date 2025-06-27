@@ -1,6 +1,7 @@
 "use client";
 import ProductCard from "@/components/shared/cards/ProductCard";
 import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
+import Empty from "@/components/ui/empty";
 import { ICar } from "@/types";
 import { motion } from "motion/react";
 
@@ -28,6 +29,8 @@ const AllCar = ({
   data: ICar[];
   isLoading?: boolean;
 }) => {
+
+  // -------------------- if data is loading --------------------
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6 ">
@@ -36,6 +39,16 @@ const AllCar = ({
           .map((_, i) => (
             <CarCardSkeleton key={i} />
           ))}
+      </div>
+    );
+  }
+  // ----------------------------------------------------------------//
+
+  // ---------------------------if data is empty ---------------------//
+  if (!carsData?.length) {
+    return (
+      <div className="flex justify-center items-center min-h-[calc(100vh-220px)]">
+        <Empty message="No Cars Available"></Empty>
       </div>
     );
   }

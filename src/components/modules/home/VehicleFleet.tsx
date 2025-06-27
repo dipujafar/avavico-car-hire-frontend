@@ -10,6 +10,7 @@ import { useGetAllCarsQuery } from "@/redux/api/carApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ICar } from "@/types";
 import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
+import Empty from "@/components/ui/empty";
 
 const fadeUpVariants = {
   initial: {
@@ -31,6 +32,7 @@ const fadeUpVariants = {
 const VehicleFleet = () => {
   const { data: allCardData, isLoading } = useGetAllCarsQuery({ limit: 8 });
 
+  // -------------------- if data is loading --------------------
   if (isLoading) {
     return (
       <Container className="lg:space-y-10 space-y-5">
@@ -56,7 +58,9 @@ const VehicleFleet = () => {
       </Container>
     );
   }
+  // -----------------------------------------------------------------//
 
+  // -------------------- display actual data --------------------
   return (
     <Container className="lg:space-y-10 space-y-5">
       <div className="flex flex-wrap gap-y-2 gap-x-2 justify-between mb-3">
@@ -82,12 +86,18 @@ const VehicleFleet = () => {
         viewport={{ once: true }}
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8"
       >
-        {allCardData?.data?.car?.map((car: ICar) => (
-          <motion.div variants={fadeUpVariants} key={car.id}>
-            {/*  @ts-ignore */}
-            <ProductCard data={car}></ProductCard>
-          </motion.div>
-        ))}
+        {allCardData?.data?.car?.length ? (
+          allCardData?.data?.car?.map((car: ICar) => (
+            <motion.div variants={fadeUpVariants} key={car.id}>
+              {/*  @ts-ignore */}
+              <ProductCard data={car}></ProductCard>
+            </motion.div>
+          ))
+        ) : (
+          <div className="flex justify-center items-center min-h-80  sm:col-span-2 lg:col-span-3 2xl:col-span-4">
+            <Empty message="No Cars Available"></Empty>
+          </div>
+        )}
       </motion.div>
     </Container>
   );

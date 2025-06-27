@@ -15,8 +15,11 @@ import PaginationSection from "@/components/shared/pagination/PaginationSection"
 import { useSearchParams } from "next/navigation";
 import {
   useGetCarBrandsQuery,
+  useGetCarLocationsQuery,
+  useGetCarTypeQuery,
   useGetFuelTypeQuery,
 } from "@/redux/api/carFilterApi";
+import { ICar } from "@/types";
 
 const CarFleetContainer = () => {
   //  ------------------ get filter data ---------------------
@@ -26,34 +29,74 @@ const CarFleetContainer = () => {
   const { data: fuelTypeData, isLoading: fuelTypeLoading } =
     useGetFuelTypeQuery(undefined);
 
-    console.log( fuelTypeData?.data);
+  const { data: carBrandsData, isLoading: carBrandsLoading } =
+    useGetCarBrandsQuery(undefined);
+  const { data: carLocationsData, isLoading: carLocationsLoading } =
+    useGetCarLocationsQuery(undefined);
+  const { data: carTypeFilterData, isLoading: carTypeFilterLoading } =
+    useGetCarTypeQuery(undefined);
 
   // ------------------- get all cars from database ---------------------
   const limit = useSearchParams()?.get("limit");
   const page = useSearchParams()?.get("page");
+  const price = useSearchParams()?.get("price");
   const query: Record<string, string | number> = {};
   query["limit"] = Number(limit) || 9;
   query["page"] = Number(page) || 1;
+  if (price) {
+    query["minPrice"] = Number(price?.split("-")?.[0]);
+    query["maxPrice"] = Number(price?.split("-")?.[1]);
+  }
+
 
   const { data: allCardData, isLoading } = useGetAllCarsQuery(query);
-  // ----------------------------------------------------------------
+  // ------------------------------------------------------------- //
 
+  // ------------------ get high price car ---------------------
+  const highPriceData = allCardData?.data?.car?.reduce(
+    (max: ICar, car: ICar) => {
+      return car.price > max.price ? car : max;
+    },
+    allCardData?.data?.car?.[0]
+  );
+  // ----------------------------------------------------------------
   return (
     <div className=" grid grid-cols-1  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5	lg:gap-8 gap-4 xl:mt-8 mt-4">
       <div className=" space-y-3 hidden lg:block">
-        <PriceCategory></PriceCategory>
-        {/* <Categories title="Car Brands" data={carBrandsFilterData}></Categories>
-        <Categories title="Car type" data={carTypeFilterData}></Categories> */}
+        <PriceCategory highPrice={highPriceData?.price}></PriceCategory>
+        <Categories
+          title="Car Brands"
+          data={carBrandsData?.data}
+          filterName="carBrand"
+          loading={carBrandsLoading}
+          totalCars={allCardData?.data?.meta?.total}
+        ></Categories>
+        <Categories
+          title="Car type"
+          data={carTypeFilterData?.data}
+          filterName="carType"
+          loading={carTypeFilterLoading}
+          totalCars={allCardData?.data?.meta?.total}
+        ></Categories>
         {/* <Categories
           title="Car Amenities"
           data={carAmenitiesFilterData}
         ></Categories> */}
-        <Categories title="Fuel Type" data={fuelTypeData?.data} filterName="fuelType"></Categories>
+        <Categories
+          title="Fuel Type"
+          data={fuelTypeData?.data}
+          filterName="fuelType"
+          loading={fuelTypeLoading}
+          totalCars={allCardData?.data?.meta?.total}
+        ></Categories>
         <ReviewCategories title="Review Score"></ReviewCategories>
-        {/* <Categories
+        <Categories
           title="Renting Location"
-          data={rentingLocationFilterData}
-        ></Categories> */}
+          data={carLocationsData?.data}
+          filterName="rentingLocation"
+          loading={carLocationsLoading}
+          totalCars={allCardData?.data?.meta?.total}
+        ></Categories>
       </div>
 
       <div className="2xl:col-span-4 xl:col-span-3 md:col-span-2 ">
@@ -65,7 +108,7 @@ const CarFleetContainer = () => {
           ></FilterSort>
 
           <div className="lg:hidden block">
-            <SmallDeviceFilter></SmallDeviceFilter>
+            <SmallDeviceFilter  cardBrandsData={carBrandsData?.data} cardBrandsLoading={carBrandsLoading} carTypesData={carTypeFilterData?.data} carTypesLoading={carTypeFilterLoading} fuelTypesData={fuelTypeData?.data} fuelTypesLoading={fuelTypeLoading} carLocationsData={carLocationsData?.data} carLocationsLoading={carLocationsLoading} highPriceData={highPriceData?.price} totalCars={allCardData?.data?.meta?.total} ></SmallDeviceFilter>
           </div>
         </div>
         {/* ========================= all products ========================== */}

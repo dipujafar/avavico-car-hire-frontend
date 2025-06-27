@@ -16,7 +16,20 @@ const carFilterApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
             providesTags: [tagTypes.car],
+        }),
+        getCarLocations: builder.query({
+            query: () => ({
+                url: "/car/locations",
+                method: "GET",
+            }),
+            providesTags: [tagTypes.car],
+        }),
+        getCarType: builder.query({
+            query: () => ({
+                url: "/car/car_types",
+                method: "GET",
+            })
         })
     }),
 });
-export const { useGetCarBrandsQuery, useGetFuelTypeQuery } = carFilterApi;
+export const { useGetCarBrandsQuery, useGetFuelTypeQuery, useGetCarLocationsQuery, useGetCarTypeQuery } = carFilterApi;

@@ -1,11 +1,12 @@
 "use client";
 import { RangeSlider } from "@/components/ui/dual-range-slider";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   childrenVariants,
   parentVariants,
 } from "@/animation/FramerMotionValiants";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 
 const containerVariants = {
   visible: {
@@ -33,9 +34,17 @@ const containerVariants = {
   },
 };
 
-const PriceCategory = () => {
+const PriceCategory = ({ highPrice }: { highPrice: number }) => {
   const [show, hide] = useState(true);
-  const [values, setValues] = useState([0, 500]);
+  const [values, setValues] = useState([0, highPrice || 1000]);
+  const updateSearchParam = useUpdateSearchParams();
+
+  // -------------------- set high price when high price change ---------------------
+  useEffect(() => {
+    setValues([0, highPrice || 1000]);
+  }, [highPrice]);
+  // --------------------------------------------------------------------------------
+
   return (
     <div className="xl:space-y-7 space-y-5 p-4 rounded-xl border border-[#DDE1DE] bg-[#FBFBFB]  ">
       <h4 className="text-lg font-bold uppercase">Filter Price</h4>
@@ -57,7 +66,10 @@ const PriceCategory = () => {
           <motion.div variants={childrenVariants}>
             <RangeSlider
               value={values}
-              onValueChange={(price) => setValues(price)}
+              onValueChange={(price) => {
+                setValues(price);
+                updateSearchParam("price", price.join("-"));
+              }}
               max={values[1] >= 950 ? values[1] + 100 : 1000}
               step={1}
             />
@@ -66,18 +78,12 @@ const PriceCategory = () => {
             variants={childrenVariants}
             className=" flex items-center justify-between mt-5 gap-x-2"
           >
-            <div className="font-medium">
-              ${values[0]}
-            </div>
+            <div className="font-medium">${values[0]}</div>
             {/* <Image src={reverseIcon} alt="reverseIcon"></Image> */}
-            <div className="font-medium">
-              ${values[1]}
-            </div>
+            <div className="font-medium">${values[1]}</div>
           </motion.div>
         </motion.div>
       </motion.div>
-
-      
     </div>
   );
 };

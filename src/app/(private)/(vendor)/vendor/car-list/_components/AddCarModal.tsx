@@ -29,6 +29,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ImageUpload } from "@/components/shared/image-upload";
 import { PlusIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAddNewCarMutation } from "@/redux/api/carApi";
 
 const colors = [
   { label: "Black", value: "black" },
@@ -98,17 +99,20 @@ const formSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   brand: z.string().min(1, "Brand is required"),
   model: z.string().min(1, "Make is required"),
-  price: z.coerce.number().positive("Price must be a positive number").optional(),
+  price: z.coerce
+    .number()
+    .positive("Price must be a positive number")
+    .optional(),
   discount: z.coerce.number().positive("Discount must be a positive number"),
   mileage: z.coerce.number().positive("Mileage must be a positive number"),
-  year: z.string().min(1, "Year is required"),
-  color: z.string().min(1, "Color is required"),
+  // year: z.string().min(1, "Year is required"),
+  // color: z.string().min(1, "Color is required"),
   seats: z.string().min(1, "Door configuration is required"),
   doors: z.string().min(1, "Door configuration is required"),
   vin: z.string().min(1, "VIN is required"),
   fuelLoad: z.coerce.number().positive("Fuel load must be a positive number"),
   bodyStyle: z.array(z.string()).min(1, "At least one body style is required"),
-  transmission: z.string().min(1, "Transmission is required"),
+  gearType: z.string().min(1, "Transmission is required"),
   fuelType: z.array(z.string()).min(1, "At least one fuel type is required"),
   additionalOptions: z.record(
     z.string(),
@@ -128,6 +132,7 @@ export function AddCarModal({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const [addNewCar, { isLoading }] = useAddNewCarMutation();
   const [customBodyStyles, setCustomBodyStyles] = useState<
     { id: string; label: string }[]
   >([]);
@@ -156,7 +161,7 @@ export function AddCarModal({
       vin: "",
       fuelLoad: undefined,
       bodyStyle: [],
-      transmission: "",
+      gearType: "",
       fuelType: [],
       additionalOptions: additionalOptions.reduce((acc, option) => {
         acc[option.id] = { option: "", price: undefined };
@@ -167,11 +172,62 @@ export function AddCarModal({
 
   function onSubmit(data: FormValues) {
     console.log(data);
+
+    const formattedData = {
+      carName: data?.name,
+      description: data?.description,
+      rentingLocation: {
+        country: "Ireland",
+        state: "Munster",
+        city: "Cork",
+        streetAddress: "45 Marina View",
+        zipCode: "T12A7Y9",
+      },
+      carAmenities: ["Bluetooth", "Leather Seats", "Navigation System"],
+      model: data?.model,
+      brand: data?.brand,
+      price: data?.price,
+      mileage: {
+        rate: "140",
+        type: "KM",
+      },
+      seat: data?.seats,
+      door: data?.doors,
+      vin: data?.vin,
+      fuel: data?.fuelLoad,
+      fuelType: "Petrol",
+      gearType: data?.gearType,
+      bodyStyle: data?.bodyStyle,
+      childSeat: {
+        select: "1",
+        price: "45",
+      },
+      additionalDriver: {
+        select: "1",
+        price: "75",
+      },
+      youngDriver: {
+        select: "0",
+        price: "0",
+      },
+      oneWayFees: {
+        select: "1",
+        price: "90",
+      },
+      gps: {
+        select: "1",
+        price: "40",
+      },
+      crossBorder: {
+        select: "1",
+        price: "70",
+      },
+    };
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-full h-screen overflow-y-auto px-0 scroll-hide">
+    <Dialog open={open} onOpenChange={setOpen} >
+      <DialogContent className="w-full h-screen overflow-y-auto px-0 scroll-hide xl:w-[800px]">
         <Card className="border-none shadow-none">
           <CardContent className="pt-3">
             <Form {...form}>
@@ -521,7 +577,7 @@ export function AddCarModal({
                   {/* ========= fuel type ============ */}
                   <FormField
                     control={form.control}
-                    name="bodyStyle"
+                    name="fuelType"
                     render={() => (
                       <FormItem>
                         <div className="mb-1">
@@ -532,7 +588,7 @@ export function AddCarModal({
                             <FormField
                               key={item.id}
                               control={form.control}
-                              name="bodyStyle"
+                              name="fuelType"
                               render={({ field }) => {
                                 return (
                                   <FormItem
@@ -624,10 +680,10 @@ export function AddCarModal({
 
                 <FormField
                   control={form.control}
-                  name="transmission"
+                  name="gearType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Transmission</FormLabel>
+                      <FormLabel>Gear Type</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
