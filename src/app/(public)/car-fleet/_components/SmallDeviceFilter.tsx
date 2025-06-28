@@ -1,14 +1,16 @@
+"use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import PriceCategory from "./PriceCategory";
 import { SlidersHorizontal } from "lucide-react";
-import { carBrandsFilterData } from "@/lib/carBrandsFilterData";
 import Categories from "@/components/shared/categories/Categories";
-import { carTypeFilterData } from "@/lib/carTypeFilterData";
-import { carAmenitiesFilterData } from "@/lib/carAmenitiesFilterData";
-import { fuelTypeFilterData } from "@/lib/fuelTypeFilterData";
-import { rentingLocationFilterData } from "@/lib/rentingLocationFilterData";
+import { useSearchParams } from "next/navigation";
 
 export function SmallDeviceFilter(props: any) {
+  const fuelType = useSearchParams()?.get("fuelType");
+  const brand = useSearchParams()?.get("brand");
+  const carType = useSearchParams()?.get("carType");
+  const rentingLocation = useSearchParams()?.get("rentingLocation");
+
   const {
     highPriceData,
     carLocationsLoading,
@@ -32,16 +34,16 @@ export function SmallDeviceFilter(props: any) {
           <Categories
             title="Car Brands"
             data={cardBrandsData}
-            filterName="carBrand"
+            filterName="brand"
             loading={cardBrandsLoading}
-            totalCars={totalCars}
+            checkedItem={brand || "all"}
           ></Categories>
           <Categories
             title="Car type"
             data={carTypesData}
             filterName="carType"
             loading={carTypesLoading}
-            totalCars={totalCars}
+            checkedItem={carType || "all"}
           ></Categories>
           {/* <Categories
             title="Car Amenities"
@@ -52,14 +54,14 @@ export function SmallDeviceFilter(props: any) {
             loading={fuelTypesLoading}
             filterName="fuelType"
             data={fuelTypesData}
-            totalCars={totalCars}
+            checkedItem={fuelType || "all"}
           ></Categories>
           <Categories
             title="Renting Location"
             filterName="rentingLocation"
             data={carLocationsData}
             loading={carLocationsLoading}
-            totalCars={totalCars}
+            checkedItem={rentingLocation || "all"}
           ></Categories>
         </div>
       </SheetContent>

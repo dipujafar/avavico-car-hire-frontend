@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   childrenVariants,
   parentVariants,
@@ -9,33 +9,44 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { Skeleton } from "@/components/ui/skeleton";
 import Empty from "@/components/ui/empty";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Categories = ({
   title,
   data,
   filterName,
   loading,
-  totalCars,
+
+  checkedItem,
 }: {
   title: string;
   data: any[];
   filterName: string;
   loading?: boolean;
-  totalCars: number;
+
+  checkedItem: string | null;
 }) => {
   const INITIAL_COUNT = 6;
   const [expanded, setExpanded] = useState(false);
-  const [selected, setSelected] = useState("all");
-  const updateSearchParam = useUpdateSearchParams();
+  const [selected, setSelected] = useState(checkedItem || "all");
+  const updateSearchParam = useUpdateSearchParams("car-section");
+
+
+  const totalCars =  data?.reduce((acc, car) => acc + car?.count, 0);
+  
+
+//   useEffect(() => {
+//   setSelected(checkedItem || "all");
+// }, [checkedItem]);
 
   const handleChange = (value: string) => {
     setSelected(value);
     updateSearchParam(filterName, value);
   };
+
+
+  console.log(checkedItem);
 
   if (loading) {
     return (
@@ -69,7 +80,11 @@ const Categories = ({
         <h4 className="text-lg font-bold">{title}</h4>
       </div>
 
-      <RadioGroup value={selected} onValueChange={handleChange} className="space-y-3">
+      <RadioGroup
+        value={selected}
+        onValueChange={handleChange}
+        className="space-y-3"
+      >
         <AnimatePresence initial={true}>
           <motion.div
             key={expanded ? "expanded" : "collapsed"}
@@ -94,10 +109,14 @@ const Categories = ({
                 className="flex items-center justify-between"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="all" id="all" />
+                  <RadioGroupItem
+                    value="all"
+                    id="all"
+                    className="cursor-pointer"
+                  />
                   <label
                     htmlFor="all"
-                    className="text-[#101010] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-base text-sm font-medium"
+                    className="text-[#101010] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-base text-sm font-medium cursor-pointer"
                   >
                     All
                   </label>
@@ -107,26 +126,32 @@ const Categories = ({
                 </span>
               </motion.div>
 
-              {(expanded ? data : data?.slice(0, INITIAL_COUNT))?.map((type) => (
-                <motion.div
-                  variants={childrenVariants}
-                  key={type?._id}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value={type.title} id={type.title} />
-                    <label
-                      htmlFor={type.title}
-                      className="text-[#101010] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-base text-sm font-medium"
-                    >
-                      {type.title}
-                    </label>
-                  </div>
-                  <span className="bg-[#DDE1DE] rounded-full md:px-3 px-2 py-0.5 text-[#101010] md:font-medium md:text-sm text-xs">
-                    {type.count}
-                  </span>
-                </motion.div>
-              ))}
+              {(expanded ? data : data?.slice(0, INITIAL_COUNT))?.map(
+                (type) => (
+                  <motion.div
+                    variants={childrenVariants}
+                    key={type?._id}
+                    className="flex items-center justify-between"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value={type.title}
+                        id={type.title}
+                        className="cursor-pointer"
+                      />
+                      <label
+                        htmlFor={type.title}
+                        className="text-[#101010] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-base text-sm font-medium cursor-pointer"
+                      >
+                        {type.title}
+                      </label>
+                    </div>
+                    <span className="bg-[#DDE1DE] rounded-full md:px-3 px-2 py-0.5 text-[#101010] md:font-medium md:text-sm text-xs">
+                      {type.count}
+                    </span>
+                  </motion.div>
+                )
+              )}
             </motion.div>
           </motion.div>
         </AnimatePresence>

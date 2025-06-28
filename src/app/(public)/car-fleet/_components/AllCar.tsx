@@ -29,7 +29,6 @@ const AllCar = ({
   data: ICar[];
   isLoading?: boolean;
 }) => {
-
   // -------------------- if data is loading --------------------
   if (isLoading) {
     return (
@@ -56,7 +55,7 @@ const AllCar = ({
   return (
     <>
       <motion.div
-        key={carsData?.length}
+        key={carsData?.reduce((acc, car) => acc + car.id, "")}
         variants={fadeUpVariants}
         initial="initial"
         whileInView="animate"

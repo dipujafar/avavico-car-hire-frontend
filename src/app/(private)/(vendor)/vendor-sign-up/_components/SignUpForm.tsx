@@ -47,9 +47,6 @@ const formSchema = z
       .string({ required_error: "Email is required" })
       .min(1, { message: "Email is required" })
       .email({ message: "Please enter a valid email address" }),
-    location: z
-      .string({ required_error: "Location is required" })
-      .min(1, { message: "Location is required" }),
     country: z.string({
       required_error: "Please select a country.",
     }),
@@ -109,14 +106,14 @@ const SignUpForm = () => {
         userName: data?.userName,
         companyName: data?.companyName,
         email: data?.email,
-        location: data?.location,
-        // location: {
-        //   country: data?.country,
-        //   state: data?.state,
-        //   city: data?.city,
-        //   streetAddress: data?.streetAddress,
-        //   zipCode: data?.zipCode,
-        // },
+        // location: data?.location,
+        location: {
+          country: data?.country,
+          state: data?.state,
+          city: data?.city,
+          streetAddress: data?.streetAddress,
+          zipCode: data?.zipCode,
+        },
         mobile: data?.phoneNumber,
         password: data?.password,
         role: "Vendor",
@@ -259,23 +256,7 @@ const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter Your Location"
-                      {...field}
-                      className="focus-visible:ring-0  focus-visible:ring-offset-0  rounded bg-[#F5F5F5] md:py-5 "
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+         
 
             {/* Country, State, City Selector */}
             <div className="grid w-full  items-center gap-1.5">

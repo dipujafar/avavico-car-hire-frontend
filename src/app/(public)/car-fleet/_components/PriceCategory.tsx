@@ -7,6 +7,7 @@ import {
   parentVariants,
 } from "@/animation/FramerMotionValiants";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import { useSearchParams } from "next/navigation";
 
 const containerVariants = {
   visible: {
@@ -38,11 +39,19 @@ const PriceCategory = ({ highPrice }: { highPrice: number }) => {
   const [show, hide] = useState(true);
   const [values, setValues] = useState([0, highPrice || 1000]);
   const updateSearchParam = useUpdateSearchParams();
+  const searchPrice = useSearchParams()?.get("price");
+
+ 
 
   // -------------------- set high price when high price change ---------------------
   useEffect(() => {
     setValues([0, highPrice || 1000]);
-  }, [highPrice]);
+
+    if (searchPrice) {
+     
+      setValues(searchPrice?.split("-")?.map(Number));
+    }
+  }, [highPrice, searchPrice]);
   // --------------------------------------------------------------------------------
 
   return (

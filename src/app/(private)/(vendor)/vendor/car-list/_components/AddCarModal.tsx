@@ -30,15 +30,18 @@ import { ImageUpload } from "@/components/shared/image-upload";
 import { PlusIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAddNewCarMutation } from "@/redux/api/carApi";
+import { Label } from "@/components/ui/label";
+import CountryStateCitySelector from "@/components/ui/country-state-city-selector";
+import LoadingSpin from "@/components/ui/loading-spin";
 
-const colors = [
-  { label: "Black", value: "black" },
-  { label: "White", value: "white" },
-  { label: "Silver", value: "silver" },
-  { label: "Gray", value: "gray" },
-  { label: "Red", value: "red" },
-  { label: "Blue", value: "blue" },
-];
+// const colors = [
+//   { label: "Black", value: "black" },
+//   { label: "White", value: "white" },
+//   { label: "Silver", value: "silver" },
+//   { label: "Gray", value: "gray" },
+//   { label: "Red", value: "red" },
+//   { label: "Blue", value: "blue" },
+// ];
 
 const dropdownData = [
   { label: "2", value: "2" },
@@ -72,16 +75,16 @@ const bodyStyles = [
 ];
 
 const fuelTypes = [
-  { id: "petrol", label: "Petrol" },
-  { id: "diesel", label: "Diesel" },
-  { id: "electric", label: "Electric" },
-  { id: "hybrid", label: "Hybrid" },
-  { id: "gas", label: "Gas" },
+  { id: "Petrol", label: "Petrol" },
+  { id: "Piesel", label: "Diesel" },
+  { id: "Electric", label: "Electric" },
+  { id: "Hybrid", label: "Hybrid" },
+  { id: "Gas", label: "Gas" },
 ];
 
 const transmissions = [
-  { value: "manual", label: "Manual" },
-  { value: "automatic", label: "Automatic" },
+  { value: "Manual", label: "Manual" },
+  { value: "Automatic", label: "Automatic" },
 ];
 
 const additionalOptions = [
@@ -93,8 +96,13 @@ const additionalOptions = [
   { id: "cross_border", label: "Cross Border" },
 ];
 
+const imageSchema = z.object({
+  file: z.instanceof(File),
+  preview: z.string().url().or(z.string().startsWith("data:image/")),
+});
+
 const formSchema = z.object({
-  images: z.array(z.string()).min(1, "At least one image is required"),
+  images: z.array(imageSchema).min(1, "At least one image is required"),
   name: z.string().min(1, "Car model is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   brand: z.string().min(1, "Brand is required"),
@@ -105,6 +113,7 @@ const formSchema = z.object({
     .optional(),
   discount: z.coerce.number().positive("Discount must be a positive number"),
   mileage: z.coerce.number().positive("Mileage must be a positive number"),
+  mileageType: z.string().min(1, "Mileage type is required"),
   // year: z.string().min(1, "Year is required"),
   // color: z.string().min(1, "Color is required"),
   seats: z.string().min(1, "Door configuration is required"),
@@ -113,7 +122,20 @@ const formSchema = z.object({
   fuelLoad: z.coerce.number().positive("Fuel load must be a positive number"),
   bodyStyle: z.array(z.string()).min(1, "At least one body style is required"),
   gearType: z.string().min(1, "Transmission is required"),
-  fuelType: z.array(z.string()).min(1, "At least one fuel type is required"),
+  fuelType: z.string().min(1, "Fuel type is required"),
+  country: z.string({
+    required_error: "Please select a country.",
+  }),
+  streetAddress: z.string().min(5, {
+    message: "Street address required.",
+  }),
+  city: z.string().optional(),
+  state: z.string({
+    required_error: "Please select a state.",
+  }),
+  zipCode: z.string().min(5, {
+    message: "Zip code must be at least 5 characters.",
+  }),
   additionalOptions: z.record(
     z.string(),
     z.object({
@@ -155,14 +177,14 @@ export function AddCarModal({
       model: "",
       price: undefined,
       mileage: undefined,
-      year: "",
-      color: "",
+      // year: "",
+      // color: "",
       doors: "",
       vin: "",
       fuelLoad: undefined,
       bodyStyle: [],
       gearType: "",
-      fuelType: [],
+      fuelType: "",
       additionalOptions: additionalOptions.reduce((acc, option) => {
         acc[option.id] = { option: "", price: undefined };
         return acc;
@@ -170,64 +192,81 @@ export function AddCarModal({
     },
   });
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
+  const { register, setValue, control } = form;
+
+  async function onSubmit(data: FormValues) {
+    // console.log(data);
 
     const formattedData = {
       carName: data?.name,
       description: data?.description,
       rentingLocation: {
-        country: "Ireland",
-        state: "Munster",
-        city: "Cork",
-        streetAddress: "45 Marina View",
-        zipCode: "T12A7Y9",
+        country: data?.country,
+        state: data?.state,
+        city: data?.city || data?.state,
+        streetAddress: data?.streetAddress,
+        zipCode: data?.zipCode,
       },
-      carAmenities: ["Bluetooth", "Leather Seats", "Navigation System"],
+      // carAmenities: ["Bluetooth", "Leather Seats", "Navigation System"],
       model: data?.model,
       brand: data?.brand,
       price: data?.price,
+      discount: data?.discount,
       mileage: {
-        rate: "140",
-        type: "KM",
+        rate: data?.mileage,
+        type: data?.mileageType,
       },
       seat: data?.seats,
       door: data?.doors,
       vin: data?.vin,
       fuel: data?.fuelLoad,
-      fuelType: "Petrol",
+      fuelType: data?.fuelType,
       gearType: data?.gearType,
       bodyStyle: data?.bodyStyle,
       childSeat: {
-        select: "1",
-        price: "45",
+        select: data?.additionalOptions?.child_seat?.option || 0,
+        price: data?.additionalOptions?.child_seat?.price || 0,
       },
       additionalDriver: {
-        select: "1",
-        price: "75",
+        select: data?.additionalOptions?.additional_driver?.option || 0,
+        price: data?.additionalOptions?.additional_driver?.price || 0,
       },
       youngDriver: {
-        select: "0",
-        price: "0",
+        select: data?.additionalOptions?.young_driver?.option || 0,
+        price: data?.additionalOptions?.young_driver?.price || 0,
       },
       oneWayFees: {
-        select: "1",
-        price: "90",
+        select: data?.additionalOptions?.one_way_fees?.option || 0,
+        price: data?.additionalOptions?.one_way_fees?.price || 0,
       },
       gps: {
-        select: "1",
-        price: "40",
+        select: data?.additionalOptions?.GPS?.option || 0,
+        price: data?.additionalOptions?.GPS?.price || 0,
       },
       crossBorder: {
-        select: "1",
-        price: "70",
+        select: data?.additionalOptions?.cross_border?.option || 0,
+        price: data?.additionalOptions?.cross_border?.price || 0,
       },
     };
+
+    const formData = new FormData();
+    data?.images?.forEach((image) => {
+      formData.append("carImage", image.file);
+    });
+
+    formData.append("data", JSON.stringify(formattedData));
+
+    try {
+      const res = await addNewCar(formData).unwrap();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} >
-      <DialogContent className="w-full h-screen overflow-y-auto px-0 scroll-hide xl:w-[800px]">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="w-full h-screen overflow-y-auto px-0 scroll-hide ">
         <Card className="border-none shadow-none">
           <CardContent className="pt-3">
             <Form {...form}>
@@ -360,24 +399,61 @@ export function AddCarModal({
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="mileage"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Mileage</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="100"
-                          {...field}
-                          className="bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="mileage"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Mileage</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="100"
+                              {...field}
+                              className="bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="mileageType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Type</FormLabel>
+                        <FormControl>
+                          <select
+                            value={field.value || ""}
+                            onChange={(e) => field.onChange(e.target.value)}
+                            className="w-full border border-gray-300 px-3 py-2 bg-[#F8FAFC]"
+                          >
+                            <option value="" disabled className="text-gray-500">
+                              Select
+                            </option>
+                            <option key={"km"} value={"km"}>
+                              km
+                            </option>
+                            <option key={"mi"} value={"mi"}>
+                              mi
+                            </option>
+                            <option key={"m"} value={"m"}>
+                              m
+                            </option>
+                            <option key={"nmi"} value={"nmi"}>
+                              nmi
+                            </option>
+                          </select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
@@ -458,11 +534,11 @@ export function AddCarModal({
                   name="fuelLoad"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Fuel Level</FormLabel>
+                      <FormLabel>Fuel Capacity (Liters)</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          placeholder="Enter fuel level"
+                          placeholder="Enter how much fuel able to carry"
                           {...field}
                           className="w-full bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
                         />
@@ -521,7 +597,7 @@ export function AddCarModal({
                             />
                           ))}
                           <p
-                            className="text-[#C99400] flex items-center gap-x-1 cursor-pointer "
+                            className="text-[#C99400] flex items-center gap-x-1 cursor-pointer text-sm "
                             onClick={() => setShowAdditionalOptionsBody(true)}
                           >
                             <PlusIcon size={20}></PlusIcon> Add additional
@@ -578,63 +654,44 @@ export function AddCarModal({
                   <FormField
                     control={form.control}
                     name="fuelType"
-                    render={() => (
+                    render={({ field }) => (
                       <FormItem>
                         <div className="mb-1">
                           <FormLabel>Fuel Type</FormLabel>
                         </div>
-                        <div className="grid md:grid-cols-3 grid-cols-2 gap-2 items-center">
-                          {[...fuelTypes, ...customFuelTypes].map((item) => (
-                            <FormField
-                              key={item.id}
-                              control={form.control}
-                              name="fuelType"
-                              render={({ field }) => {
-                                return (
-                                  <FormItem
-                                    key={item.id}
-                                    className="flex flex-row items-start space-x-1 space-y-0"
-                                  >
-                                    <FormControl>
-                                      <Checkbox
-                                        checked={field.value?.includes(item.id)}
-                                        className="bg-[#F8FAFC]"
-                                        onCheckedChange={(checked) => {
-                                          return checked
-                                            ? field.onChange([
-                                                ...field.value,
-                                                item.id,
-                                              ])
-                                            : field.onChange(
-                                                field.value?.filter(
-                                                  (value) => value !== item.id
-                                                )
-                                              );
-                                        }}
-                                      />
-                                    </FormControl>
-                                    <FormLabel className="font-normal">
-                                      {item.label}
-                                    </FormLabel>
-                                  </FormItem>
-                                );
-                              }}
-                            />
-                          ))}
+                        <FormControl>
+                          <select
+                            value={field.value || ""}
+                            onChange={(e) => field.onChange(e.target.value)}
+                            className="w-full border   px-3 py-2 bg-[#F8FAFC]"
+                          >
+                            <option value="" disabled>
+                              Select fuel type
+                            </option>
+                            {[...fuelTypes, ...customFuelTypes].map((item) => (
+                              <option key={item.id} value={item.id}>
+                                {item.label}
+                              </option>
+                            ))}
+                          </select>
+                        </FormControl>
+
+                        <div className="mt-0.5">
                           <p
-                            className="text-[#C99400] flex items-center gap-x-1 cursor-pointer "
+                            className="text-[#C99400] flex items-center gap-x-1 cursor-pointer text-sm"
                             onClick={() =>
                               setShowAdditionalOptionsFuelType(true)
                             }
                           >
-                            <PlusIcon size={20}></PlusIcon> Add additional
+                            <PlusIcon size={20} />
+                            Add More Fuel Types
                           </p>
                         </div>
 
                         {/* Add additional input */}
                         <div
                           className={cn(
-                            "mt-1 x items-center gap-2 hidden relative",
+                            "mt-1 items-center gap-2 hidden relative",
                             showAdditionalFuelType && "flex"
                           )}
                         >
@@ -642,15 +699,15 @@ export function AddCarModal({
                             <div
                               className="absolute right-1 top-0.5 bg-red-500 rounded-full size-4 flex justify-center items-center text-white cursor-pointer"
                               onClick={() =>
-                                setShowAdditionalOptionsBody(false)
+                                setShowAdditionalOptionsFuelType(false)
                               }
                             >
-                              <X size={14}></X>
+                              <X size={14} />
                             </div>
                             <Input
                               value={newFuelType}
                               onChange={(e) => setNewFuelType(e.target.value)}
-                              placeholder="Add Another Body Style"
+                              placeholder="Add Another  Fuel Type"
                               className="w-full pr-5"
                             />
                           </div>
@@ -709,6 +766,60 @@ export function AddCarModal({
                   )}
                 />
 
+                <div className="grid w-full  items-center gap-1.5">
+                  <Label>Pick Up Location</Label>
+                  <CountryStateCitySelector
+                    control={control}
+                    setValue={setValue}
+                    register={register}
+                    className="w-full rounded-none bg-[#F8FAFC] py-5"
+                  />
+                  <div className="flex gap-1.5 flex-wrap">
+                    {
+                      // @ts-ignore
+                      form.formState.errors?.country && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {form.formState.errors?.country.message}
+                        </p>
+                      )
+                    }
+                    {
+                      // @ts-ignore
+                      form.formState.errors?.state && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {form.formState.errors?.state.message}
+                        </p>
+                      )
+                    }
+
+                    {
+                      // @ts-ignore
+                      form.formState.errors?.city && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {form.formState.errors?.city.message}
+                        </p>
+                      )
+                    }
+
+                    {
+                      // @ts-ignore
+                      form.formState.errors?.streetAddress && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {form.formState.errors?.streetAddress.message}
+                        </p>
+                      )
+                    }
+                    {
+                      // @ts-ignore
+                      form.formState.errors?.zipCode && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {form.formState.errors?.zipCode.message}
+                        </p>
+                      )
+                    }
+                  </div>
+                </div>
+
                 {additionalOptions.map((option) => (
                   <div
                     key={option.id}
@@ -761,10 +872,11 @@ export function AddCarModal({
                 ))}
 
                 <Button
+                  disabled={isLoading}
                   type="submit"
                   className="w-full bg-primary-cyan hover:bg-cyan-600 rounded-none py-5"
                 >
-                  Upload
+                  Upload {isLoading && <LoadingSpin />}
                 </Button>
               </form>
             </Form>

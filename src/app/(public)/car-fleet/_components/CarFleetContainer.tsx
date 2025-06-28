@@ -1,10 +1,5 @@
 "use client";
 import Categories from "@/components/shared/categories/Categories";
-import { carAmenitiesFilterData } from "@/lib/carAmenitiesFilterData";
-import { carBrandsFilterData } from "@/lib/carBrandsFilterData";
-import { carTypeFilterData } from "@/lib/carTypeFilterData";
-import { fuelTypeFilterData } from "@/lib/fuelTypeFilterData";
-import { rentingLocationFilterData } from "@/lib/rentingLocationFilterData";
 import AllCar from "./AllCar";
 import PriceCategory from "./PriceCategory";
 import { FilterSort } from "./FilterSort";
@@ -20,12 +15,10 @@ import {
   useGetFuelTypeQuery,
 } from "@/redux/api/carFilterApi";
 import { ICar } from "@/types";
+import { useDebounce } from "use-debounce";
 
 const CarFleetContainer = () => {
-  //  ------------------ get filter data ---------------------
-  const { data: filterData, isLoading: filterLoading } =
-    useGetCarBrandsQuery(undefined);
-
+  //  ------------------ get filter data --------------------
   const { data: fuelTypeData, isLoading: fuelTypeLoading } =
     useGetFuelTypeQuery(undefined);
 
@@ -40,14 +33,52 @@ const CarFleetContainer = () => {
   const limit = useSearchParams()?.get("limit");
   const page = useSearchParams()?.get("page");
   const price = useSearchParams()?.get("price");
+  const fuelType = useSearchParams()?.get("fuelType");
+  const brand = useSearchParams()?.get("brand");
+  const carType = useSearchParams()?.get("carType");
+  const rentingLocation = useSearchParams()?.get("rentingLocation");
+  const [searchPrice] = useDebounce(price, 500);
+
+  // --------------------- set queries ---------------------
   const query: Record<string, string | number> = {};
   query["limit"] = Number(limit) || 9;
   query["page"] = Number(page) || 1;
   if (price) {
-    query["minPrice"] = Number(price?.split("-")?.[0]);
-    query["maxPrice"] = Number(price?.split("-")?.[1]);
+    query["minPrice"] = Number(searchPrice?.split("-")?.[0]);
+    query["maxPrice"] = Number(searchPrice?.split("-")?.[1]);
   }
 
+  if (fuelType) {
+    if (fuelType === "all") {
+      delete query["fuelType"];
+    } else {
+      query["fuelType"] = fuelType;
+    }
+  }
+
+  if (brand) {
+    if (brand === "all") {
+      delete query["brand"];
+    } else {
+      query["brand"] = brand;
+    }
+  }
+
+  if (carType) {
+    if (carType === "all") {
+      delete query["bodyStyle"];
+    } else {
+      query["bodyStyle"] = carType;
+    }
+  }
+
+  if (rentingLocation) {
+    if (rentingLocation === "all") {
+      delete query["rentingLocation.city"];
+    } else {
+      query["rentingLocation.city"] = rentingLocation;
+    }
+  }
 
   const { data: allCardData, isLoading } = useGetAllCarsQuery(query);
   // ------------------------------------------------------------- //
@@ -67,9 +98,9 @@ const CarFleetContainer = () => {
         <Categories
           title="Car Brands"
           data={carBrandsData?.data}
-          filterName="carBrand"
+          filterName="brand"
           loading={carBrandsLoading}
-          totalCars={allCardData?.data?.meta?.total}
+          checkedItem={brand || "all"}
         ></Categories>
         <Categories
           title="Car type"
@@ -77,6 +108,7 @@ const CarFleetContainer = () => {
           filterName="carType"
           loading={carTypeFilterLoading}
           totalCars={allCardData?.data?.meta?.total}
+          checkedItem={carType || "all"}
         ></Categories>
         {/* <Categories
           title="Car Amenities"
@@ -87,7 +119,7 @@ const CarFleetContainer = () => {
           data={fuelTypeData?.data}
           filterName="fuelType"
           loading={fuelTypeLoading}
-          totalCars={allCardData?.data?.meta?.total}
+          checkedItem={fuelType || "all"}
         ></Categories>
         <ReviewCategories title="Review Score"></ReviewCategories>
         <Categories
@@ -95,7 +127,7 @@ const CarFleetContainer = () => {
           data={carLocationsData?.data}
           filterName="rentingLocation"
           loading={carLocationsLoading}
-          totalCars={allCardData?.data?.meta?.total}
+          checkedItem={rentingLocation || "all"}
         ></Categories>
       </div>
 
@@ -108,7 +140,18 @@ const CarFleetContainer = () => {
           ></FilterSort>
 
           <div className="lg:hidden block">
-            <SmallDeviceFilter  cardBrandsData={carBrandsData?.data} cardBrandsLoading={carBrandsLoading} carTypesData={carTypeFilterData?.data} carTypesLoading={carTypeFilterLoading} fuelTypesData={fuelTypeData?.data} fuelTypesLoading={fuelTypeLoading} carLocationsData={carLocationsData?.data} carLocationsLoading={carLocationsLoading} highPriceData={highPriceData?.price} totalCars={allCardData?.data?.meta?.total} ></SmallDeviceFilter>
+            <SmallDeviceFilter
+              cardBrandsData={carBrandsData?.data}
+              cardBrandsLoading={carBrandsLoading}
+              carTypesData={carTypeFilterData?.data}
+              carTypesLoading={carTypeFilterLoading}
+              fuelTypesData={fuelTypeData?.data}
+              fuelTypesLoading={fuelTypeLoading}
+              carLocationsData={carLocationsData?.data}
+              carLocationsLoading={carLocationsLoading}
+              highPriceData={highPriceData?.price}
+              totalCars={allCardData?.data?.meta?.total}
+            ></SmallDeviceFilter>
           </div>
         </div>
         {/* ========================= all products ========================== */}

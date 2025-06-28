@@ -69,6 +69,7 @@ export interface ICar {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+  discount: string;
   id: string;
  
 }

@@ -5,36 +5,40 @@ import { useState } from "react"
 import Image from "next/image"
 import { Plus, X } from "lucide-react"
 
+interface UploadedImage {
+  file: File
+  preview: string
+}
+
 interface ImageUploadProps {
-  onChange: (value: string[]) => void
-  value: string[]
+  onChange: (value: UploadedImage[]) => void
+  value: UploadedImage[]
   maxImages?: number
 }
 
 export const ImageUpload = ({ onChange, value = [], maxImages = 4 }: ImageUploadProps) => {
   const [isUploading, setIsUploading] = useState(false)
 
-  // This would be replaced with your actual upload logic
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsUploading(true)
 
     const files = e.target.files
     if (!files) return
 
-    // Simulate upload - in a real app, you'd upload to a server/storage
-    const newImages: string[] = []
+    const newItems: UploadedImage[] = []
+    let processedCount = 0
 
     Array.from(files).forEach((file) => {
       const reader = new FileReader()
       reader.onload = (event) => {
         if (event.target?.result) {
-          newImages.push(event.target.result as string)
-
-          // When all files are processed
-          if (newImages.length === files.length) {
-            onChange([...value, ...newImages].slice(0, maxImages))
-            setIsUploading(false)
-          }
+          newItems.push({ file, preview: event.target.result as string })
+        }
+        processedCount++
+        if (processedCount === files.length) {
+          const updated = [...value, ...newItems].slice(0, maxImages)
+          onChange(updated)
+          setIsUploading(false)
         }
       }
       reader.readAsDataURL(file)
@@ -50,9 +54,9 @@ export const ImageUpload = ({ onChange, value = [], maxImages = 4 }: ImageUpload
   return (
     <div>
       <div className="flex flex-wrap gap-4">
-        {value.map((image, index) => (
+        {value.map((item, index) => (
           <div key={index} className="relative w-24 h-24 rounded border overflow-hidden">
-            <Image fill src={image} alt={`Car image ${index + 1}`} className="object-cover" />
+            <Image fill src={item.preview} alt={`Image ${index + 1}`} className="object-cover" />
             <button
               type="button"
               onClick={() => handleRemove(index)}
@@ -64,8 +68,8 @@ export const ImageUpload = ({ onChange, value = [], maxImages = 4 }: ImageUpload
         ))}
 
         {value.length < maxImages && (
-          <label className="flex items-center justify-center w-24 h-24 bg-[#F8FAFC]  border border-dashed rounded cursor-pointer hover:bg-muted transition">
-            <div className="flex flex-col items-center justify-center text-muted-foreground ">
+          <label className="flex items-center justify-center w-24 h-24 bg-[#F8FAFC] border border-dashed rounded cursor-pointer hover:bg-muted transition">
+            <div className="flex flex-col items-center justify-center text-muted-foreground">
               <Plus className="h-6 w-6 mb-1 text-orange-500" />
               <span className="text-xs text-orange-500">Add Image</span>
             </div>

@@ -22,13 +22,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-4 row-span-2  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[0]}
-              alt="details_image1"
-              className="w-full h-full object-cover rounded-md xl:max-h-[450px] lg:max-h-[370px] md:max-h-[300px] max-h-[200px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[0] && (
+              <Image
+                src={carImages?.[0]}
+                alt="details_image1"
+                className="w-full h-full object-cover rounded-md xl:max-h-[450px] lg:max-h-[370px] md:max-h-[300px] max-h-[200px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -38,13 +40,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-2 row-span-1  shadow-md rounded-md flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[1]}
-              alt="details_image2"
-              className="w-full h-full object-cover rounded-md xl:max-h-[225px] lg:max-h-[185px] md:max-h-[150px] max-h-[100px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[1] && (
+              <Image
+                src={carImages?.[1]}
+                alt="details_image2"
+                className="w-full h-full object-cover rounded-md xl:max-h-[225px] lg:max-h-[185px] md:max-h-[150px] max-h-[100px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -54,13 +58,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-2 row-span-1  shadow-md rounded-md flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[2]}
-              alt="details_image3"
-              className="w-full h-full object-cover rounded-md xl:max-h-[225px] lg:max-h-[185px] md:max-h-[150px] max-h-[100px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[2] && (
+              <Image
+                src={carImages?.[2]}
+                alt="details_image3"
+                className="w-full h-full object-cover rounded-md xl:max-h-[225px] lg:max-h-[185px] md:max-h-[150px] max-h-[100px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -70,13 +76,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[3]}
-              alt="details_image4"
-              className="w-full h-full object-cover rounded-md max-h-[220px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[3] && (
+              <Image
+                src={carImages?.[3]}
+                alt="details_image4"
+                className="w-full h-full object-cover rounded-md max-h-[220px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -86,13 +94,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[4]}
-              alt="details_image5"
-              className="w-full h-full object-cover rounded-md max-h-[220px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[4] && (
+              <Image
+                src={carImages?.[4]}
+                alt="details_image5"
+                className="w-full h-full object-cover rounded-md max-h-[220px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -102,13 +112,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[5]}
-              alt="details_image6"
-              className="w-full h-full object-cover rounded-md max-h-[220px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[5] && (
+              <Image
+                src={carImages?.[5]}
+                alt="details_image6"
+                className="w-full h-full object-cover rounded-md max-h-[220px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -118,13 +130,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[6]}
-              alt="details_image7"
-              className="w-full h-full object-cover rounded-md max-h-[220px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[6] && (
+              <Image
+                src={carImages?.[6]}
+                alt="details_image7"
+                className="w-full h-full object-cover rounded-md max-h-[220px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -134,13 +148,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[7]}
-              alt="details_image8"
-              className="w-full h-full object-cover rounded-md max-h-[220px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[7] && (
+              <Image
+                src={carImages?.[7]}
+                alt="details_image8"
+                className="w-full h-full object-cover rounded-md max-h-[220px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
 
@@ -150,13 +166,15 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
           <Zoom>
-            <Image
-              src={carImages?.[8]}
-              alt="details_image9"
-              className="w-full h-full object-cover rounded-md max-h-[220px]"
-              width={1900}
-              height={1900}
-            ></Image>
+            {carImages?.[8] && (
+              <Image
+                src={carImages?.[8]}
+                alt="details_image9"
+                className="w-full h-full object-cover rounded-md max-h-[220px]"
+                width={1900}
+                height={1900}
+              ></Image>
+            )}
           </Zoom>
         </motion.div>
       </motion.div>
