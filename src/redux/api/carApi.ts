@@ -25,8 +25,15 @@ export const carApi = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: [tagTypes.car],
+    }),
+    getOwnCars: builder.query({
+      query: () => ({
+        url: "/car/my-cars",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.car],
     })
   }),
 });
 
-export const { useGetAllCarsQuery, useGetSingleCarQuery, useAddNewCarMutation } = carApi;
+export const { useGetAllCarsQuery, useGetSingleCarQuery, useAddNewCarMutation, useGetOwnCarsQuery } = carApi;

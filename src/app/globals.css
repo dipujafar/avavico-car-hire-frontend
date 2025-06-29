@@ -163,3 +163,14 @@
   height: 100% !important;
   overflow: hidden !important;
 }
+
+
+/* styles/globals.css or another global CSS file */
+.editor h1, .editor h2, .editor h3, .editor p, .editor ul, .editor ol, .editor b, .editor i {
+  all: revert;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.editor{
+  word-break: break-all;
+}

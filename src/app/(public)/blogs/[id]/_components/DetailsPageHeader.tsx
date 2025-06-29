@@ -1,6 +1,7 @@
 import CustomAvatar from "@/components/shared/CustomeAvater";
 import SectionTitle from "@/components/shared/SectionTitle";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formatDate } from "@/lib/utils";
+import { IBlog } from "@/types";
 import {
   Facebook,
   Linkedin,
@@ -9,26 +10,17 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-interface BlogHeaderProps {
-  category: string;
-  title: string;
-  author: {
-    name: string;
-    role: string;
-    avatar: string;
-  };
-  date: string;
-}
 
-export default function DetailsPageHeader({ data }: { data: BlogHeaderProps }) {
+
+export default function DetailsPageHeader({ data }: { data: IBlog }) {
   return (
     <div>
       <div className="space-y-6">
         <span className="font-medium text-[#333] bg-[#EFF3FF] p-2.5 rounded-md ">
-          {data?.category}
+          {data?.category?.[0]}
         </span>
         <div className=" mt-5">
-          <SectionTitle title={data?.title} className="max-w-6xl" ></SectionTitle>
+          <SectionTitle title={data?.blogName} className="max-w-6xl" ></SectionTitle>
         </div>
         <div className="flex items-center gap-3">
          <CustomAvatar img={data?.author?.avatar} name={data?.author?.name} className="size-12"></CustomAvatar>
@@ -37,7 +29,7 @@ export default function DetailsPageHeader({ data }: { data: BlogHeaderProps }) {
             <div>
               By {data?.author?.name}, {data?.author?.role}
             </div>
-            <div className="text-sm">{data?.date}</div>
+            <div className="text-sm">{formatDate(data?.createdAt)}</div>
           </div>
         </div>
 

@@ -130,3 +130,17 @@ export interface IRentingLocation {
   streetAddress: string;
   zipCode: string;
 }
+
+
+// ---------------------- type for blog ----------------------
+export interface IBlog {
+  author: string
+  blogName: string
+  details: string
+  blogImage: string
+  category: string[]
+  isDeleted: boolean
+  createdAt: string
+  updatedAt: string
+  id: string
+}

@@ -107,7 +107,6 @@ const CarFleetContainer = () => {
           data={carTypeFilterData?.data}
           filterName="carType"
           loading={carTypeFilterLoading}
-          totalCars={allCardData?.data?.meta?.total}
           checkedItem={carType || "all"}
         ></Categories>
         {/* <Categories

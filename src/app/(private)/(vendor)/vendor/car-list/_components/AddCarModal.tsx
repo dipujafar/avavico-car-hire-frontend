@@ -33,6 +33,8 @@ import { useAddNewCarMutation } from "@/redux/api/carApi";
 import { Label } from "@/components/ui/label";
 import CountryStateCitySelector from "@/components/ui/country-state-city-selector";
 import LoadingSpin from "@/components/ui/loading-spin";
+import { Error_Modal } from "@/modals";
+import { toast } from "sonner";
 
 // const colors = [
 //   { label: "Black", value: "black" },
@@ -61,10 +63,10 @@ const dropdownData = [
   { label: "16", value: "16" },
 ];
 
-const years = Array.from({ length: 30 }, (_, i) => {
-  const year = new Date().getFullYear() - i;
-  return { label: year.toString(), value: year.toString() };
-});
+// const years = Array.from({ length: 30 }, (_, i) => {
+//   const year = new Date().getFullYear() - i;
+//   return { label: year.toString(), value: year.toString() };
+// });
 
 const bodyStyles = [
   { id: "sedan", label: "Sedan" },
@@ -207,7 +209,6 @@ export function AddCarModal({
         streetAddress: data?.streetAddress,
         zipCode: data?.zipCode,
       },
-      // carAmenities: ["Bluetooth", "Leather Seats", "Navigation System"],
       model: data?.model,
       brand: data?.brand,
       price: data?.price,
@@ -224,30 +225,32 @@ export function AddCarModal({
       gearType: data?.gearType,
       bodyStyle: data?.bodyStyle,
       childSeat: {
-        select: data?.additionalOptions?.child_seat?.option || 0,
+        select: Number(data?.additionalOptions?.child_seat?.option) || 0,
         price: data?.additionalOptions?.child_seat?.price || 0,
       },
       additionalDriver: {
-        select: data?.additionalOptions?.additional_driver?.option || 0,
+        select: Number(data?.additionalOptions?.additional_driver?.option) || 0,
         price: data?.additionalOptions?.additional_driver?.price || 0,
       },
       youngDriver: {
-        select: data?.additionalOptions?.young_driver?.option || 0,
+        select: Number(data?.additionalOptions?.young_driver?.option) || 0,
         price: data?.additionalOptions?.young_driver?.price || 0,
       },
       oneWayFees: {
-        select: data?.additionalOptions?.one_way_fees?.option || 0,
+        select: Number(data?.additionalOptions?.one_way_fees?.option) || 0,
         price: data?.additionalOptions?.one_way_fees?.price || 0,
       },
       gps: {
-        select: data?.additionalOptions?.GPS?.option || 0,
+        select: Number(data?.additionalOptions?.GPS?.option) || 0,
         price: data?.additionalOptions?.GPS?.price || 0,
       },
       crossBorder: {
-        select: data?.additionalOptions?.cross_border?.option || 0,
+        select: Number(data?.additionalOptions?.cross_border?.option) || 0,
         price: data?.additionalOptions?.cross_border?.price || 0,
       },
     };
+
+   
 
     const formData = new FormData();
     data?.images?.forEach((image) => {
@@ -257,10 +260,10 @@ export function AddCarModal({
     formData.append("data", JSON.stringify(formattedData));
 
     try {
-      const res = await addNewCar(formData).unwrap();
-      console.log(res);
-    } catch (err) {
-      console.log(err);
+     await addNewCar(formData).unwrap();
+      toast.success("Car Successfully Uploaded.");
+    } catch (err: any) {
+      Error_Modal({ title: err?.data?.message });
     }
   }
 

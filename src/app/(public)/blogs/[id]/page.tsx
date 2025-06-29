@@ -27,7 +27,8 @@ const pathsData = [
     active: true,
   },
 ];
-const BlogDetailsPage = () => {
+const BlogDetailsPage = async ({params}:{params:Promise<{id:string}>}) => {
+   const {id} = await params;
   return (
     <div className="xl:space-y-20 md:space-y-12 space-y-8 bg-[#F8F9FA]  md:pb-16  pb-8">
       <PageTopBanner
@@ -36,7 +37,7 @@ const BlogDetailsPage = () => {
         className="opacity-40"
         pathsData={pathsData}
       ></PageTopBanner>
-      <DetailsPageContainer></DetailsPageContainer>
+      <DetailsPageContainer id={id}></DetailsPageContainer>
       <AllCarBrands></AllCarBrands>
       <SimilarPosts></SimilarPosts>
     </div>

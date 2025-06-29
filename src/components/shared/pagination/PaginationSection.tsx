@@ -7,9 +7,10 @@ import { Pagination } from "react-pagination-bar";
 const PaginationSection = ({
   totalItems,
   className,
-  id
+  id,
+  pagePostsLimitProps
 }: {
-  pagePostsLimit?: number;
+  pagePostsLimitProps?: number;
   totalItems: number;
   className?: string;
   id?: string;
@@ -21,7 +22,7 @@ const PaginationSection = ({
     <div className={cn("mt-5 text-end", className)}>
       <Pagination
         currentPage={Number(currentPage) || 1}
-        itemsPerPage={Number(pagePostsLimit)|| 9}
+        itemsPerPage={Number(pagePostsLimit)|| pagePostsLimitProps || 9}
         onPageChange={(pageNumber) =>
           updateSearchParam("page", pageNumber?.toString())
         }
