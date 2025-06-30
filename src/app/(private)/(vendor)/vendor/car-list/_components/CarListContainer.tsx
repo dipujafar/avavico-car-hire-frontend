@@ -8,10 +8,19 @@ import { useGetOwnCarsQuery } from "@/redux/api/carApi";
 import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
 import { ICar } from "@/types";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
+import { useSearchParams } from "next/navigation";
 
 const CarListContainer = () => {
   const [openAddCarModal, setOpenAddCarModal] = useState(false);
-  const { data: ownCarsData, isLoading } = useGetOwnCarsQuery(undefined);
+
+  // -------------------------- call api with query params --------------------------//
+  const pagePostsLimit = 9;
+  const page = useSearchParams()?.get("page");
+  const query: Record<string, string | number> = {};
+  query["limit"] = pagePostsLimit;
+  query["page"] = Number(page) || 1;
+  const { data: ownCarsData, isLoading } = useGetOwnCarsQuery(query);
+  console.log(ownCarsData?.data?.cars);
   return (
     <>
       <div className="flex justify-between mb-5">
@@ -32,7 +41,7 @@ const CarListContainer = () => {
                 // @ts-ignore
                 <CarCardSkeleton key={i}></CarCardSkeleton>
               ))
-          : ownCarsData?.data?.car?.map((carData: ICar) => (
+          : ownCarsData?.data?.cars?.map((carData: ICar) => (
               // @ts-ignore
               <ProductCard
                 data={carData}
@@ -41,7 +50,10 @@ const CarListContainer = () => {
               ></ProductCard>
             ))}
       </div>
-      <PaginationSection totalItems={10}></PaginationSection>
+      <PaginationSection
+        totalItems={ownCarsData?.data?.meta?.total || 0}
+        pagePostsLimitProps={pagePostsLimit}
+      ></PaginationSection>
       <AddCarModal
         open={openAddCarModal}
         setOpen={setOpenAddCarModal}

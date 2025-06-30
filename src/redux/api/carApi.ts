@@ -27,13 +27,36 @@ export const carApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.car],
     }),
     getOwnCars: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/car/my-cars",
         method: "GET",
+        params,
       }),
       providesTags: [tagTypes.car],
-    })
+    }),
+    deleteCar: builder.mutation({
+      query: (id) => ({
+        url: `/car/delete_car/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [tagTypes.car],
+    }),
+    updateCar: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/car/update_car/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.car],
+    }),
   }),
 });
 
-export const { useGetAllCarsQuery, useGetSingleCarQuery, useAddNewCarMutation, useGetOwnCarsQuery } = carApi;
+export const {
+  useGetAllCarsQuery,
+  useGetSingleCarQuery,
+  useAddNewCarMutation,
+  useGetOwnCarsQuery,
+  useDeleteCarMutation,
+  useUpdateCarMutation,
+} = carApi;

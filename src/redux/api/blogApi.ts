@@ -34,6 +34,13 @@ const blogApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.blog],
     }),
+    updateBlog: builder.query({
+      query: ({id,data}) => ({
+        url: `/blog/update_blog/${id}`, 
+        method: "PATCH",
+        body: data
+      })
+    })
   }),
 });
 
@@ -42,4 +49,5 @@ export const {
   useAddNewBlogMutation,
   useGetSingleBlogQuery,
   useGetMyBlogsQuery,
+  useUpdateBlogQuery
 } = blogApi;

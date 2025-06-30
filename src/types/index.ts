@@ -31,7 +31,7 @@ export interface ICar {
   door: number;
   vin: string;
   fuel: number;
-  fuelType: string[];
+  fuelType: string;
   gearType: string;
   bodyStyle: string[];
   carImage: string[];
@@ -46,6 +46,7 @@ export interface ICar {
   createdAt: string;
   updatedAt: string;
   discount: string;
+  brand: string;
   id: string;
  
 }

@@ -4,7 +4,6 @@ import { SearchCheck, Star } from "lucide-react";
 import { ReactNode } from "react";
 import { motion } from "motion/react";
 import {
-  BagIcon,
   DoorsIcons,
   MiterIcon,
   PuleIcon,
@@ -35,19 +34,35 @@ export default function CarDetails({ data }: { data: ICar }) {
     },
     {
       icon: <PuleTypeIcon></PuleTypeIcon>,
-      text: data?.fuelType?.map((type) => type).join(", "),
+      text: data?.fuelType,
       title: "Fuel Type",
     },
-    { icon: <SettingIcon2></SettingIcon2>, text: data?.gearType, title: "Gear Type" },
-    { icon: <SeatsIcons></SeatsIcons>, text: `${data?.seat} seats`, title: "Seats" },
+    {
+      icon: <SettingIcon2></SettingIcon2>,
+      text: data?.gearType,
+      title: "Gear Type",
+    },
+    {
+      icon: <SeatsIcons></SeatsIcons>,
+      text: `${data?.seat} seats`,
+      title: "Seats",
+    },
     { icon: <SearchCheck size={20} />, text: data?.vin, title: "VIN" },
     {
       icon: <SUVsIcons></SUVsIcons>,
       text: data?.bodyStyle?.map((type) => type).join(", "),
       title: "Body Style",
     },
-    { icon: <DoorsIcons></DoorsIcons>, text: `${data?.door} Doors`, title: "Doors" },
-    { icon: <PuleIcon></PuleIcon>, text: `${data?.fuel}L`, title: "Fuel Capacity" },
+    {
+      icon: <DoorsIcons></DoorsIcons>,
+      text: `${data?.door} Doors`,
+      title: "Doors",
+    },
+    {
+      icon: <PuleIcon></PuleIcon>,
+      text: `${data?.fuel}L`,
+      title: "Fuel Capacity",
+    },
   ];
   return (
     <div className="space-y-4">
@@ -56,9 +71,7 @@ export default function CarDetails({ data }: { data: ICar }) {
           <h2 className="xl:text-4xl md:text-3xl text-2xl  font-bold tracking-tight">
             {data?.carName}
           </h2>
-          <p className="text-black/70">
-            {data?.model}
-          </p>
+          <p className="text-black/70">{data?.model}</p>
         </div>
         <div className="flex items-center gap-1.5 border px-4 py-1 w-fit rounded-full bg-white">
           <motion.span
@@ -99,7 +112,13 @@ export default function CarDetails({ data }: { data: ICar }) {
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p> <span className="font-semibold">{spec.title && `${spec.title} : `} </span>{spec.text}</p>
+                <p>
+                  {" "}
+                  <span className="font-semibold">
+                    {spec.title && `${spec.title} : `}{" "}
+                  </span>
+                  {spec.text}
+                </p>
               </TooltipContent>
             </Tooltip>
           ))}

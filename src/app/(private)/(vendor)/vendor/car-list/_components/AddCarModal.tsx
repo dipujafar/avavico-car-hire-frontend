@@ -29,21 +29,14 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ImageUpload } from "@/components/shared/image-upload";
 import { PlusIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useAddNewCarMutation } from "@/redux/api/carApi";
+import { useAddNewCarMutation, useUpdateCarMutation } from "@/redux/api/carApi";
 import { Label } from "@/components/ui/label";
 import CountryStateCitySelector from "@/components/ui/country-state-city-selector";
 import LoadingSpin from "@/components/ui/loading-spin";
 import { Error_Modal } from "@/modals";
 import { toast } from "sonner";
-
-// const colors = [
-//   { label: "Black", value: "black" },
-//   { label: "White", value: "white" },
-//   { label: "Silver", value: "silver" },
-//   { label: "Gray", value: "gray" },
-//   { label: "Red", value: "red" },
-//   { label: "Blue", value: "blue" },
-// ];
+import { ICar } from "@/types";
+import { formSchema } from "./schema";
 
 const dropdownData = [
   { label: "2", value: "2" },
@@ -62,11 +55,6 @@ const dropdownData = [
   { label: "15", value: "15" },
   { label: "16", value: "16" },
 ];
-
-// const years = Array.from({ length: 30 }, (_, i) => {
-//   const year = new Date().getFullYear() - i;
-//   return { label: year.toString(), value: year.toString() };
-// });
 
 const bodyStyles = [
   { id: "sedan", label: "Sedan" },
@@ -98,65 +86,19 @@ const additionalOptions = [
   { id: "cross_border", label: "Cross Border" },
 ];
 
-const imageSchema = z.object({
-  file: z.instanceof(File),
-  preview: z.string().url().or(z.string().startsWith("data:image/")),
-});
-
-const formSchema = z.object({
-  images: z.array(imageSchema).min(1, "At least one image is required"),
-  name: z.string().min(1, "Car model is required"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  brand: z.string().min(1, "Brand is required"),
-  model: z.string().min(1, "Make is required"),
-  price: z.coerce
-    .number()
-    .positive("Price must be a positive number")
-    .optional(),
-  discount: z.coerce.number().positive("Discount must be a positive number"),
-  mileage: z.coerce.number().positive("Mileage must be a positive number"),
-  mileageType: z.string().min(1, "Mileage type is required"),
-  // year: z.string().min(1, "Year is required"),
-  // color: z.string().min(1, "Color is required"),
-  seats: z.string().min(1, "Door configuration is required"),
-  doors: z.string().min(1, "Door configuration is required"),
-  vin: z.string().min(1, "VIN is required"),
-  fuelLoad: z.coerce.number().positive("Fuel load must be a positive number"),
-  bodyStyle: z.array(z.string()).min(1, "At least one body style is required"),
-  gearType: z.string().min(1, "Transmission is required"),
-  fuelType: z.string().min(1, "Fuel type is required"),
-  country: z.string({
-    required_error: "Please select a country.",
-  }),
-  streetAddress: z.string().min(5, {
-    message: "Street address required.",
-  }),
-  city: z.string().optional(),
-  state: z.string({
-    required_error: "Please select a state.",
-  }),
-  zipCode: z.string().min(5, {
-    message: "Zip code must be at least 5 characters.",
-  }),
-  additionalOptions: z.record(
-    z.string(),
-    z.object({
-      option: z.string().optional(),
-      price: z.coerce.number().optional(),
-    })
-  ),
-});
-
 type FormValues = z.infer<typeof formSchema>;
 
 export function AddCarModal({
   open,
   setOpen,
+  defaultData,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  defaultData?: ICar;
 }) {
   const [addNewCar, { isLoading }] = useAddNewCarMutation();
+  const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
   const [customBodyStyles, setCustomBodyStyles] = useState<
     { id: string; label: string }[]
   >([]);
@@ -170,34 +112,63 @@ export function AddCarModal({
   const [showAdditionalFuelType, setShowAdditionalOptionsFuelType] =
     useState(false);
 
+  const additionalOptionsDefault = {
+    child_seat: {
+      option: defaultData?.childSeat?.select?.toString(),
+      price: defaultData?.childSeat?.price,
+    },
+    additional_driver: {
+      option: defaultData?.additionalDriver?.select?.toString(),
+      price: defaultData?.additionalDriver?.price,
+    },
+    young_driver: {
+      option: defaultData?.youngDriver?.select?.toString(),
+      price: defaultData?.youngDriver?.price,
+    },
+    one_way_fees: {
+      option: defaultData?.oneWayFees?.select?.toString(),
+      price: defaultData?.oneWayFees?.price,
+    },
+    GPS: {
+      option: defaultData?.gps?.select?.toString(),
+      price: defaultData?.gps?.price,
+    },
+    cross_border: {
+      option: defaultData?.crossBorder?.select?.toString(),
+      price: defaultData?.crossBorder?.price,
+    },
+  };
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      images: [],
-      name: "",
-      description: "",
-      model: "",
-      price: undefined,
-      mileage: undefined,
-      // year: "",
-      // color: "",
-      doors: "",
-      vin: "",
-      fuelLoad: undefined,
-      bodyStyle: [],
-      gearType: "",
-      fuelType: "",
-      additionalOptions: additionalOptions.reduce((acc, option) => {
-        acc[option.id] = { option: "", price: undefined };
-        return acc;
-      }, {} as Record<string, { option?: string; price?: number }>),
+      name: defaultData?.carName || "",
+      description: defaultData?.description || "",
+      model: defaultData?.model || "",
+      price: defaultData?.price || undefined,
+      discount: Number(defaultData?.discount) || 0,
+      mileage: defaultData?.mileage?.rate || undefined,
+      mileageType: defaultData?.mileage?.type || "",
+      brand: defaultData?.brand || "",
+      seats: defaultData?.seat.toString() || "",
+      doors: defaultData?.door.toString() || "",
+      vin: defaultData?.vin || "",
+      fuelLoad: defaultData?.fuel || undefined,
+      bodyStyle: defaultData?.bodyStyle || [],
+      gearType: defaultData?.gearType || "",
+      fuelType: defaultData?.fuelType || "",
+      country: defaultData?.rentingLocation?.country || "",
+      streetAddress: defaultData?.rentingLocation?.streetAddress || "",
+      city: defaultData?.rentingLocation?.city || "",
+      state: defaultData?.rentingLocation?.state || "",
+      zipCode: defaultData?.rentingLocation?.zipCode || "",
+      additionalOptions: additionalOptionsDefault || {},
     },
   });
 
   const { register, setValue, control } = form;
 
   async function onSubmit(data: FormValues) {
-
     const formattedData = {
       carName: data?.name,
       description: data?.description,
@@ -249,21 +220,42 @@ export function AddCarModal({
       },
     };
 
-   
+    if (defaultData) {
+      const formData = new FormData();
+      data?.images?.forEach((image) => {
+        formData.append("carImage", image.file);
+      });
 
-    const formData = new FormData();
-    data?.images?.forEach((image) => {
-      formData.append("carImage", image.file);
-    });
+      formData.append(
+        "data",
+        JSON.stringify({ carImage: defaultData?.carImage, ...formattedData })
+      );
+      try {
+        await updateCar({
+          id: defaultData?.id,
+          data: formData,
+        }).unwrap();
+      } catch (err: any) {
+        Error_Modal({ title: err?.data?.message });
+      }
+    } else {
+      if (!data?.images?.length)
+        return toast.error("Please upload at least one image.");
 
-    formData.append("data", JSON.stringify(formattedData));
+      const formData = new FormData();
+      data?.images?.forEach((image) => {
+        formData.append("carImage", image.file);
+      });
 
-    try {
-     await addNewCar(formData).unwrap();
-      toast.success("Car Successfully Uploaded.");
-      setOpen(false);
-    } catch (err: any) {
-      Error_Modal({ title: err?.data?.message });
+      formData.append("data", JSON.stringify(formattedData));
+
+      try {
+        await addNewCar(formData).unwrap();
+        toast.success("Car Successfully Uploaded.");
+        setOpen(false);
+      } catch (err: any) {
+        Error_Modal({ title: err?.data?.message });
+      }
     }
   }
 
@@ -283,12 +275,17 @@ export function AddCarModal({
                   name="images"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Attach Image</FormLabel>
+                      <FormLabel>
+                        Attach Image{" "}
+                        <span className="text-xs">
+                          (Recommendation: upload 9 images)
+                        </span>
+                      </FormLabel>
                       <FormControl>
                         <ImageUpload
                           value={field.value}
                           onChange={field.onChange}
-                          maxImages={10}
+                          maxImages={9}
                         />
                       </FormControl>
                       <FormMessage />
@@ -776,6 +773,11 @@ export function AddCarModal({
                     setValue={setValue}
                     register={register}
                     className="w-full rounded-none bg-[#F8FAFC] py-5"
+                    userAddress={{
+                      country: defaultData?.rentingLocation?.country,
+                      state: defaultData?.rentingLocation?.state,
+                      city: defaultData?.rentingLocation?.city,
+                    }}
                   />
                   <div className="flex gap-1.5 flex-wrap">
                     {
@@ -823,7 +825,7 @@ export function AddCarModal({
                   </div>
                 </div>
 
-                {additionalOptions.map((option) => (
+                {additionalOptions?.map((option) => (
                   <div
                     key={option.id}
                     className="grid grid-cols-1 md:grid-cols-2 gap-3"
@@ -844,9 +846,9 @@ export function AddCarModal({
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="option1"> 1</SelectItem>
-                              <SelectItem value="option2"> 2</SelectItem>
-                              <SelectItem value="option3"> 3</SelectItem>
+                              <SelectItem value="1"> 1</SelectItem>
+                              <SelectItem value="2"> 2</SelectItem>
+                              <SelectItem value="3"> 3</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -875,11 +877,11 @@ export function AddCarModal({
                 ))}
 
                 <Button
-                  disabled={isLoading}
+                  disabled={isLoading || updateLoading}
                   type="submit"
                   className="w-full bg-primary-cyan hover:bg-cyan-600 rounded-none py-5"
                 >
-                  Upload {isLoading && <LoadingSpin />}
+                  Upload {isLoading || (updateLoading && <LoadingSpin />)}
                 </Button>
               </form>
             </Form>
