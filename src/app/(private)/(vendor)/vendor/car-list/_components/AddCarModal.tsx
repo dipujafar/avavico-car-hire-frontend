@@ -197,7 +197,6 @@ export function AddCarModal({
   const { register, setValue, control } = form;
 
   async function onSubmit(data: FormValues) {
-    // console.log(data);
 
     const formattedData = {
       carName: data?.name,
@@ -262,6 +261,7 @@ export function AddCarModal({
     try {
      await addNewCar(formData).unwrap();
       toast.success("Car Successfully Uploaded.");
+      setOpen(false);
     } catch (err: any) {
       Error_Modal({ title: err?.data?.message });
     }

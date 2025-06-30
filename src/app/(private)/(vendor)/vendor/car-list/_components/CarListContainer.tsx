@@ -1,7 +1,6 @@
 "use client";
 import ProductCard from "@/components/shared/cards/ProductCard";
 import { Button } from "@/components/ui/button";
-import { carData } from "@/lib/dummyData";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { AddCarModal } from "./AddCarModal";

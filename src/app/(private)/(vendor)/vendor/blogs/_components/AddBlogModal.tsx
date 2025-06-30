@@ -72,7 +72,10 @@ export function AddBlogModal({
     };
 
     const formData = new FormData();
-    formData.append("blogImage", values?.images[0]?.file);
+    values?.images?.forEach((image) => {
+      formData.append("blogImage", image.file);
+    });
+
     formData.append("data", JSON.stringify(formattedData));
 
     try {
@@ -105,12 +108,12 @@ export function AddBlogModal({
               name="images"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Upload Blog Image</FormLabel>
+                  <FormLabel>Upload Blog Image <span className="text-xs translate-y-0.5">(Recommended: Upload 4 images)</span></FormLabel>
                   <FormControl>
                     <ImageUpload
                       value={field.value}
                       onChange={field.onChange}
-                      maxImages={10}
+                      maxImages={4}
                     />
                   </FormControl>
                   <FormMessage />
@@ -176,7 +179,7 @@ export function AddBlogModal({
               type="submit"
               className="w-full bg-primary-cyan rounded-none py-5"
             >
-              Upload {isLoading && <LoadingSpin/>}
+              Upload {isLoading && <LoadingSpin />}
             </Button>
           </form>
         </Form>

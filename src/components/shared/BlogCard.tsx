@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { IBlog } from "@/types";
 import Link from "next/link";
 import { Edit, Trash2 } from "lucide-react";
@@ -25,7 +25,7 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
             className="object-cover h-[220px]"
           />
         </div>
-        <div className="p-4 space-y-6">
+        <div className="p-4 md:space-y-4 space-y-3">
           <div className="space-y-1">
             <h2 className="text-lg font-medium line-clamp-1">
               {post?.blogName}
@@ -35,7 +35,7 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
           <div className="flex  gap-x-2 justify-between items-center mt-4 text-sm text-[#333]">
             <span className="truncate">{formatDate(post.createdAt)}</span>
             <span className="w-[30px] bg-[#8A8A8A] h-px"></span>
-            <span className=" flex justify-end truncate ">
+            <span className={cn("flex justify-end truncate", ownBlog && "hidden")}>
               {post.category?.[0]}
             </span>
             {ownBlog && (
