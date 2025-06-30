@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { formatDate } from "@/lib/utils";
-import { IBlog, TBlogPost } from "@/types";
+import { IBlog } from "@/types";
 import Link from "next/link";
 import { Edit, Trash2 } from "lucide-react";
 
@@ -16,10 +16,12 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
       <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
         <div className="relative ">
           <Image
-            src={post?.blogImage}
+            src={post?.blogImage?.[0]}
             alt={`${post?.blogName} blog image`}
             width={1200}
             height={1200}
+            placeholder="blur"
+            blurDataURL={"/blurImage.jpg"}
             className="object-cover h-[220px]"
           />
         </div>
@@ -28,15 +30,16 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
             <h2 className="text-lg font-medium line-clamp-1">
               {post?.blogName}
             </h2>
-            
           </div>
           <hr />
-          <div className="flex j gap-x-2 justify-between items-center mt-4 text-sm text-[#333]">
-            <span className="truncate flex-1">{formatDate(post.createdAt)}</span>
+          <div className="flex  gap-x-2 justify-between items-center mt-4 text-sm text-[#333]">
+            <span className="truncate">{formatDate(post.createdAt)}</span>
             <span className="w-[30px] bg-[#8A8A8A] h-px"></span>
-            <span className="flex-1 flex justify-end ">{post.category?.[0]}</span>
+            <span className=" flex justify-end truncate ">
+              {post.category?.[0]}
+            </span>
             {ownBlog && (
-              <div className="flex gap-x-1 flex-1 justify-end">
+              <div className="flex gap-x-1 justify-end">
                 <div className="size-7 bg-green-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer">
                   <Edit size={16}></Edit>
                 </div>

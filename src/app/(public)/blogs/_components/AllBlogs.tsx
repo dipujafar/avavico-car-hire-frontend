@@ -1,11 +1,10 @@
-  "use client";
+  "use client";;
   import BlogCard from "@/components/shared/BlogCard";
   import Container from "@/components/shared/Container";
   import PaginationSection from "@/components/shared/pagination/PaginationSection";
   import SectionTitle from "@/components/shared/SectionTitle";
   import BlogCardSkeleton from "@/components/skeletons/BlogSkeleton/BlogCardSkeleton";
   import Empty from "@/components/ui/empty";
-  import { blogPosts } from "@/lib/dummyData";
   import { useGetAllBlogsQuery } from "@/redux/api/blogApi";
   import { IBlog } from "@/types";
   import { useSearchParams } from "next/navigation";
@@ -18,7 +17,7 @@
     query["page"] = Number(page) || 1;
 
     const { data: allBlogData, isLoading } = useGetAllBlogsQuery(query);
-    console.log(allBlogData?.data?.meta?.total);
+
     return (
       <Container>
         <div className=" xl:mb-10 mb-7">
@@ -35,8 +34,8 @@
               .map((_, i) => <BlogCardSkeleton key={i}></BlogCardSkeleton>)
           ) :
           // --------------------------------if data is exists then display them other wise display show empty ---------------------//
-          allBlogData?.data?.blog?.length ? (
-            allBlogData?.data?.blog?.map((post: IBlog) => (
+          allBlogData?.data?.blogs?.length ? (
+            allBlogData?.data?.blogs?.map((post: IBlog) => (
               <BlogCard key={post.id} post={post} />
             ))
           ) : (

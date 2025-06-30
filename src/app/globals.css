@@ -174,3 +174,9 @@
 .editor{
   word-break: break-all;
 }
+
+
+/* ---------------------------------- react share styles -------------------- */
+.makeStyles-copyContainer-5{
+  @apply !hidden
+}

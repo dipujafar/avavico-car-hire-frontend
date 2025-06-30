@@ -29,6 +29,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md xl:max-h-[450px] lg:max-h-[370px] md:max-h-[300px] max-h-[200px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -47,6 +49,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md xl:max-h-[225px] lg:max-h-[185px] md:max-h-[150px] max-h-[100px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -65,6 +69,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md xl:max-h-[225px] lg:max-h-[185px] md:max-h-[150px] max-h-[100px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -83,6 +89,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md max-h-[220px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -101,6 +109,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md max-h-[220px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -119,6 +129,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md max-h-[220px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -137,6 +149,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md max-h-[220px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -155,6 +169,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md max-h-[220px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>
@@ -173,6 +189,8 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
                 className="w-full h-full object-cover rounded-md max-h-[220px]"
                 width={1900}
                 height={1900}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             )}
           </Zoom>

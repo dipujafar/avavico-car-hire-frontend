@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ICar } from "@/types";
 import Link from "next/link";
 import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3 } from "../../icons";
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export default function ProductCard({
@@ -21,9 +20,11 @@ export default function ProductCard({
         <div className="relative w-full z-0">
           <Image
             src={data?.carImage?.[0]}
-            alt={`${data?.carImage} image`}
+            alt={`${data?.carName} image`}
             width={1200}
             height={1200}
+            placeholder="blur"
+            blurDataURL={"/blurImage.jpg"}
             className="object-cover origin-center md:h-[200px] max-h-[250px]  "
           />
         </div>

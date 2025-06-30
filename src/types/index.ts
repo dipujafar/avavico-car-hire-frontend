@@ -1,28 +1,4 @@
-export type TCar = {
-  id: string;
-  name: string;
-  location: string;
-  imageUrl: string;
-  rating: number;
-  reviewCount: number;
-  distanceIncluded: string;
-  transmission: "";
-  fuelType: "";
-  seatingCapacity: number;
-  pricePerDay: number;
-  availability: boolean;
-  licensePlate: string;
-  vehicleType: "";
-};
 
-export type TBlogPost = {
-  id: string;
-  title: string;
-  imageUrl: string;
-  date: string;
-  category: "Road Trip" | "Eco Friendly" | "Safe Driving";
-  slug: string;
-};
 
 export type TTestimonial = {
   id: string;
@@ -134,13 +110,33 @@ export interface IRentingLocation {
 
 // ---------------------- type for blog ----------------------
 export interface IBlog {
-  author: string
+  author: IUser
   blogName: string
   details: string
-  blogImage: string
+  blogImage: string[]
   category: string[]
   isDeleted: boolean
   createdAt: string
   updatedAt: string
+  id: string
+}
+
+
+// ---------------------- type for user ----------------------
+export interface IUser {
+  firstName: string
+  lastName: string
+  userName: string
+  mobile: string
+  email: string
+  role: string
+  isDeleted: boolean
+  __t: string
+  companyName: string
+  isAuthProvider: boolean
+  passwordUpdatedAt: string
+  createdAt: string
+  updatedAt: string
+  image: string
   id: string
 }

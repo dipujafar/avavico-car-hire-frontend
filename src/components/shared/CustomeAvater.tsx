@@ -16,8 +16,15 @@ const CustomAvatar = ({
   return (
     <Avatar className={cn("", className)}>
       <AvatarImage src={img?.src || img} />
-      <AvatarFallback className={cn("bg-gray-300 text-3xl", fallbackClass)}>
-        {name?.charAt(0).toUpperCase()}
+      <AvatarFallback className={cn("bg-gray-300 text-3xl uppercase", fallbackClass)}>
+        {name?.split(" ").length > 1 ? (
+          <p>
+            {name?.split(" ")[0].substring(0, 1)}
+            {name?.split(" ")[1].substring(0, 1)}
+          </p>
+        ) : (
+          name?.split(" ")[0].substring(0, 1)
+        )}
       </AvatarFallback>
     </Avatar>
   );
