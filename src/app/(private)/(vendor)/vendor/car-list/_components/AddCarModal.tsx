@@ -283,6 +283,7 @@ export function AddCarModal({
                       </FormLabel>
                       <FormControl>
                         <ImageUpload
+                          // @ts-ignore
                           value={field.value}
                           onChange={field.onChange}
                           maxImages={9}
