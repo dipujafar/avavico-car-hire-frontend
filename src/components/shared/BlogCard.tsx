@@ -4,6 +4,11 @@ import { cn, formatDate } from "@/lib/utils";
 import { IBlog } from "@/types";
 import { Edit, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useDeleteBlogMutation } from "@/redux/api/blogApi";
+import { Error_Modal } from "@/modals";
+import { toast } from "sonner";
+import { AddBlogModal } from "@/app/(private)/(vendor)/vendor/blogs/_components/AddBlogModal";
+import { useState } from "react";
 
 interface BlogCardProps {
   post: IBlog;
@@ -12,6 +17,8 @@ interface BlogCardProps {
 
 export default function BlogCard({ post, ownBlog }: BlogCardProps) {
   const router = useRouter();
+  const [deleteBlog, { isLoading }] = useDeleteBlogMutation();
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const handleCardClick = () => {
     router.push(`/blogs/${post.id}`);
@@ -19,15 +26,26 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Add your edit logic here
+   setOpenEditModal(true);
   };
 
-  const handleDeleteClick = (e: React.MouseEvent) => {
+  const handleDeleteClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    toast.loading("Deleting blog...", { id: "deleteBlog" });
+    try{
+       await deleteBlog(post?.id).unwrap();
+       toast.success("Blog deleted successfully");
+       toast.dismiss("deleteBlog");
+    }catch(error: any){
+     Error_Modal({title: error?.data?.message})
+     toast.dismiss("deleteBlog");
+    }
+
     // Add your delete logic here
   };
 
   return (
+    <>
     <div
       className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
       onClick={handleCardClick}
@@ -73,5 +91,7 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
         </div>
       </div>
     </div>
+     <AddBlogModal open={openEditModal} setOpen={setOpenEditModal} defaultValues={post} />
+    </>
   );
 }

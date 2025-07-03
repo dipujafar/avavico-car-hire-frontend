@@ -13,10 +13,12 @@ interface UploadedImage {
 interface ImageUploadProps {
   onChange: (value: UploadedImage[]) => void
   value: UploadedImage[]
-  maxImages?: number
+  maxImages?: number,
+  defaultImages?: string[] | null,
+  setDefaultImages?: React.Dispatch<React.SetStateAction<string[]>> | any
 }
 
-export const ImageUpload = ({ onChange, value = [], maxImages = 4 }: ImageUploadProps) => {
+export const ImageUpload = ({ onChange, value = [], maxImages = 4, defaultImages, setDefaultImages }: ImageUploadProps) => {
   const [isUploading, setIsUploading] = useState(false)
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +56,21 @@ export const ImageUpload = ({ onChange, value = [], maxImages = 4 }: ImageUpload
   return (
     <div>
       <div className="flex flex-wrap gap-4">
+        { defaultImages && defaultImages.map((image, index) => (
+          <div key={index} className="relative w-24 h-24 rounded border overflow-hidden">
+            <Image fill src={image} alt={`Image ${index + 1}`} placeholder="blur"
+            blurDataURL={"/blurImage.jpg"}   className="object-cover"  />
+          
+            <button
+              type="button"
+              onClick={()=> setDefaultImages(defaultImages.filter((_, i) => i !== index))}
+              className="absolute top-1 right-1 bg-black/50 rounded-full p-1 text-white cursor-pointer hover:bg-black hover:text-red-600"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          </div>
+        ))}
+
         {value.map((item, index) => (
           <div key={index} className="relative w-24 h-24 rounded border overflow-hidden">
             <Image fill src={item.preview} alt={`Image ${index + 1}`} className="object-cover" />

@@ -5,8 +5,7 @@ import Container from '@/components/shared/Container';
 import DisplayBlogImage from './DisplayBlogImage';
 import DetailsDescription from './DetailsDescription';
 import { useGetSingleBlogQuery } from '@/redux/api/blogApi';
-import BlogDetailsSkeleton from '@/components/skeletons/BlogSkeleton/BlogDetailsSkeleton';
-
+import BlogDetailsSkeleton from '@/components/Skeletons/BlogSkeleton/BlogDetailsSkeleton';
 
 
 const DetailsPageContainer = ({ id }: { id: string }) => {

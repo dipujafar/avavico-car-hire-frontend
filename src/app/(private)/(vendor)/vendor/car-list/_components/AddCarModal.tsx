@@ -111,6 +111,7 @@ export function AddCarModal({
     useState(false);
   const [showAdditionalFuelType, setShowAdditionalOptionsFuelType] =
     useState(false);
+     const [defaultImages, setDefaultImages] = useState<string[] | null>(defaultData?.carImage || []);
 
   const additionalOptionsDefault = {
     child_seat: {
@@ -252,6 +253,7 @@ export function AddCarModal({
       try {
         await addNewCar(formData).unwrap();
         toast.success("Car Successfully Uploaded.");
+        form.reset();
         setOpen(false);
       } catch (err: any) {
         Error_Modal({ title: err?.data?.message });
@@ -287,6 +289,8 @@ export function AddCarModal({
                           value={field.value}
                           onChange={field.onChange}
                           maxImages={9}
+                          defaultImages={defaultImages}
+                          setDefaultImages={setDefaultImages}
                         />
                       </FormControl>
                       <FormMessage />
@@ -882,7 +886,7 @@ export function AddCarModal({
                   type="submit"
                   className="w-full bg-primary-cyan hover:bg-cyan-600 rounded-none py-5"
                 >
-                  Upload {isLoading || (updateLoading && <LoadingSpin />)}
+                  Upload {(isLoading || updateLoading) && <LoadingSpin />}
                 </Button>
               </form>
             </Form>

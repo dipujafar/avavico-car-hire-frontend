@@ -28,6 +28,8 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
               className="w-full lg:h-[300px] md:h-[200px] h-[130px]  object-cover rounded-md  border"
               width={1200}
               height={1200}
+              placeholder="blur"
+               blurDataURL={"/blurImage.jpg"}
             ></Image>
           </Zoom>
         </motion.div>
@@ -45,6 +47,8 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
                 className="w-full lg:h-[200px] md:h-[133px] h-[88px] object-cover rounded-md  "
                 width={1200}
                 height={1200}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             </Zoom>
           )}
@@ -63,6 +67,8 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
                 className="w-full lg:h-[300px] md:h-[200px] h-[130px] object-cover rounded-md"
                 width={1200}
                 height={1200}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             </Zoom>
           )}
@@ -81,6 +87,8 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
                 className="w-full lg:h-[200px] md:h-[133px] h-[88px] object-cover rounded-md"
                 width={1200}
                 height={1200}
+                placeholder="blur"
+                blurDataURL={"/blurImage.jpg"}
               ></Image>
             </Zoom>
           )}

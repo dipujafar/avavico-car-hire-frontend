@@ -9,6 +9,7 @@ import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
 import { ICar } from "@/types";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import { useSearchParams } from "next/navigation";
+import Empty from "@/components/ui/empty";
 
 const CarListContainer = () => {
   const [openAddCarModal, setOpenAddCarModal] = useState(false);
@@ -41,14 +42,20 @@ const CarListContainer = () => {
                 // @ts-ignore
                 <CarCardSkeleton key={i}></CarCardSkeleton>
               ))
-          : ownCarsData?.data?.cars?.map((carData: ICar) => (
+          : ownCarsData?.data?.cars?.length  ? ownCarsData?.data?.cars?.map((carData: ICar) => (
               // @ts-ignore
               <ProductCard
                 data={carData}
                 key={carData.id}
                 ownCar={true}
               ></ProductCard>
-            ))}
+            )) :  (
+            <div className="w-full md:h-[350px] h-[200px] flex justify-center items-center sm:col-span-2 lg:col-span-3">
+              <Empty message="No Cars Uploaded"></Empty>{" "}
+            </div>
+          )
+            
+            }
       </div>
       <PaginationSection
         totalItems={ownCarsData?.data?.meta?.total || 0}

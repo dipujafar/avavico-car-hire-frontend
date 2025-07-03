@@ -1,8 +1,17 @@
+"use client";
+import { ProfileDetailsSkeleton } from "@/components/Skeletons/Profile/ProfileDetailsSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { userData } from "@/utils/user-data";
+import { useGetUserProfileQuery } from "@/redux/api/userProfileApi";
 import Link from "next/link";
 
 const ProfileInfo = () => {
+  const {data: userData, isLoading} = useGetUserProfileQuery(undefined);
+
+
+  if(isLoading){
+    return <ProfileDetailsSkeleton/>
+  }
+  
   return (
     <div
       style={{
@@ -31,21 +40,36 @@ const ProfileInfo = () => {
         </Avatar>
 
         <div className="md:space-y-4 space-y-3 flex-1">
+
+<div className="grid md:grid-cols-2 gap-2">
           <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
-            <h5>Name :</h5>
-            <p>{userData?.name}</p>
+            <h5 className="text-sm md:text-base">First Name :</h5>
+            <p className="text-sm md:text-base">{userData?.data?.firstName}</p>
+          </div>
+
+
+          <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
+            <h5 className="text-sm md:text-base">Last Name :</h5>
+            <p className="text-sm md:text-base">{userData?.data?.lastName}</p>
+          </div>
+          </div>
+
+
+          <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
+            <h5 className="text-sm md:text-base">User Name :</h5>
+            <p className="text-sm md:text-base">{userData?.data?.userName}</p>
           </div>
           <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
-            <h5>Email :</h5>
-            <p>{userData?.email}</p>
+            <h5 className="text-sm md:text-base">Email :</h5>
+            <p className="text-sm md:text-base">{userData?.data?.email}</p>
           </div>
           <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
-            <h5>Location :</h5>
-            <p>{userData?.address}</p>
+            <h5 className="text-sm md:text-base">Location :</h5>
+            <p className="text-sm md:text-base">{userData?.data?.location?.streetAddress}, {userData?.data?.location?.city}{ userData?.data?.location?.city && ","} {userData?.data?.location?.state}, {userData?.data?.location?.country}</p>
           </div>
           <div className="bg-[#F8F9FA] px-2.5 xl:py-2 py-1 rounded border border-[#E6E6E6] md:text-lg text-black flex items-center gap-x-2 w-full">
-            <h5>Phone :</h5>
-            <p>{userData?.phoneNumber}</p>
+            <h5 className="text-sm md:text-base">Phone :</h5>
+            <p className="text-sm md:text-base">{userData?.data?.mobile}</p>
           </div>
         </div>
       </div>

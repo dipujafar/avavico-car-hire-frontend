@@ -1,15 +1,16 @@
 "use client";
 import BlogCard from "@/components/shared/BlogCard";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/lib/dummyData";
 import { Plus } from "lucide-react";
 import { AddBlogModal } from "./AddBlogModal";
 import { useState } from "react";
 import { useGetMyBlogsQuery } from "@/redux/api/blogApi";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import { useSearchParams } from "next/navigation";
-import BlogCardSkeleton from "@/components/skeletons/BlogSkeleton/BlogCardSkeleton";
 import Empty from "@/components/ui/empty";
+import BlogCardSkeleton from "@/components/skeletons/BlogSkeleton/BlogCardSkeleton";
+
+
 
 const BlogsPageContainer = () => {
   const [openAddBlogModal, setOpenAddBlogModal] = useState(false);
