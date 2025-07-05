@@ -7,7 +7,11 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/images/logo.png";
 import Container from "../Container";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAppSelector } from "@/redux/hooks";
+import Cookies from "js-cookie";
+import CustomAvatar from "../CustomeAvater";
+import { useGetUserProfileQuery } from "@/redux/api/userProfileApi";
 
 const navigationItems = [
   { name: "Home", href: "/" },
@@ -33,6 +37,21 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const currentPathName = usePathname();
+  const user: any = useAppSelector((state) => state.auth.user);
+  const isLoggedIn = Cookies.get("avavico-car-hire-access-token");
+  const { data: userData } = useGetUserProfileQuery(undefined, {
+    skip: !isLoggedIn || !user,
+  });
+  const router = useRouter();
+
+
+  const userRedirect = () => {
+    if (user && user?.role === "User") {
+      router?.push("/user/profile");
+    } else if (user && user?.role === "Vendor") {
+      router?.push("/vendor/profile");
+    }
+  };
 
   const toggleDropdown = (name: string) => {
     setActiveDropdown(activeDropdown === name ? null : name);
@@ -119,21 +138,34 @@ export default function Navbar() {
             </nav>
 
             {/* Action Buttons */}
-            <div className="hidden lg:flex items-center space-x-3">
-              <Link href={"/sign-up"}>
-                <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md">
-                  Join Now
-                </Button>
-              </Link>
-              <Link href={"/sign-in"}>
-                <Button
-                  variant="outline"
-                  className="border-primary-cyan text-primary-cyan hover:bg-cyan-50"
-                >
-                  Login
-                </Button>
-              </Link>
-            </div>
+            {user && isLoggedIn ? (
+              <div onClick={userRedirect} className="hidden lg:flex items-center cursor-pointer">
+                <CustomAvatar
+                  img={userData?.data?.photo?.[0]?.d}
+                  name={
+                    userData?.data?.firstName + " " + userData?.data?.lastName
+                  }
+                  className="size-12"
+                  fallbackClass="md:text-xl text-lg"
+                ></CustomAvatar>
+              </div>
+            ) : (
+              <div className="hidden lg:flex items-center space-x-3">
+                <Link href={"/sign-up"}>
+                  <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md">
+                    Join Now
+                  </Button>
+                </Link>
+                <Link href={"/sign-in"}>
+                  <Button
+                    variant="outline"
+                    className="border-primary-cyan text-primary-cyan hover:bg-cyan-50"
+                  >
+                    Login
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Navigation */}
@@ -193,25 +225,35 @@ export default function Navbar() {
                   </div>
                 ))}
 
-                <div className="pt-4 pb-2 space-y-2">
-                  <Link
-                    href={"/sign-up"}
-                    className="w-full block"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full">
-                      Join Now
-                    </Button>
-                  </Link>
-                  <Link href={"/sign-in"} className="w-full block" onClick={() => setIsOpen(false)}>
-                    <Button
-                      variant="outline"
-                      className="border-primary-cyan text-cyan-500 hover:bg-cyan-50 w-full"
+                {user && isLoggedIn ? (
+                  <Button onClick={userRedirect} className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full">
+                    Dashboard
+                  </Button>
+                ) : (
+                  <div className="pt-4 pb-2 space-y-2">
+                    <Link
+                      href={"/sign-up"}
+                      className="w-full block"
+                      onClick={() => setIsOpen(false)}
                     >
-                      Login
-                    </Button>
-                  </Link>
-                </div>
+                      <Button className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full">
+                        Join Now
+                      </Button>
+                    </Link>
+                    <Link
+                      href={"/sign-in"}
+                      className="w-full block"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Button
+                        variant="outline"
+                        className="border-primary-cyan text-cyan-500 hover:bg-cyan-50 w-full"
+                      >
+                        Login
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           )}

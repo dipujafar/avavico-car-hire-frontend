@@ -16,6 +16,9 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useForgetPasswordMutation } from "@/redux/api/authApi";
+import LoadingSpin from "@/components/ui/loading-spin";
+import { Error_Modal } from "@/modals";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z
@@ -34,7 +37,13 @@ const ForgetPassForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try{
+      forgetPass(data).unwrap();
+      toast.success("Sent OTP on your email! Please check your inbox.");
+    }catch(error: any){
+      Error_Modal({ title: error?.data?.message });
+    }
     router.push("/verify-otp");
   };
 
@@ -67,7 +76,7 @@ const ForgetPassForm = () => {
               )}
             />
 
-        <Button className="w-full bg-primary-cyan group hover:bg-cyan-600">Send <AnimatedArrow></AnimatedArrow></Button>
+        <Button disabled={isLoading} className="w-full bg-primary-cyan group hover:bg-cyan-600">Send <AnimatedArrow></AnimatedArrow> {isLoading && <LoadingSpin/>}</Button>
           </form>
         </Form>
       </CardContent>

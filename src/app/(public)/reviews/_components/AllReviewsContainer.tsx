@@ -1,10 +1,13 @@
+"use client";
 import Container from "@/components/shared/Container"
 import { ReviewCard } from "./ReviewCard"
-import { testimonials } from "@/lib/dummyData"
-
-
+import { useGetAllReviewesQuery } from "@/redux/api/reviewsApi";
+import { testimonials } from "@/lib/dummyData";
+import PaginationSection from "@/components/shared/pagination/PaginationSection";
 
 export function AllReviewsContainer() {
+  const {data: allReviews, isLoading} = useGetAllReviewesQuery(undefined);
+  console.log(allReviews);
   return (
     <Container>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -17,6 +20,7 @@ export function AllReviewsContainer() {
           />
         ))}
       </div>
+      <PaginationSection totalItems={50}/>
     </Container>
   )
 }

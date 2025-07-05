@@ -1,11 +1,12 @@
 "use client";
-import ProfileInfo from "./ProfileInfo";
+
+import ProfileInfo from "@/components/shared/ProfileInfo/ProfileInfo";
 import RecentOrders from "./RecentOrders";
 
 export default function ProfileContainer() {
   return (
     <div className="space-y-8 text-primary-black">
-      <ProfileInfo />
+      <ProfileInfo editLink="/vendor/account-settings#profile"  />
       <RecentOrders />
     </div>
   );

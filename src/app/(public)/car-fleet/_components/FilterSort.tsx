@@ -44,7 +44,7 @@ export function FilterSort({ totalCars, limit }: FilterSortProps) {
           </Select>
         </div>
 
-        <div className="md:flex items-center  border md:px-4 px-1 rounded-md hidden">
+        {/* <div className="md:flex items-center  border md:px-4 px-1 rounded-md hidden">
           <span className="text-sm truncate">Sort by:</span>
           <Select
             defaultValue="newest_post"
@@ -61,7 +61,7 @@ export function FilterSort({ totalCars, limit }: FilterSortProps) {
               <SelectItem value="high_to_low">Price: High to Low</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
       </div>
     </div>
   );

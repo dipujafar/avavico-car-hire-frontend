@@ -1,11 +1,11 @@
 import React from "react";
 import { Metadata } from "next";
-import AccountSettings from "@/app/(private)/(user)/user/account-settings/_components/AccountSettings";
 import ChangePasswordForm from "@/app/(private)/(user)/user/account-settings/_components/ChangePasswordForm";
+import AccountSettings from "@/components/shared/accountSettings/AccountSettings";
 
 export const metadata: Metadata = {
   title: "Account Settings",
-  description: "Account Settings page of Chez Tati",
+  description: "Account Settings page of Avavico car hire",
 };
 
 const AccountSettingPage = () => {

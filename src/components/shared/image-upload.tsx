@@ -18,7 +18,7 @@ interface ImageUploadProps {
   setDefaultImages?: React.Dispatch<React.SetStateAction<string[]>> | any
 }
 
-export const ImageUpload = ({ onChange, value = [], maxImages = 4, defaultImages, setDefaultImages }: ImageUploadProps) => {
+export const ImageUpload = ({ onChange, value = [], maxImages = 4, defaultImages, setDefaultImages,  handleDeleteImage }: ImageUploadProps) => {
   const [isUploading, setIsUploading] = useState(false)
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,13 +61,13 @@ export const ImageUpload = ({ onChange, value = [], maxImages = 4, defaultImages
             <Image fill src={image} alt={`Image ${index + 1}`} placeholder="blur"
             blurDataURL={"/blurImage.jpg"}   className="object-cover"  />
           
-            <button
+          {defaultImages.length > 1 &&  <button
               type="button"
-              onClick={()=> setDefaultImages(defaultImages.filter((_, i) => i !== index))}
+              onClick={()=>  handleDeleteImage(image)}
               className="absolute top-1 right-1 bg-black/50 rounded-full p-1 text-white cursor-pointer hover:bg-black hover:text-red-600"
             >
               <X className="h-3 w-3" />
-            </button>
+            </button>}
           </div>
         ))}
 

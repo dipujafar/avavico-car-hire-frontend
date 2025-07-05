@@ -27,6 +27,8 @@ import CountryStateCitySelector from "@/components/ui/country-state-city-selecto
 import { Error_Modal } from "@/modals";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { setUser } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const formSchema = z
   .object({
@@ -86,6 +88,7 @@ const SignUpForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agree, setAgree] = useState(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -122,11 +125,18 @@ const SignUpForm = () => {
 
     try {
       const res = await createUser(formattedData).unwrap();
-      if (res.success) {
-        toast.success("User Created Successfully");
-        toast.success("Please verify your email with OTP, which has been send to your email.");
-        router.push("/verify-otp");
-      }
+      if(res?.data?.result?.otpToken?.token){
+            dispatch(
+              setUser({
+                token: res?.data?.result?.otpToken?.token,
+                 })
+                );
+              toast.success("User Created Successfully");
+              toast.success(
+                "Please verify your email with OTP, which has been sent to your email."
+              );
+              router.push("/verify-otp");
+            }
     } catch (error: any) {
       Error_Modal({ title: "Error", text: error?.data?.message });
     }

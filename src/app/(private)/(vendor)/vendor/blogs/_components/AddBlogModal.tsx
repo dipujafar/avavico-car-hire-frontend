@@ -18,16 +18,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import { ImageUpload } from "@/components/shared/image-upload";
 import { TextEditor } from "@/components/shared/TextEditor/text-editor";
-import { useAddNewBlogMutation, useUpdateBlogMutation } from "@/redux/api/blogApi";
+import { useAddNewBlogMutation, useDeleteBlogImageMutation, useUpdateBlogMutation } from "@/redux/api/blogApi";
 import { Error_Modal } from "@/modals";
 import LoadingSpin from "@/components/ui/loading-spin";
 import { toast } from "sonner";
 import { IBlog } from "@/types";
 import { useState } from "react";
-import Image from "next/image";
+
 
 const imageSchema = z.object({
   file: z.instanceof(File),
@@ -60,8 +59,9 @@ export function AddBlogModal({
   const [uploadBlog, { isLoading }] = useAddNewBlogMutation();
   const [updateBlog, { isLoading: updateLoading }] = useUpdateBlogMutation();
   const [defaultImages, setDefaultImages] = useState<string[] | null>(defaultValues?.blogImage || []);
+  const [deleteImage] = useDeleteBlogImageMutation();
 
-  console.log(defaultImages);
+
   
   const form = useForm<CarFormValues>({
     resolver: zodResolver(formSchema),
@@ -102,7 +102,6 @@ export function AddBlogModal({
         Error_Modal({ title: error?.data?.message });
       }
     }else{
-
     const formData = new FormData();
     values?.images?.forEach((image) => {
       formData.append("blogImage", image.file);
@@ -128,6 +127,19 @@ export function AddBlogModal({
     // Close the modal after submission
     // setOpen(false)
   };
+
+
+  // delete image
+  const handleDeleteImage = async(value : string) => {
+    const id = defaultValues?.id
+    const data = {blogImage: value}
+    try {
+      await deleteImage({ id,data}).unwrap();
+      toast.success("Image deleted successfully");
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -171,6 +183,7 @@ export function AddBlogModal({
                       maxImages={4}
                       defaultImages={defaultImages}
                       setDefaultImages={setDefaultImages}
+                      handleDeleteImage={handleDeleteImage}
                     />
                   </FormControl>
                   <FormMessage />
@@ -237,7 +250,7 @@ export function AddBlogModal({
               type="submit"
               className="w-full bg-primary-cyan rounded-none py-5"
             >
-              Upload {(isLoading || updateLoading) && <LoadingSpin />}
+             {defaultValues ? "Update": "Upload"}  {(isLoading || updateLoading) && <LoadingSpin />}
             </Button>
           </form>
         </Form>

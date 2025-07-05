@@ -12,11 +12,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import { PhoneInput } from "@/components/ui/phone-input";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
@@ -27,6 +26,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import CountryStateCitySelector from "@/components/ui/country-state-city-selector";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/authSlice";
 
 const formSchema = z
   .object({
@@ -87,6 +88,7 @@ const SignUpForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agree, setAgree] = useState(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -123,7 +125,13 @@ const SignUpForm = () => {
 
     try {
       const res = await createUser(formattedData).unwrap();
-      if (res.success) {
+
+      if(res?.data?.result?.otpToken?.token){
+          dispatch(
+              setUser({
+                token: res?.data?.result?.otpToken?.token,
+              })
+          );
         toast.success("User Created Successfully");
         toast.success(
           "Please verify your email with OTP, which has been sent to your email."

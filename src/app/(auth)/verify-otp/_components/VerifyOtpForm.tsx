@@ -21,6 +21,11 @@ import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useVerifyOtpMutation } from "@/redux/api/authApi";
 import { error } from "console";
 import LoadingSpin from "@/components/ui/loading-spin";
+import { setUser } from "@/redux/features/authSlice";
+import { jwtDecode } from "jwt-decode";
+import { useAppDispatch } from "@/redux/hooks";
+import { Error_Modal } from "@/modals";
+import { toast } from "sonner";
 
 // ✅ Define form validation schema using Zod
 const formSchema = z.object({
@@ -34,6 +39,7 @@ const formSchema = z.object({
 const VerifyOtpForm = () => {
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,14 +49,12 @@ const VerifyOtpForm = () => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const res = await verifyOtp(data).unwrap();
-      console.log(res);
-      // router.push("/set-new-password");
-    } catch (error) {
-      // console.log(error)
+       await verifyOtp(data).unwrap();
+      toast.success("OTP verified successfully! Please login.");
+      router.push("/sign-in");
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
     }
-    // console.log("Submitted Data:", data);
-    // router.push("/set-new-password");
   };
 
   return (

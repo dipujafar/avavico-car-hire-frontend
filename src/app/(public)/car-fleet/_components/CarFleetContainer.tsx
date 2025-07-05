@@ -120,7 +120,7 @@ const CarFleetContainer = () => {
           loading={fuelTypeLoading}
           checkedItem={fuelType || "all"}
         ></Categories>
-        <ReviewCategories title="Review Score"></ReviewCategories>
+        {/* <ReviewCategories title="Review Score"></ReviewCategories> */}
         <Categories
           title="Renting Location"
           data={carLocationsData?.data}

@@ -20,6 +20,7 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
   const [deleteBlog, { isLoading }] = useDeleteBlogMutation();
   const [openEditModal, setOpenEditModal] = useState(false);
 
+
   const handleCardClick = () => {
     router.push(`/blogs/${post.id}`);
   };
