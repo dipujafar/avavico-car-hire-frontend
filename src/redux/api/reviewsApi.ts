@@ -10,7 +10,21 @@ const reviewsAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.reviews],
     }),
+    getSingleCarReviewes: builder.query({
+      query: (id) => ({
+        url: `/car/single-car-reviews/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.reviews],
+    }),
+    getSingleCarAvarageReview: builder.query({
+      query: (id) => ({
+        url: `/car/car-reviews/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.reviews],
+    })
   }),
 });
 
-export const { useGetAllReviewesQuery } = reviewsAPi;
+export const { useGetAllReviewesQuery, useGetSingleCarReviewesQuery, useGetSingleCarAvarageReviewQuery } = reviewsAPi;

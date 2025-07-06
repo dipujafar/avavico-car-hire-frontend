@@ -9,6 +9,8 @@ import { Error_Modal } from "@/modals";
 import { toast } from "sonner";
 import { AddBlogModal } from "@/app/(private)/(vendor)/vendor/blogs/_components/AddBlogModal";
 import { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
 
 interface BlogCardProps {
   post: IBlog;
@@ -20,26 +22,25 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
   const [deleteBlog, { isLoading }] = useDeleteBlogMutation();
   const [openEditModal, setOpenEditModal] = useState(false);
 
-
   const handleCardClick = () => {
     router.push(`/blogs/${post.id}`);
   };
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-   setOpenEditModal(true);
+    setOpenEditModal(true);
   };
 
   const handleDeleteClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     toast.loading("Deleting blog...", { id: "deleteBlog" });
-    try{
-       await deleteBlog(post?.id).unwrap();
-       toast.success("Blog deleted successfully");
-       toast.dismiss("deleteBlog");
-    }catch(error: any){
-     Error_Modal({title: error?.data?.message})
-     toast.dismiss("deleteBlog");
+    try {
+      await deleteBlog(post?.id).unwrap();
+      toast.success("Blog deleted successfully");
+      toast.dismiss("deleteBlog");
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+      toast.dismiss("deleteBlog");
     }
 
     // Add your delete logic here
@@ -47,52 +48,70 @@ export default function BlogCard({ post, ownBlog }: BlogCardProps) {
 
   return (
     <>
-    <div
-      className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
-      onClick={handleCardClick}
-    >
-      <div className="relative">
-        <Image
-          src={post?.blogImage?.[0]}
-          alt={`${post?.blogName} blog image`}
-          width={1200}
-          height={1200}
-          placeholder="blur"
-          blurDataURL={"/blurImage.jpg"}
-          className="object-cover h-[220px]"
-        />
-      </div>
-      <div className="p-4 md:space-y-4 space-y-3">
-        <div className="space-y-1">
-          <h2 className="text-lg font-medium line-clamp-1">
-            {post?.blogName}
-          </h2>
+      <div
+        className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
+        onClick={handleCardClick}
+      >
+        <div className="relative">
+          <Image
+            src={post?.blogImage?.[0]}
+            alt={`${post?.blogName} blog image`}
+            width={1200}
+            height={1200}
+            placeholder="blur"
+            blurDataURL={"/blurImage.jpg"}
+            className="object-cover h-[220px]"
+          />
         </div>
-        <hr />
-        <div className="flex gap-x-2 justify-between items-center mt-4 text-sm text-[#333]">
-          <span className="truncate">{formatDate(post.createdAt)}</span>
-          <span className="w-[30px] bg-[#8A8A8A] h-px"></span>
-          <span className={cn("flex justify-end truncate", ownBlog && "hidden")}>{post.category?.[0]}</span>
-          {ownBlog && (
-            <div className="flex gap-x-1 justify-end">
-              <div
-                className="size-7 bg-green-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer"
-                onClick={handleEditClick}
-              >
-                <Edit size={16} />
+        <div className="p-4 md:space-y-4 space-y-3">
+          <div className="space-y-1">
+            <h2 className="text-lg font-medium line-clamp-1">
+              {post?.blogName}
+            </h2>
+          </div>
+          <hr />
+          <div className="flex gap-x-2 justify-between items-center mt-4 text-sm text-[#333]">
+            <span className="truncate">{formatDate(post.createdAt)}</span>
+            <span className="w-[30px] bg-[#8A8A8A] h-px"></span>
+            <span
+              className={cn("flex justify-end truncate", ownBlog && "hidden")}
+            >
+              {post.category?.[0]}
+            </span>
+            {ownBlog && (
+              <div className="flex gap-x-1 justify-end">
+                <div
+                  className="size-8 bg-green-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer"
+                  onClick={handleEditClick}
+                >
+                  <Edit size={16} />
+                </div>
+                <Popover>
+                  <PopoverTrigger onClick={(e) => e.stopPropagation()}>
+                    {" "}
+                    <div className="size-8 bg-red-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer">
+                      <Trash2 size={16} />
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="space-y-2">
+                    <h5>Are you sure you want to delete this blog?</h5>
+                    <div className="flex justify-end">
+                      <Button disabled={isLoading} onClick={handleDeleteClick} size={"sm"} className="bg-red-500">
+                        Confirm
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
-              <div
-                className="size-7 bg-red-800 text-white flex justify-center items-center rounded-full hover:cursor-pointer"
-                onClick={handleDeleteClick}
-              >
-                <Trash2 size={16} />
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
-     <AddBlogModal open={openEditModal} setOpen={setOpenEditModal} defaultValues={post} />
+      <AddBlogModal
+        open={openEditModal}
+        setOpen={setOpenEditModal}
+        defaultValues={post}
+      />
     </>
   );
 }

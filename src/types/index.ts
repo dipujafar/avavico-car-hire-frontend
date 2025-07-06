@@ -1,5 +1,3 @@
-
-
 export type TTestimonial = {
   id: string;
   name: string;
@@ -48,7 +46,6 @@ export interface ICar {
   discount: string;
   brand: string;
   id: string;
- 
 }
 
 export interface Vendor {
@@ -108,36 +105,63 @@ export interface IRentingLocation {
   zipCode: string;
 }
 
-
 // ---------------------- type for blog ----------------------
 export interface IBlog {
-  author: IUser
-  blogName: string
-  details: string
-  blogImage: string[]
-  category: string[]
-  isDeleted: boolean
-  createdAt: string
-  updatedAt: string
-  id: string
+  author: IUser;
+  blogName: string;
+  details: string;
+  blogImage: string[];
+  category: string[];
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
 }
 
+export interface IUserLocation {
+  country: string;
+  state: string;
+  streetAddress: string;
+  zipCode: string;
+  city: string;
+}
 
 // ---------------------- type for user ----------------------
 export interface IUser {
-  firstName: string
-  lastName: string
-  userName: string
-  mobile: string
-  email: string
-  role: string
-  isDeleted: boolean
-  __t: string
-  companyName: string
-  isAuthProvider: boolean
-  passwordUpdatedAt: string
+  firstName: string;
+  lastName: string;
+  userName: string;
+  mobile: string;
+  email: string;
+  role: string;
+  isDeleted: boolean;
+  location: IUserLocation;
+  __t: string;
+  companyName: string;
+  isAuthProvider: boolean;
+  passwordUpdatedAt: string;
+  createdAt: string;
+  updatedAt: string;
+  photo: string[];
+  image: string;
+  id: string;
+}
+
+
+
+// ----------------------------- type for reviews ---------------------------
+export interface IReview {
+  carId: string
+  userId: string
+  orderId: string
+  price: number
+  safety: number
+  accessibility: number
+  services: number
+  entertainment: number
+  support: number
+  comment: string
   createdAt: string
   updatedAt: string
-  image: string
   id: string
 }

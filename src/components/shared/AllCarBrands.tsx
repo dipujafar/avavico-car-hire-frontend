@@ -1,3 +1,4 @@
+
 import { carBrandsData } from "@/lib/CarBrandsData";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";

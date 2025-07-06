@@ -10,7 +10,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   InputOTP,
   InputOTPGroup,
@@ -19,13 +19,11 @@ import {
 import { Button } from "@/components/ui/button";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useVerifyOtpMutation } from "@/redux/api/authApi";
-import { error } from "console";
 import LoadingSpin from "@/components/ui/loading-spin";
-import { setUser } from "@/redux/features/authSlice";
-import { jwtDecode } from "jwt-decode";
 import { useAppDispatch } from "@/redux/hooks";
 import { Error_Modal } from "@/modals";
 import { toast } from "sonner";
+import { setUser } from "@/redux/features/authSlice";
 
 // ✅ Define form validation schema using Zod
 const formSchema = z.object({
@@ -40,6 +38,7 @@ const VerifyOtpForm = () => {
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const forRedirect = useSearchParams().get("for");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,9 +47,33 @@ const VerifyOtpForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    if (forRedirect === "forgetPassword") {
+      try {
+        const res = await verifyOtp(data).unwrap();
+        toast.success("OTP verified successfully! Please login.");
+
+        console.log(res?.data?.accessToken);
+        dispatch(
+          setUser({
+            token: res?.data?.accessToken,
+          })
+        );
+        router.push("/set-new-password");
+        return;
+      } catch (error: any) {
+        Error_Modal({ title: error?.data?.message });
+        return;
+      }
+    }
+
     try {
-       await verifyOtp(data).unwrap();
+      await verifyOtp(data).unwrap();
       toast.success("OTP verified successfully! Please login.");
+      dispatch(
+        setUser({
+          token: null,
+        })
+      );
       router.push("/sign-in");
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });

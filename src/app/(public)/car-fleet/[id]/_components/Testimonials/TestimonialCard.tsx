@@ -1,10 +1,10 @@
 import { Star } from "lucide-react"
-import { TTestimonial } from "@/types"
+import { IReview } from "@/types"
 import CustomAvatar from "@/components/shared/CustomeAvater"
 
 
 // Component for a single testimonial card
-export function TestimonialCard({ testimonial }: { testimonial: TTestimonial }) {
+export function TestimonialCard({ testimonial }: { testimonial: IReview }) {
   return (
     <div className="border-2 border-[#DDE1DE] rounded-lg p-4 mb-4">
       <div className="flex flex-wrap justify-between items-start mb-4 border-b pb-4">

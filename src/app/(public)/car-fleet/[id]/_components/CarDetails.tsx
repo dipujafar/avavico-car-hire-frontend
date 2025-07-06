@@ -1,5 +1,5 @@
 "use client";
-import { SearchCheck, Star } from "lucide-react";
+import { MapPin, SearchCheck, Star } from "lucide-react";
 
 import { ReactNode } from "react";
 import { motion } from "motion/react";
@@ -72,6 +72,13 @@ export default function CarDetails({ data }: { data: ICar }) {
             {data?.carName}
           </h2>
           <p className="text-black/70">{data?.model}</p>
+          <div className="flex items-center text-primary-gray">
+            <MapPin className="w-4 h-4 mr-1" />
+            <span className="truncate">
+           {data?.rentingLocation?.state !== data?.rentingLocation?.city ? `${data?.rentingLocation?.state}, ` : ""}   {data?.rentingLocation?.city},{" "}
+              {data?.rentingLocation?.streetAddress}
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-1.5 border px-4 py-1 w-fit rounded-full bg-white">
           <motion.span

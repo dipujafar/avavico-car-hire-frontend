@@ -46,7 +46,7 @@ const Categories = ({
   };
 
 
-  console.log(checkedItem);
+
 
   if (loading) {
     return (

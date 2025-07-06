@@ -111,7 +111,9 @@ export function AddCarModal({
     useState(false);
   const [showAdditionalFuelType, setShowAdditionalOptionsFuelType] =
     useState(false);
-     const [defaultImages, setDefaultImages] = useState<string[] | null>(defaultData?.carImage || []);
+  const [defaultImages, setDefaultImages] = useState<string[] | null>(
+    defaultData?.carImage || []
+  );
 
   const additionalOptionsDefault = {
     child_seat: {
@@ -830,56 +832,67 @@ export function AddCarModal({
                   </div>
                 </div>
 
-                {additionalOptions?.map((option) => (
-                  <div
-                    key={option.id}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-3"
-                  >
-                    <FormField
-                      control={form.control}
-                      name={`additionalOptions.${option.id}.option`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{option.label}</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
+                {additionalOptions?.map((option) => {
+                  const selected = form.watch(
+                    `additionalOptions.${option.id}.option`
+                  );
+                  return (
+                    <div
+                      key={option.id}
+                      className="grid grid-cols-1 md:grid-cols-2 gap-3"
+                    >
+                      <FormField
+                        control={form.control}
+                        name={`additionalOptions.${option.id}.option`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{option.label}</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="w-full bg-[#F8FAFC] py-5 border-[#707071] rounded-none">
+                                  <SelectValue placeholder="Select One" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="1">1</SelectItem>
+                                <SelectItem value="2">2</SelectItem>
+                                <SelectItem value="3">3</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name={`additionalOptions.${option.id}.price`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Price</FormLabel>
                             <FormControl>
-                              <SelectTrigger className="w-full bg-[#F8FAFC] py-5 border-[#707071 rounded-none">
-                                <SelectValue placeholder="Select One" />
-                              </SelectTrigger>
+                              <Input
+                                type="number"
+                                placeholder="Amount for 1"
+                                {...field}
+                                disabled={!selected}
+                                className={`w-full bg-[#F8FAFC] py-5 border-[#707071] rounded-none ${
+                                  !selected
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : ""
+                                }`}
+                              />
                             </FormControl>
-                            <SelectContent>
-                              <SelectItem value="1"> 1</SelectItem>
-                              <SelectItem value="2"> 2</SelectItem>
-                              <SelectItem value="3"> 3</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`additionalOptions.${option.id}.price`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Price</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="number"
-                              placeholder="Amount"
-                              {...field}
-                              className="w-full bg-[#F8FAFC] py-5 border-[#707071 rounded-none"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                ))}
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  );
+                })}
 
                 <Button
                   disabled={isLoading || updateLoading}

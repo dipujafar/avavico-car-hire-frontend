@@ -25,7 +25,8 @@ import { Error_Modal } from "@/modals";
 import LoadingSpin from "@/components/ui/loading-spin";
 import { toast } from "sonner";
 import { IBlog } from "@/types";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 
 const imageSchema = z.object({
@@ -60,6 +61,7 @@ export function AddBlogModal({
   const [updateBlog, { isLoading: updateLoading }] = useUpdateBlogMutation();
   const [defaultImages, setDefaultImages] = useState<string[] | null>(defaultValues?.blogImage || []);
   const [deleteImage] = useDeleteBlogImageMutation();
+  const router = useRouter();
 
 
   
@@ -133,13 +135,22 @@ export function AddBlogModal({
   const handleDeleteImage = async(value : string) => {
     const id = defaultValues?.id
     const data = {blogImage: value}
+    toast?.loading("Deleting image...", { id: "deleteImage" });
     try {
       await deleteImage({ id,data}).unwrap();
       toast.success("Image deleted successfully");
+      toast.dismiss("deleteImage");
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
+      toast.dismiss("deleteImage");
     }
   }
+
+  useEffect(() => {
+    if (defaultValues) {
+      setDefaultImages(defaultValues?.blogImage);
+    }
+  }, [defaultValues?.blogImage?.length]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

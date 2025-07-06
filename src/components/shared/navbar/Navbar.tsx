@@ -141,7 +141,7 @@ export default function Navbar() {
             {user && isLoggedIn ? (
               <div onClick={userRedirect} className="hidden lg:flex items-center cursor-pointer">
                 <CustomAvatar
-                  img={userData?.data?.photo?.[0]?.d}
+                  img={userData?.data?.photo?.[0]}
                   name={
                     userData?.data?.firstName + " " + userData?.data?.lastName
                   }

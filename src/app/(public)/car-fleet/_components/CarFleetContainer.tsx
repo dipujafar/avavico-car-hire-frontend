@@ -4,7 +4,6 @@ import AllCar from "./AllCar";
 import PriceCategory from "./PriceCategory";
 import { FilterSort } from "./FilterSort";
 import { SmallDeviceFilter } from "./SmallDeviceFilter";
-import ReviewCategories from "@/components/shared/categories/ReviewCategories";
 import { useGetAllCarsQuery } from "@/redux/api/carApi";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import { useSearchParams } from "next/navigation";

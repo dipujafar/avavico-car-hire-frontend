@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { History, LayoutDashboard, LogOut, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/redux/features/authSlice";
 
 
 export  const SIDEBAR_LINKS = [
@@ -32,6 +34,8 @@ export default function DashboardSidebar() {
   const path = pathname?.split("/")[2];
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
 
   
 
@@ -88,7 +92,7 @@ export default function DashboardSidebar() {
             ))}
 
             <button
-              onClick={() => router.push("/sign-in")}
+              onClick={() => {dispatch(logout()); router.refresh();}}
               type="button"
               className="flex items-center gap-x-3 px-5 py-4 text-lg text-[#595959] cursor-pointer "
             >

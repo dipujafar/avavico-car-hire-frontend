@@ -10,6 +10,7 @@ import { DateTimePicker } from "@/components/ui/date-picker";
 import CarRentalSkeleton from "@/components/skeletons/CarRentalSkeleton";
 import {motion} from "motion/react";
 import { fadeUpVariants } from "@/animation/motionVariant";
+import Link from "next/link";
 
 // You'll need to add your Google Maps API key as an environment variable
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
@@ -109,9 +110,9 @@ export default function RentCar() {
             <h2 className="text-xl font-medium text-primary-black-gray">
               Need to rent a luxury car?
             </h2>
-            <span className="text-sm text-primary-gray">
-              Need more information?
-            </span>
+            <Link href="/car-fleet" className="text-sm text-primary-gray">
+             View All
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-center  gap-4 md:border 2xl:p-3 p-2 rounded-lg">
@@ -182,7 +183,7 @@ export default function RentCar() {
               <label className="text-sm  font-bold text-primary-gray ">
                 Return Date & Time
               </label>
-              <DateTimePicker value={returnDate} onChange={setReturnDate} />
+              <DateTimePicker value={returnDate} onChange={setReturnDate} disableBefore={pickupDate} placeholder="Drop Off" />
             </div>
 
             {/* Rent a Car Button */}

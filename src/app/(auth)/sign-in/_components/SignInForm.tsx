@@ -24,7 +24,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AppleIcon, GoogleIcon } from "@/components/icons";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/api/authApi";
 import LoadingSpin from "@/components/ui/loading-spin";
@@ -50,6 +50,7 @@ const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const redirectUrl = useSearchParams()?.get("redirect");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,11 +76,17 @@ const SignInForm = () => {
           token: res?.data?.accessToken,
         })
       );
+      if(res?.data?.user?.role && redirectUrl){
+        router.push(decodeURIComponent(redirectUrl));
+        return
+      }
       if (res?.data?.user?.role === "User") {
         router.replace("/user/profile");
+        return
       }
       if(res?.data?.user?.role === "Vendor"){
         router.push("/vendor/profile");
+        return
       }
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });

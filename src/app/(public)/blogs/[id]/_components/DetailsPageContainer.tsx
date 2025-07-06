@@ -11,7 +11,6 @@ import BlogDetailsSkeleton from '@/components/Skeletons/BlogSkeleton/BlogDetails
 const DetailsPageContainer = ({ id }: { id: string }) => {
   const {data: blogDetailsData, isLoading} = useGetSingleBlogQuery(id, {skip: !id});
 
-  console.log(blogDetailsData?.data);
   
   if(isLoading){
     return (

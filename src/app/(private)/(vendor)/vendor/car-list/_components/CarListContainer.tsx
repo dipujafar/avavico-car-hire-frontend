@@ -21,7 +21,6 @@ const CarListContainer = () => {
   query["limit"] = pagePostsLimit;
   query["page"] = Number(page) || 1;
   const { data: ownCarsData, isLoading } = useGetOwnCarsQuery(query);
-  console.log(ownCarsData?.data?.cars);
   return (
     <>
       <div className="flex justify-between mb-5">

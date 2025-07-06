@@ -19,6 +19,8 @@ import { useForgetPasswordMutation } from "@/redux/api/authApi";
 import LoadingSpin from "@/components/ui/loading-spin";
 import { Error_Modal } from "@/modals";
 import { toast } from "sonner";
+import { setUser } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const formSchema = z.object({
   email: z
@@ -28,8 +30,9 @@ const formSchema = z.object({
 });
 
 const ForgetPassForm = () => {
-  const [forgetPass, {isLoading}] = useForgetPasswordMutation(); 
+  const [forgetPass, { isLoading }] = useForgetPasswordMutation();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,13 +41,23 @@ const ForgetPassForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    try{
-      forgetPass(data).unwrap();
-      toast.success("Sent OTP on your email! Please check your inbox.");
-    }catch(error: any){
+    try {
+      const res = await forgetPass(data).unwrap();
+      console.log(res);
+      if (res?.data?.token) {
+        dispatch(
+          setUser({
+            token: res?.data?.token,
+          })
+        );
+        toast.success("Sent OTP on your email! Please check your inbox.");
+         router.push("/verify-otp?for=forgetPassword");
+      }
+
+     
+    } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }
-    router.push("/verify-otp");
   };
 
   return (
@@ -76,7 +89,13 @@ const ForgetPassForm = () => {
               )}
             />
 
-        <Button disabled={isLoading} className="w-full bg-primary-cyan group hover:bg-cyan-600">Send <AnimatedArrow></AnimatedArrow> {isLoading && <LoadingSpin/>}</Button>
+            <Button
+              disabled={isLoading}
+              className="w-full bg-primary-cyan group hover:bg-cyan-600"
+            >
+              Send <AnimatedArrow></AnimatedArrow>{" "}
+              {isLoading && <LoadingSpin />}
+            </Button>
           </form>
         </Form>
       </CardContent>

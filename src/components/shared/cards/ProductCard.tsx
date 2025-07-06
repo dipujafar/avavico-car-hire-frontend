@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import { Error_Modal } from "@/modals";
 import { AddCarModal } from "@/app/(private)/(vendor)/vendor/car-list/_components/AddCarModal";
 import { useState } from "react";
+import { useGetSingleCarAvarageReviewQuery } from "@/redux/api/reviewsApi";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProductCard({
   data,
@@ -21,7 +23,9 @@ export default function ProductCard({
 }) {
   const [openAddCarModal, setOpenAddCarModal] = useState(false);
   const router = useRouter();
-  const [deleteCar, { isLoading }] = useDeleteCarMutation();
+  const [deleteCar] = useDeleteCarMutation();
+  const {data: averageReview, isLoading: isReviewLoading} = useGetSingleCarAvarageReviewQuery(data?.id, {skip: !data?.id});
+  console.log(averageReview?.data?.totalReviews);
 
   const handleCardClick = () => {
     router.push(`/car-fleet/${data?.id}`);
@@ -81,12 +85,12 @@ export default function ProductCard({
               <span className="text-sm font-medium">{data?.discount}% Off</span>
             </div>
 
-            <div className="inline-flex items-center px-3 py-1 bg-white rounded-sm border shadow-sm">
+           {isReviewLoading ? <Skeleton className="inline-flex items-center px-3 py-1 bg-gray-200 rounded-sm border shadow-sm h-[30px] w-[120px]"/> :averageReview?.data?.totalReviews > 0 && <div className="inline-flex items-center px-3 py-1 bg-white rounded-sm border shadow-sm">
               <Star className="w-4 h-4 mr-1 text-primary-cyan fill-primary-cyan" />
               <span className="text-sm font-medium">
-                {data?.rating} ({data?.reviewCount} reviews)
+                {averageReview?.data?.overallRating} ({averageReview?.data?.totalReviews} reviews)
               </span>
-            </div>
+            </div>}
           </div>
 
           <div className="space-y-1">

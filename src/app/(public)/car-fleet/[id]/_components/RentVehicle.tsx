@@ -1,60 +1,90 @@
 "use client";
 import { useState } from "react";
-import { format, differenceInDays } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { differenceInDays } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
-
-const DAILY_RATE = 450;
-const DISCOUNT = 50;
+import { DateTimePicker } from "@/components/ui/date-picker";
+import { ICar } from "@/types";
+import { Input } from "@/components/ui/input";
+import { useAddNewOrderMutation } from "@/redux/api/orderApi";
+import { useAppSelector } from "@/redux/hooks";
+import Cookies from "js-cookie";
+import { LoginDialog } from "@/components/shared/LoginDialog";
+import { getDiscountAmount } from "@/utils/getDiscountAmount";
+import { toast } from "sonner";
+import { Error_Modal } from "@/modals";
+import LoadingSpin from "@/components/ui/loading-spin";
 
 type Extra = {
   id: string;
   label: string;
   price: number;
   checked: boolean;
+  select: number;
 };
 
-export function RentVehicle() {
-  const [pickupDate, setPickupDate] = useState<Date | undefined>(
-    new Date("2025-04-17")
-  );
-  const [dropoffDate, setDropoffDate] = useState<Date | undefined>(
-    new Date("2025-04-19")
-  );
+export function RentVehicle({ data }: { data: ICar }) {
+  const [dropoffDate, setDropoffDate] = useState<Date | undefined>();
+  const [pickupDate, setPickupDate] = useState<Date | undefined>(new Date());
+  const [pickupLocation, setPickupLocation] = useState<string>("");
+  const [dropoffLocation, setDropoffLocation] = useState<string>("");
+  const [addOrder, { isLoading }] = useAddNewOrderMutation();
+  const user: any = useAppSelector((state) => state.auth.user);
+  const isLoggedIn = Cookies.get("avavico-car-hire-access-token");
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   const [extras, setExtras] = useState<Extra[]>([
-    { id: "childSeat", label: "Child Seat", price: 24, checked: true },
+    {
+      id: "childSeat",
+      label: "Child Seat",
+      select: data?.childSeat?.select,
+      price: data?.childSeat?.price,
+      checked: false,
+    },
     {
       id: "additionalDriver",
       label: "Additional Driver",
-      price: 32,
+      price: data?.additionalDriver?.price,
+      checked: false,
+      select: data?.additionalDriver?.select,
+    },
+    {
+      id: "youngDriver",
+      label: "Young Driver",
+      select: data?.youngDriver?.select,
+      price: data?.youngDriver?.price,
       checked: false,
     },
-    { id: "youngDriver", label: "Young Driver", price: 32, checked: false },
-    { id: "oneWayFees", label: "One way fees", price: 125, checked: false },
+    {
+      id: "oneWayFees",
+      label: "One way fees",
+      select: data?.oneWayFees?.select,
+      price: data?.oneWayFees?.price,
+      checked: false,
+    },
     {
       id: "gpsNavigation",
       label: "GPS Navigation System",
-      price: 25,
-      checked: true,
+      price: data?.gps?.price,
+      select: data?.gps?.select,
+      checked: false,
     },
-    { id: "crossBorder", label: "Cross Border", price: 25, checked: false },
     {
-      id: "insuranceCoverage",
-      label: "Insurance Coverage",
-      price: 750,
-      checked: true,
+      id: "crossBorder",
+      label: "Cross Border",
+      select: data?.crossBorder?.select,
+      price: data?.crossBorder?.price,
+      checked: false,
     },
+    // {
+    //   id: "insuranceCoverage",
+    //   label: "Insurance Coverage",
+    //   price: 750,
+    //   checked: true,
+    // },
   ]);
 
   const toggleExtra = (id: string) => {
@@ -72,7 +102,7 @@ export function RentVehicle() {
       : 0;
 
   // Calculate base rental cost
-  const baseRental = days * DAILY_RATE;
+  const baseRental = days * Number(data?.price);
 
   // Calculate extras cost
   const extrasCost = extras
@@ -83,141 +113,181 @@ export function RentVehicle() {
   const subtotal = baseRental + extrasCost;
 
   // Calculate grand total
-  const grandTotal = subtotal - DISCOUNT;
+  const grandTotal =
+    subtotal - getDiscountAmount(Number(data?.price), Number(data?.discount));
+
+  // post api to rent car
+
+  const handleRentCar = async () => {
+    if (!isLoggedIn || !user) {
+      setOpenLoginModal(true);
+      return;
+    }
+
+    const orderData = {
+      data: {
+        carId: data?.id,
+        pickUp: pickupDate,
+        dropOff: dropoffDate,
+        pickUpLocation: pickupLocation,
+        dropOffLocation: dropoffLocation,
+      },
+    };
+
+    try {
+      await addOrder(orderData).unwrap();
+      toast.success("Car rented successfully");
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
+  };
 
   return (
-    <Card>
-      <h3 className="text-xl font-bold px-4 border-b pb-2 text-[#101010]">Rent This Vehicle</h3>
+    <>
+      <Card>
+        <h3 className="text-xl font-bold px-4 border-b pb-2 text-[#101010]">
+          Rent This Vehicle
+        </h3>
 
-      <CardContent className="p-0">
-        <div className="border-b">
-          <div className="flex items-center justify-between px-4 pb-2">
-            <div className="font-medium">Pick-Up</div>
-            <div className="flex items-center">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "justify-start text-left font-normal",
-                      !pickupDate && "text-muted-foreground"
-                    )}
-                  >
-                    {pickupDate
-                      ? format(pickupDate, "dd/MM/yyyy")
-                      : "Select date"}
-                    <CalendarIcon className="ml-2 h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={pickupDate}
-                    onSelect={setPickupDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
-          <div className="flex items-center justify-between px-4 border-b pb-2">
-            <div className="font-medium">Drop-Off</div>
-            <div className="flex items-center">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "justify-start text-left font-normal",
-                      !dropoffDate && "text-muted-foreground"
-                    )}
-                  >
-                    {dropoffDate
-                      ? format(dropoffDate, "dd/MM/yyyy")
-                      : "Select date"}
-                    <CalendarIcon className="ml-2 h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={dropoffDate}
-                    onSelect={setDropoffDate}
-                    initialFocus
-                    disabled={(date) =>
-                      (pickupDate ? date < pickupDate : false) ||
-                      date < new Date()
-                    }
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
-          <div className="flex items-center justify-between p-4 ">
-            <div className="font-medium">Rent :</div>
-            <div className="flex items-center gap-1">
-              <span>
-                ${DAILY_RATE} x {days} days
-              </span>
-              <span className="ml-auto font-medium">
-                ${baseRental?.toFixed(2)}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-4 border-b">
-          <div className="font-medium mb-2">Add Extra:</div>
-          <div className="space-y-2">
-            {extras?.map((extra) => (
-              <div key={extra?.id} className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    className="border-primary-gray data-[state=checked]:bg-[#00B74A] data-[state=checked]:border-[#00B74A]"
-                    id={extra?.id}
-                    checked={extra?.checked}
-                    onCheckedChange={() => toggleExtra(extra?.id)}
-                  />
-                  <label
-                    htmlFor={extra?.id}
-                    className=" xl:text-base text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#737373]"
-                  >
-                    {extra?.label}
-                  </label>
-                </div>
-                <div className="xl:text-base text-sm">
-                  ${extra?.price?.toFixed(2)}
-                </div>
+        <CardContent className="p-0">
+          <div className="border-b">
+            <div className="flex items-center justify-between px-4 pb-2">
+              <div className="font-medium">Pick-Up</div>
+              <div className="border rounded-md ">
+                <DateTimePicker
+                  value={pickupDate}
+                  onChange={setPickupDate}
+                  className="bg-gray-100"
+                />
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="p-4 border-b-2">
-          <div className="flex items-center justify-between">
-            <div className="font-medium">Subtotal</div>
-            <div className="font-medium">${subtotal?.toFixed(2)}</div>
-          </div>
-          <div className="flex items-center justify-between mt-2">
-            <div className="font-medium">Discount</div>
-            <div className="font-medium text-primary-cyan">
-              -${DISCOUNT?.toFixed(2)}
+            </div>
+            <div className="flex items-center justify-between px-4 border-b pb-2">
+              <div className="font-medium">Drop-Off</div>
+              <div className="border rounded-md ">
+                <DateTimePicker
+                  value={dropoffDate}
+                  onChange={setDropoffDate}
+                  disableBefore={pickupDate}
+                  placeholder="Drop Off"
+                  className="bg-gray-100"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-4 ">
+              <div className="font-medium">Rent :</div>
+              <div className="flex items-center gap-1">
+                <span className="ml-auto font-medium">
+                  ${baseRental?.toFixed(2)}
+                </span>
+                (
+                <span className="text-xs">
+                  ${Number(data?.price)} x {days} days
+                </span>
+                )
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="px-4 pt-4">
-          <div className="flex items-center justify-between">
-            <div className="font-medium text-lg">Grand Total</div>
-            <div className="font-bold text-lg">${grandTotal?.toFixed(2)}</div>
+          <div className="p-4 border-b">
+            <div className="font-medium mb-2">Add Extra:</div>
+            <div className="space-y-2">
+              {extras?.map((extra) => (
+                <div
+                  key={extra?.id}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      disabled={extra?.select === 0}
+                      className="border-primary-gray data-[state=checked]:bg-[#00B74A] data-[state=checked]:border-[#00B74A]"
+                      id={extra?.id}
+                      checked={extra?.checked}
+                      onCheckedChange={() => toggleExtra(extra?.id)}
+                    />
+                    <label
+                      htmlFor={extra?.id}
+                      className=" xl:text-base text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#737373]"
+                    >
+                      {extra?.label}
+                    </label>
+                  </div>
+                  <div
+                    className={cn(
+                      "xl:text-base text-sm",
+                      extra?.select === 0 && "text-[#737373]"
+                    )}
+                  >
+                    ${extra?.price?.toFixed(2)}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </CardContent>
-      <CardFooter className="px-4 pb-4 ">
-        <Button className="w-full bg-primary-cyan hover:bg-cyan-600 group">
-          Rent Now <AnimatedArrow></AnimatedArrow>
-        </Button>
-      </CardFooter>
-    </Card>
+
+          <div className="p-4 border-b-2">
+            <div className="flex items-center justify-between">
+              <div className="font-medium">Subtotal</div>
+              <div className="font-medium">${subtotal?.toFixed(2)}</div>
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              <div className="font-medium">Discount</div>
+              <div className="font-medium text-primary-cyan">
+                -$
+                {getDiscountAmount(
+                  Number(data?.price),
+                  Number(data?.discount)
+                )?.toFixed(2)}{" "}
+                <span className="text-xs ">({data?.discount}%)</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="px-4 pt-4">
+            <div className="flex items-center justify-between">
+              <div className="font-medium text-lg">Grand Total</div>
+              <div className="font-bold text-lg">${grandTotal?.toFixed(2)}</div>
+            </div>
+          </div>
+
+          <div className="p-4 border-b-2 space-y-3">
+            <div className="flex gap-x-4 items-center justify-between">
+              <div className="font-medium w-32 text-sm ">Pickup Location : </div>
+              <div className="flex-1">
+                <Input
+                  placeholder="Enter easiest location"
+                  className="bg-gray-100"
+                  onChange={(e) => setPickupLocation(e.target.value)}
+                ></Input>
+              </div>
+            </div>
+            <div className="flex gap-x-4 items-center justify-between">
+              <div className="font-medium w-32 text-sm">Dropoff Location : </div>
+              <div className="flex-1">
+                <Input
+                  placeholder="Enter easiest location"
+                  className="bg-gray-100"
+                  onChange={(e) => setDropoffLocation(e.target.value)}
+                ></Input>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="px-4 pb-4 ">
+          <Button
+            onClick={handleRentCar}
+            className="w-full bg-primary-cyan hover:bg-cyan-600 group"
+            disabled={
+              pickupLocation === "" ||
+              dropoffLocation === "" ||
+              !pickupDate ||
+              !dropoffDate || isLoading
+            }
+          >
+            Rent Now <AnimatedArrow></AnimatedArrow> {isLoading && <LoadingSpin/>}
+          </Button>
+        </CardFooter>
+      </Card>
+      <LoginDialog open={openLoginModal} setOpen={setOpenLoginModal} />
+    </>
   );
 }

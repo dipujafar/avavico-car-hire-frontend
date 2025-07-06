@@ -1,6 +1,5 @@
-"use client";
+"use client";;
 import Container from "@/components/shared/Container";
-import React from "react";
 import PathRoutes from "./PathRoutes";
 import DetailsPageImages from "./DetailsPageImages";
 import CarDetails from "./CarDetails";
@@ -22,8 +21,6 @@ const DetailsPageContainer = ({ id }: { id: string }) => {
   const { data: carDetailsData, isLoading } = useGetSingleCarQuery(id, {
     skip: !id,
   });
-
-
 
   if (isLoading) {
     return (
@@ -62,14 +59,14 @@ const DetailsPageContainer = ({ id }: { id: string }) => {
         <div className="lg:col-span-2">
           <CarDetails data={carDetailsData?.data?.car}></CarDetails>
           <div className="xl:mt-16 md:mt-10 mt-7 lg:space-y-10 space-y-7 bg-white md:p-8 px-2 py-4 rounded-md border border-[#DDE1DE]">
-            <RatingReviews />
-            <AllTestimonials></AllTestimonials>
+            <RatingReviews id={carDetailsData?.data?.car?.id} />
+            <AllTestimonials id={carDetailsData?.data?.car?.id}></AllTestimonials>
           </div>
         </div>
         <div className="space-y-7">
           <InsuranceCoverage></InsuranceCoverage>
-          <RentVehicle></RentVehicle>
-          <ListedBy></ListedBy>
+          <RentVehicle data={carDetailsData?.data?.car}></RentVehicle>
+          <ListedBy data={carDetailsData?.data?.car?.vendor}></ListedBy>
         </div>
       </div>
     </Container>

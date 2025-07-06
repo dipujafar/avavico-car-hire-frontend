@@ -1,47 +1,49 @@
-"use client"
-import { useState, useEffect } from "react"
-import { Star } from "lucide-react"
-import { cn } from "@/lib/utils"
+"use client";
+import { useState, useEffect } from "react";
+import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useGetSingleCarAvarageReviewQuery } from "@/redux/api/reviewsApi";
 
 interface RatingCategory {
-  name: string
-  value: number
+  name: string;
+  value: number;
 }
 
 interface RatingProps {
-  overallRating?: number
-  reviewCount?: number
-  categories?: RatingCategory[]
-  className?: string
+  className?: string;
+  id: string;
 }
 
 export default function RatingReviews({
-  overallRating = 4.95,
-  reviewCount = 672,
-  categories = [
-    { name: "Price", value: 4.8 },
-    { name: "Service", value: 4.2 },
-    { name: "Safety", value: 4.9 },
-    { name: "Entertainment", value: 4.7 },
-    { name: "Accessibility", value: 5 },
-    { name: "Support", value: 5 },
-  ],
   className,
+  id,
 }: RatingProps) {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(false);
+  const { data: averageReview, isLoading: isReviewLoading } =
+    useGetSingleCarAvarageReviewQuery(id, { skip: !id });
+  console.log(averageReview?.data?.totalReviews);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640)
-    }
+      setIsMobile(window.innerWidth < 640);
+    };
 
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
 
     return () => {
-      window.removeEventListener("resize", checkMobile)
-    }
-  }, [])
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  const categories = [
+    { name: "Price", value: averageReview?.data?.avgPrice || 0},
+    { name: "Service", value: averageReview?.data?.avgService || 0 },
+    { name: "Safety", value: averageReview?.data?.avgSafety || 0 },
+    { name: "Entertainment", value: averageReview?.data?.avgEntertainment || 0 },
+    { name: "Accessibility", value: averageReview?.data?.avgAccessibility || 0 },
+    { name: "Support", value: averageReview?.data?.avgSupport || 0 },
+  ];
 
   return (
     <div className={cn("w-full", className)}>
@@ -50,11 +52,18 @@ export default function RatingReviews({
       <div className="flex flex-col sm:flex-row gap-6   ">
         {/* Left side - Overall rating */}
         <div className="flex-shrink-0 flex flex-col items-center justify-center p-4 border-2 border-[#DDE1DE] rounded-lg min-w-[200px]">
-          <div className="text-2xl font-bold text-[#101010]">{overallRating} / 5</div>
-          <div className="text-sm text-[#8E8E8E] mb-2">({reviewCount} reviews)</div>
+          <div className="text-2xl font-bold text-[#101010]">
+            {averageReview?.data?.overallRating} / 5
+          </div>
+          <div className="text-sm text-[#8E8E8E] mb-2">
+            ({averageReview?.data?.totalReviews} reviews)
+          </div>
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="size-4 fill-yellow-400 text-yellow-400" />
+              <Star
+                key={i}
+                className="size-4 fill-yellow-400 text-yellow-400"
+              />
             ))}
           </div>
         </div>
@@ -78,5 +87,5 @@ export default function RatingReviews({
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -5,12 +5,15 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { logout } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 
 const SmallDeviceSidebar = () => {
     const pathname = usePathname();
       const path = pathname?.split("/")[2];
       const router = useRouter();
+      const dispatch = useAppDispatch();
     return (
         <Carousel
         opts={{
@@ -37,10 +40,10 @@ const SmallDeviceSidebar = () => {
           ))}
 
           <button
-            onClick={() => router.push("/sign-in")}
-            className="flex items-center md:gap-x-3 gap-x-1.5  px-3 mx-1  py-1 md:text-lg rounded text-primary-gray hover:bg-primary-gray/40 bg-gray-200 hover:text-primary-white  transition-all duration-300 ease-in-out"
+            onClick={() => {dispatch(logout()); router.refresh();}}
+            className="flex items-center md:gap-x-3 gap-x-1.5  px-3 mx-1  py-1 md:text-lg rounded  hover:bg-primary-gray/40 bg-gray-200 hover:text-primary-white  transition-all duration-300 ease-in-out"
           >
-            <LogOut className="md:size-6 size-4" color="#8A8A8A" />
+            <LogOut className="md:size-6 size-4"  />
             <span className="">Logout</span>
           </button>
         </CarouselContent>

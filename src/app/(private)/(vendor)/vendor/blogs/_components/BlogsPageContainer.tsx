@@ -21,7 +21,6 @@ const BlogsPageContainer = () => {
   query["page"] = Number(page) || 1;
 
   const { data: myBlogs, isLoading } = useGetMyBlogsQuery(query);
-  console.log(myBlogs?.data?.blogs);
   return (
     <>
       <div className="flex justify-between mb-5">
