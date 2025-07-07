@@ -51,8 +51,6 @@ const VerifyOtpForm = () => {
       try {
         const res = await verifyOtp(data).unwrap();
         toast.success("OTP verified successfully! Please login.");
-
-        console.log(res?.data?.accessToken);
         dispatch(
           setUser({
             token: res?.data?.accessToken,

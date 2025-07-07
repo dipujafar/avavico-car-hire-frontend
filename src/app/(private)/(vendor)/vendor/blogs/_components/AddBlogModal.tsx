@@ -75,8 +75,6 @@ export function AddBlogModal({
   });
 
   const onSubmit = async (values: CarFormValues) => {
-    // console.log("Form submitted:", values);
-
     const formattedData = {
       blogName: values?.name,
       details: values?.details,

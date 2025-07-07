@@ -15,6 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { useContactMutation } from "@/redux/api/contactApi";
+import { toast } from "sonner";
+import { Error_Modal } from "@/modals";
+import LoadingSpin from "@/components/ui/loading-spin";
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -32,14 +36,12 @@ const formSchema = z.object({
   message: z.string().min(5, {
     message: "Message must be at least 5 characters.",
   }),
-  termsAccepted: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the terms and conditions." }),
-  }),
 });
 
 type ContactFormValues = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
+  const [sendMail, { isLoading }] = useContactMutation();
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,10 +53,14 @@ export default function ContactForm() {
     },
   });
 
-  function onSubmit(values: ContactFormValues) {
-    // This is where you would typically send the form data to your backend
-    console.log(values);
-    alert("Form submitted successfully!");
+  async function onSubmit(values: ContactFormValues) {
+    try {
+      await sendMail(values).unwrap();
+      toast.success("Message sent successfully! We will get back to you soon.");
+      form.reset();
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
   }
 
   return (
@@ -73,7 +79,7 @@ export default function ContactForm() {
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input
-                      className="py-5 focus-visible:ring-0"
+                      className="py-5 focus-visible:ring-0 bg-[#F5F5F5]"
                       placeholder="Enter your first name"
                       {...field}
                     />
@@ -90,7 +96,7 @@ export default function ContactForm() {
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
                     <Input
-                      className="py-5 focus-visible:ring-0"
+                      className="py-5 focus-visible:ring-0 bg-[#F5F5F5]"
                       placeholder="Enter your last name"
                       {...field}
                     />
@@ -109,7 +115,7 @@ export default function ContactForm() {
                 <FormLabel>Email Address</FormLabel>
                 <FormControl>
                   <Input
-                    className="py-5 focus-visible:ring-0"
+                    className="py-5 focus-visible:ring-0 bg-[#F5F5F5]"
                     placeholder="Enter your email"
                     {...field}
                   />
@@ -132,6 +138,7 @@ export default function ContactForm() {
                     onChange={field.onChange}
                     international
                     defaultCountry="US"
+                    bgColor="#F5F5F5"
                   />
                 </FormControl>
                 <FormMessage />
@@ -148,7 +155,7 @@ export default function ContactForm() {
                 <FormControl>
                   <Textarea
                     placeholder="Leave us a message..."
-                    className="min-h-[100px]"
+                    className="min-h-[100px] bg-[#F5F5F5]"
                     {...field}
                   />
                 </FormControl>
@@ -158,10 +165,11 @@ export default function ContactForm() {
           />
 
           <Button
+            disabled={isLoading}
             type="submit"
             className="w-full bg-primary-cyan hover:bg-cyan-600 group"
           >
-            Send message
+            Send message {isLoading && <LoadingSpin/>}
             <AnimatedArrow></AnimatedArrow>
           </Button>
         </form>

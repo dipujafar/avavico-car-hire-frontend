@@ -2,18 +2,16 @@
 import Link from "next/link";
 import { orderData } from "@/utils/order-data";
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
+import { useGetMyOrdersQuery } from "@/redux/api/orderApi";
 
 
-const TABLE_HEADERS = [
-  "Car Name",
-  "Pick Up Location",
-  "Drop Off Location",
-  "Pick Up Date",
-  "Return Date",
-  "Status",
-];
+
 
 const RecentOrders = () => {
+  const limit = 5;
+  const {data: allMyOrderData, isLoading} = useGetMyOrdersQuery({limit});
+
+ 
   return (
     <div
       style={{
@@ -33,7 +31,7 @@ const RecentOrders = () => {
           View All
         </Link>
       </div>
-      <UserDashboardTable data={orderData} showLength={5}/>
+      <UserDashboardTable data={allMyOrderData?.data?.orders} loading={isLoading}/>
     </div>
   );
 };

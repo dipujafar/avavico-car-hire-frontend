@@ -25,7 +25,6 @@ export default function ProductCard({
   const router = useRouter();
   const [deleteCar] = useDeleteCarMutation();
   const {data: averageReview, isLoading: isReviewLoading} = useGetSingleCarAvarageReviewQuery(data?.id, {skip: !data?.id});
-  console.log(averageReview?.data?.totalReviews);
 
   const handleCardClick = () => {
     router.push(`/car-fleet/${data?.id}`);
@@ -93,7 +92,7 @@ export default function ProductCard({
             </div>}
           </div>
 
-          <div className="space-y-1">
+          <div className={cn("space-y-1", (!data?.discount && !averageReview?.data?.totalReviews) && "py-3")}>
             <div>
               <h2 className="xl:text-2xl text-xl font-bold truncate">
                 {data?.carName}

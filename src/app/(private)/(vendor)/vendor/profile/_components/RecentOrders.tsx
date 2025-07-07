@@ -4,14 +4,6 @@ import { orderData } from "@/utils/order-data";
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
 import { Button } from "@/components/ui/button";
 
-const TABLE_HEADERS = [
-  "Car Name",
-  "Pick Up Location",
-  "Drop Off Location",
-  "Pick Up Date",
-  "Return Date",
-  "Status",
-];
 
 const RecentOrders = () => {
   return (

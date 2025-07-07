@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useGetSingleCarAvarageReviewQuery } from "@/redux/api/reviewsApi";
+import RatingReviewsSkeleton from "@/components/skeletons/CarDetailsPage/RatingReviewsSkeleton";
+import { IAvarageRating } from "@/types";
+import StarRating from "@/components/shared/StarRating";
 
 interface RatingCategory {
   name: string;
@@ -11,38 +14,29 @@ interface RatingCategory {
 
 interface RatingProps {
   className?: string;
-  id: string;
+  averageReview: IAvarageRating;
+  isReviewLoading: boolean;
 }
 
-export default function RatingReviews({
-  className,
-  id,
-}: RatingProps) {
-  const [isMobile, setIsMobile] = useState(false);
-  const { data: averageReview, isLoading: isReviewLoading } =
-    useGetSingleCarAvarageReviewQuery(id, { skip: !id });
-  console.log(averageReview?.data?.totalReviews);
+export default function RatingReviews({ averageReview, isReviewLoading, className }: RatingProps) {
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
-  }, []);
+  if (isReviewLoading) {
+    return <RatingReviewsSkeleton />;
+  }
 
   const categories = [
-    { name: "Price", value: averageReview?.data?.avgPrice || 0},
-    { name: "Service", value: averageReview?.data?.avgService || 0 },
-    { name: "Safety", value: averageReview?.data?.avgSafety || 0 },
-    { name: "Entertainment", value: averageReview?.data?.avgEntertainment || 0 },
-    { name: "Accessibility", value: averageReview?.data?.avgAccessibility || 0 },
-    { name: "Support", value: averageReview?.data?.avgSupport || 0 },
+    { name: "Price", value: averageReview?.avgPrice || 0 },
+    { name: "Service", value: averageReview?.avgService || 0 },
+    { name: "Safety", value: averageReview?.avgSafety || 0 },
+    {
+      name: "Entertainment",
+      value: averageReview?.avgEntertainment || 0,
+    },
+    {
+      name: "Accessibility",
+      value: averageReview?.avgAccessibility || 0,
+    },
+    { name: "Support", value: averageReview?.avgSupport || 0 },
   ];
 
   return (
@@ -53,18 +47,13 @@ export default function RatingReviews({
         {/* Left side - Overall rating */}
         <div className="flex-shrink-0 flex flex-col items-center justify-center p-4 border-2 border-[#DDE1DE] rounded-lg min-w-[200px]">
           <div className="text-2xl font-bold text-[#101010]">
-            {averageReview?.data?.overallRating} / 5
+            {averageReview?.overallRating} / 5
           </div>
           <div className="text-sm text-[#8E8E8E] mb-2">
-            ({averageReview?.data?.totalReviews} reviews)
+            ({averageReview?.totalReviews} reviews)
           </div>
           <div className="flex gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className="size-4 fill-yellow-400 text-yellow-400"
-              />
-            ))}
+           <StarRating rating={averageReview?.overallRating || 0} size="md" />
           </div>
         </div>
 

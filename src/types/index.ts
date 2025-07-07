@@ -147,21 +147,48 @@ export interface IUser {
   id: string;
 }
 
-
-
 // ----------------------------- type for reviews ---------------------------
 export interface IReview {
-  carId: string
-  userId: string
-  orderId: string
-  price: number
-  safety: number
-  accessibility: number
-  services: number
-  entertainment: number
-  support: number
-  comment: string
-  createdAt: string
-  updatedAt: string
-  id: string
+  carId: ICar;
+  userId: IUser;
+  orderId: string;
+  price: number;
+  safety: number;
+  accessibility: number;
+  services: number;
+  entertainment: number;
+  support: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+export interface IAvarageRating {
+  totalReviews: number;
+  avgPrice: number;
+  avgService: number;
+  avgSafety: number;
+  avgEntertainment: number;
+  avgAccessibility: number;
+  avgSupport: number;
+  overallRating: number;
+}
+
+export interface IOrderData {
+  carId: ICar;
+  userId: IUser;
+  pickUp: string;
+  dropOff: string;
+  pickUpLocation: string;
+  dropOffLocation: string;
+  addExtra: Record<string, number>;
+  discount: number;
+  subTotal: number;
+  total: number;
+  status: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
 }

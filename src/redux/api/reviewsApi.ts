@@ -4,9 +4,10 @@ import { baseApi } from "./baseApi";
 const reviewsAPi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllReviewes: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: `/review/get_all_review`,
         method: "GET",
+        params,
       }),
       providesTags: [tagTypes.reviews],
     }),
@@ -23,8 +24,12 @@ const reviewsAPi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: [tagTypes.reviews],
-    })
+    }),
   }),
 });
 
-export const { useGetAllReviewesQuery, useGetSingleCarReviewesQuery, useGetSingleCarAvarageReviewQuery } = reviewsAPi;
+export const {
+  useGetAllReviewesQuery,
+  useGetSingleCarReviewesQuery,
+  useGetSingleCarAvarageReviewQuery,
+} = reviewsAPi;

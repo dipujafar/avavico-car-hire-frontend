@@ -12,7 +12,7 @@ import {
   SettingIcon2,
   SUVsIcons,
 } from "@/components/icons";
-import { ICar } from "@/types";
+import { IAvarageRating, ICar } from "@/types";
 import {
   Tooltip,
   TooltipContent,
@@ -25,7 +25,13 @@ type CarSpecification = {
   title?: string;
 };
 
-export default function CarDetails({ data }: { data: ICar }) {
+export default function CarDetails({
+  data,
+  averageReview,
+}: {
+  data: ICar;
+  averageReview: IAvarageRating;
+}) {
   const carSpecifications: CarSpecification[] = [
     {
       icon: <MiterIcon></MiterIcon>,
@@ -75,7 +81,10 @@ export default function CarDetails({ data }: { data: ICar }) {
           <div className="flex items-center text-primary-gray">
             <MapPin className="w-4 h-4 mr-1" />
             <span className="truncate">
-           {data?.rentingLocation?.state !== data?.rentingLocation?.city ? `${data?.rentingLocation?.state}, ` : ""}   {data?.rentingLocation?.city},{" "}
+              {data?.rentingLocation?.state !== data?.rentingLocation?.city
+                ? `${data?.rentingLocation?.state}, `
+                : ""}{" "}
+              {data?.rentingLocation?.city},{" "}
               {data?.rentingLocation?.streetAddress}
             </span>
           </div>
@@ -93,8 +102,10 @@ export default function CarDetails({ data }: { data: ICar }) {
           >
             <Star className="h-4 w-4 fill-current text-[#1EC1E2]" />
           </motion.span>
-          <span className="font-medium">4.95</span>
-          <span className="text-[#737373]">(672 reviews)</span>
+          <span className="font-medium">{averageReview?.overallRating}</span>
+          <span className="text-[#737373]">
+            ({averageReview?.totalReviews} reviews)
+          </span>
         </div>
       </div>
       <div className="space-y-4">

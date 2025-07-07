@@ -1,24 +1,23 @@
 "use client";
 import { IReview, TTestimonial } from "@/types";
 import { TestimonialCard } from "./TestimonialCard";
-import { testimonialsData } from "@/lib/dummyData";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGetSingleCarReviewesQuery } from "@/redux/api/reviewsApi";
+import { AllTestimonialsSkeleton } from "@/components/skeletons/CarDetailsPage/AllTestimonialsSkeleton";
+
 
 export function AllTestimonials({
-  testimonials: customTestimonials,
   id
 }: {
-  testimonials?: TTestimonial[];
   id: string
 }) {
   const [showReview, setShowReview] = useState(2);
-  // Use provided testimonials or fall back to sample data
-  const displayTestimonials = customTestimonials || testimonialsData;
   const {data: testimonialData, isLoading} = useGetSingleCarReviewesQuery(id, {skip: !id});
 
-  console.log(testimonialData?.data);
+  if (isLoading) {
+    return <AllTestimonialsSkeleton/>
+  }
 
   return (
     <div className="space-y-4">

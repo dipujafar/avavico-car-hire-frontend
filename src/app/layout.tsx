@@ -51,7 +51,7 @@ export default function RootLayout({
           </div>
           <div className="min-h-[calc(100vh-124px)]">{children}</div>
           <Footer></Footer>
-          <Toaster />
+          <Toaster position="top-center" />
 
           <NextTopLoader
             color="#1EC1E2"

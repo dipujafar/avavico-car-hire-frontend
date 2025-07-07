@@ -35,7 +35,6 @@ const AccountSettings = () => {
 
     if (file) {
       const url = URL.createObjectURL(file);
-      console.log(url);
       setImageUrl(url);
       setFileName(file);
     } else {

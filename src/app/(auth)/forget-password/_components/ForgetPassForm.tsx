@@ -43,7 +43,6 @@ const ForgetPassForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const res = await forgetPass(data).unwrap();
-      console.log(res);
       if (res?.data?.token) {
         dispatch(
           setUser({

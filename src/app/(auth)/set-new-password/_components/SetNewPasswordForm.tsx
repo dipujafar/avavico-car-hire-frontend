@@ -61,7 +61,6 @@ const SetNewPasswordForm = () => {
     };
     try {
       const res = await resetPassword(formattedData).unwrap();
-      console.log(res);
       toast.success("Password reset successfully! Please login.");
       // router.push("/sign-in");
     } catch (error: any) {

@@ -66,13 +66,13 @@ const Footer = () => {
                 </li>
 
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">Car Fleet</Link>
+                  <Link href="/car-fleet">Car Fleet</Link>
                 </li>
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">About US</Link>
+                  <Link href="/about-us">About US</Link>
                 </li>
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">Services</Link>
+                  <Link href="/services">Services</Link>
                 </li>
               </ul>
             </div>
@@ -81,17 +81,17 @@ const Footer = () => {
               <h3 className="lg:mb-8 mb-4">Pages</h3>
               <ul className="lg:space-y-4 space-y-2  text-primary-gray ">
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">Contact Us</Link>
+                  <Link href="/contact-us">Contact Us</Link>
                 </li>
 
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">Blog</Link>
+                  <Link href="/blogs">Blog</Link>
                 </li>
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">Reviews</Link>
+                  <Link href="/reviews">Reviews</Link>
                 </li>
                 <li className="hover:text-primary-cyan duration-300">
-                  <Link href="/">FAQ</Link>
+                  <Link href="/faqs">FAQ</Link>
                 </li>
               </ul>
             </div>
@@ -103,7 +103,7 @@ const Footer = () => {
               <ul className="lg:space-y-4 space-y-2  text-primary-gray ">
                 <li className="flex items-center gap-x-2">
                   <MapIcon></MapIcon>
-                  <p>123 Business Street, Europe</p>
+                  <p>Dublin, Ireland</p>
                 </li>
                 <li className="flex items-center gap-x-2">
                   <PhoneIcon></PhoneIcon>
@@ -120,7 +120,7 @@ const Footer = () => {
                     href="mailto:info@avavico.com"
                     className="hover:text-primary-cyan duration-300"
                   >
-                    info@avavico.com
+                    info@avavicocarhire.com
                   </Link>
                 </li>
               </ul>

@@ -16,11 +16,17 @@ import ListedBySkeleton from "@/components/skeletons/CarDetailsPage/ListedBySkel
 import RentVehicleSkeleton from "@/components/skeletons/CarDetailsPage/RentVehicleSkeleton";
 import RatingReviewsSkeleton from "@/components/skeletons/CarDetailsPage/RatingReviewsSkeleton";
 import { AllTestimonialsSkeleton } from "@/components/skeletons/CarDetailsPage/AllTestimonialsSkeleton";
+import { useGetSingleCarAvarageReviewQuery } from "@/redux/api/reviewsApi";
 
 const DetailsPageContainer = ({ id }: { id: string }) => {
   const { data: carDetailsData, isLoading } = useGetSingleCarQuery(id, {
     skip: !id,
   });
+
+
+   const { data: averageReview, isLoading: isReviewLoading } =
+      useGetSingleCarAvarageReviewQuery(id, { skip: !id });
+
 
   if (isLoading) {
     return (
@@ -53,14 +59,15 @@ const DetailsPageContainer = ({ id }: { id: string }) => {
         <PathRoutes></PathRoutes>
         <DetailsPageImages
           carImages={carDetailsData?.data?.car?.carImage}
+        
         ></DetailsPageImages>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 2xl:gap-x-16 xl:gap-x-10 lg:gap-x-7 gap-y-7">
         <div className="lg:col-span-2">
-          <CarDetails data={carDetailsData?.data?.car}></CarDetails>
+          <CarDetails data={carDetailsData?.data?.car}   averageReview={averageReview?.data}></CarDetails>
           <div className="xl:mt-16 md:mt-10 mt-7 lg:space-y-10 space-y-7 bg-white md:p-8 px-2 py-4 rounded-md border border-[#DDE1DE]">
-            <RatingReviews id={carDetailsData?.data?.car?.id} />
-            <AllTestimonials id={carDetailsData?.data?.car?.id}></AllTestimonials>
+            <RatingReviews averageReview={averageReview?.data} isReviewLoading={isReviewLoading}/>
+            <AllTestimonials id={id}></AllTestimonials>
           </div>
         </div>
         <div className="space-y-7">

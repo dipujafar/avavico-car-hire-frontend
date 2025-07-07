@@ -7,11 +7,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { IOrderData } from "@/types";
 import Link from "next/link";
 import { ReactNode } from "react";
+import moment from "moment";
 
 const TABLE_HEADERS = [
   "Car Name",
+  "Model",
   "Pick Up Location",
   "Drop Off Location",
   "Pick Up Date",
@@ -21,11 +24,11 @@ const TABLE_HEADERS = [
 
 const UserDashboardTable = ({
   data,
-  showLength = data?.length,
+  loading,
   button,
 }: {
-  data: any;
-  showLength?: number;
+  data: IOrderData[];
+  loading?: boolean;
   button?: ReactNode;
 }) => {
   return (
@@ -33,31 +36,32 @@ const UserDashboardTable = ({
       <TableHeader>
         <TableRow>
           {TABLE_HEADERS?.map((header) => (
-            <TableHead key={header} className="text-[#B0B0B0]`">
+            <TableHead key={header} className="text-[#000000] font-semibold ">
               {header}
             </TableHead>
           ))}
         </TableRow>
       </TableHeader>
       <TableBody className="p-6  font-medium">
-        {data?.slice(0, showLength)?.map((data: any) => (
-          <TableRow key={data._id}>
-            <TableCell className="py-4"> <Link href={`/car-fleet/${data._id}`}>{data?.name} </Link></TableCell>
-            <TableCell className="py-4 text-[#B0B0B0]">
-              {data?.pick_up_location}
+        {data?.map((data: IOrderData) => (
+          <TableRow key={data.id}>
+            <TableCell className="py-4 "> <Link href={`/car-fleet/${data?.carId?.id}`}>{data?.carId?.carName} </Link></TableCell>
+            <TableCell className="py-4 "> {data?.carId?.model}</TableCell>
+            <TableCell className="py-4  text-[#B0B0B0]">
+             {data?.pickUpLocation}
             </TableCell>
-            <TableCell className="py-4 text-[#B0B0B0]">
-              {data?.drop_off_location}
+            <TableCell className="py-4  text-[#B0B0B0]">
+              {data?.dropOffLocation}
             </TableCell>
-            <TableCell className="py-4 text-[#B0B0B0]">{data?.date}</TableCell>
-            <TableCell className="py-4 text-[#B0B0B0]">
-              {data?.return_date}
+            <TableCell className="py-4  text-[#B0B0B0]">{moment(data?.pickUp).format("ll")}</TableCell>
+            <TableCell className="py-4  text-[#B0B0B0]">
+              {moment(data?.dropOff).format("ll")}
             </TableCell>
 
-            <TableCell className="py-4">
+            <TableCell className="py-4 ">
               <h5
                 className={cn(
-                  "capitalize text-white flex justify-center rounded-md px-2 py-0.5",
+                  "capitalize text-white flex justify-center rounded-md px-2 py-0.5 bg-black",
                   data.status === "pending" && "bg-[#5B4373] ",
                   data.status === "canceled" && "bg-red-600",
                   data.status === "onTheWay" && "bg-[#2E3559]",
@@ -74,7 +78,7 @@ const UserDashboardTable = ({
                 button
               ) : (
                 <Link
-                  href={`/user/orders/${data._id}?status=${data.status}`}
+                  href={`/user/orders/${data?.id}?status=${data.status}`}
                   className="underline text-primary-cyan hover:text-cyan-600"
                 >
                   View Details
