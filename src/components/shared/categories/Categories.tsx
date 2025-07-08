@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   childrenVariants,
   parentVariants,
@@ -10,7 +10,6 @@ import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { Skeleton } from "@/components/ui/skeleton";
 import Empty from "@/components/ui/empty";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const Categories = ({
   title,
@@ -32,21 +31,16 @@ const Categories = ({
   const [selected, setSelected] = useState(checkedItem || "all");
   const updateSearchParam = useUpdateSearchParams("car-section");
 
+  const totalCars = data?.reduce((acc, car) => acc + car?.count, 0);
 
-  const totalCars =  data?.reduce((acc, car) => acc + car?.count, 0);
-  
-
-//   useEffect(() => {
-//   setSelected(checkedItem || "all");
-// }, [checkedItem]);
+  //   useEffect(() => {
+  //   setSelected(checkedItem || "all");
+  // }, [checkedItem]);
 
   const handleChange = (value: string) => {
     setSelected(value);
     updateSearchParam(filterName, value);
   };
-
-
-
 
   if (loading) {
     return (

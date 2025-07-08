@@ -8,15 +8,17 @@ const PaginationSection = ({
   totalItems,
   className,
   id,
-  pagePostsLimitProps
+  pagePostsLimitProps,
+  setName,
 }: {
   pagePostsLimitProps?: number;
   totalItems: number;
   className?: string;
   id?: string;
+  setName?: string;
 }) => {
   const updateSearchParam = useUpdateSearchParams(id);
-  const currentPage = useSearchParams()?.get("page");
+  const currentPage = useSearchParams()?.get(setName || "page");
   const pagePostsLimit = useSearchParams()?.get("limit");
   return (
     <div className={cn("mt-5 text-end", className)}>
@@ -24,7 +26,7 @@ const PaginationSection = ({
         currentPage={Number(currentPage) || 1}
         itemsPerPage={Number(pagePostsLimit)|| pagePostsLimitProps || 9}
         onPageChange={(pageNumber) =>
-          updateSearchParam("page", pageNumber?.toString())
+          updateSearchParam( setName || "page", pageNumber?.toString())
         }
         totalItems={totalItems}
         pageNeighbours={1}

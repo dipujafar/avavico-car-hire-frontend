@@ -31,8 +31,13 @@ export default function ListedBy({ data }: { data: IUser }) {
         ></CustomAvatar>
 
         <div>
-          <p className="font-bold text-lg">{data?.firstName + " " + data?.lastName}</p>
-          <p className="text-sm text-[#737373]">{data?.location?.state} {data?.location?.city && ", "} {data?.location?.city} </p>
+          <p className="font-bold text-lg line-clamp-1">
+            {data?.companyName || data?.firstName + " " + data?.lastName}
+          </p>
+          <p className="text-sm text-[#737373] line-clamp-1">
+            {data?.location?.state} {data?.location?.city && ", "}{" "}
+            {data?.location?.city}{" "}
+          </p>
         </div>
       </div>
       <div className="space-y-5 pb-4">
@@ -40,20 +45,14 @@ export default function ListedBy({ data }: { data: IUser }) {
           <PhoneIcon2></PhoneIcon2>
           <span>
             <span className="font-bold">Mobile:</span>{" "}
-            <Link target="_blank" href={`tel:${data?.mobile}`}>
-              {" "}
-              {data?.mobile}
-            </Link>
+            <Link href={`tel:${data?.mobile}`}> {data?.mobile}</Link>
           </span>
         </div>
         <div className="flex items-center gap-2">
           <MailIcon2></MailIcon2>
           <span>
             <span className="font-bold">Email: </span>{" "}
-            <Link target="_blank" href={`mailto:${data?.email}`}>
-              {" "}
-              {data?.email}
-            </Link>
+            <Link href={`mailto:${data?.email}`}> {data?.email}</Link>
           </span>
         </div>
         {/* <div className="flex items-center gap-2">

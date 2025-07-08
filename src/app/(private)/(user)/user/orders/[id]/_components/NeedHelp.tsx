@@ -17,7 +17,7 @@ export function NeedHelp({
   title = "Need Help?",
   buttonText = "Contact Us",
   phoneNumber = "+1 234 567 8900",
-  email = "support@avaxico.com",
+  email = "support@avavico.com",
   onContactClick,
 }: NeedHelpProps) {
   return (
@@ -26,7 +26,7 @@ export function NeedHelp({
       className="w-full bg-white rounded-lg  p-6"
     >
       <h2 className="text-xl font-medium  mb-4">{title}</h2>
-      <Link href={"contact-us"}>
+      <Link href={"/contact-us"}>
         <Button
           className="w-full mb-4 bg-[#1EC1E2] hover:bg-sky-500 text-white group"
           onClick={onContactClick}

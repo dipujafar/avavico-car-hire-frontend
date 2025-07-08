@@ -1,9 +1,8 @@
-"use client";
+"use client";;
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import ProductCard from "@/components/shared/cards/ProductCard";
 import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
-import { carData } from "@/lib/dummyData";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useGetAllCarsQuery } from "@/redux/api/carApi";

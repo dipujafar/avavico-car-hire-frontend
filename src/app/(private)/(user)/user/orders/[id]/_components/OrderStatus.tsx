@@ -14,7 +14,7 @@ export function OrderStatus() {
   const onCancel = () => {
     console.log("Cancel");
   };
-  if (status === "completed") {
+  if (status === "complete") {
     return (
       <div>
         <div
@@ -40,7 +40,7 @@ export function OrderStatus() {
       </div>
     );
   }
-  if (status === "canceled") {
+  if (status === "cancel") {
     return (
       <div
         style={{ boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)" }}
@@ -63,12 +63,11 @@ export function OrderStatus() {
         <div className="space-y-4">
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 text-[#EF4444] mt-1 flex-shrink-0" />
-            <h3 className="text-lg font-medium">Cancel Your Order</h3>
+            <h3 className="text-lg font-medium">Do you want to modify?</h3>
           </div>
 
           <p className="text-[#747474]">
-            You can cancel your booking free of charge up to 24 hours before the
-            rental period begins.
+            You can modify your order pickup and drop date and time before 2 hour of rent time start .
           </p>
 
           <Button
@@ -76,7 +75,7 @@ export function OrderStatus() {
             className="w-full bg-[#EF4444] hover:bg-red-600 group"
             onClick={onCancel}
           >
-            Cancel Booking
+            Change 
             <AnimatedArrow></AnimatedArrow>
           </Button>
         </div>

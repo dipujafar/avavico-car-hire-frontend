@@ -3,15 +3,33 @@ import PaginationSection from "@/components/shared/pagination/PaginationSection"
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
 import { useGetMyOrdersQuery } from "@/redux/api/orderApi";
 import { orderData } from "@/utils/order-data";
+import { useSearchParams } from "next/navigation";
 
 const OrderPageContainer = () => {
-    const scheduledOrderData = orderData.filter((order) => order.status === "scheduled");
-    const completedOrderData = orderData.filter((order) => order.status === "completed");
-    const canceledOrderData = orderData.filter((order) => order.status === "canceled");
+  const limit = 5;
+  const scheduledPage = useSearchParams()?.get("scheduledPage");
+  const completedPage = useSearchParams()?.get("completedPage");
 
-   const {data: inProgressOrderData, isLoading: isInProgressOrderDataLoading} = useGetMyOrdersQuery({status : "inProgress"});
-   const {data: accpectedOrderData, isLoading: isAccpectedOrderDataOrderDataLoading} = useGetMyOrdersQuery({status : "accept"});
-   const {data: compoletedOrderData, isLoading: isCompoletededOrderDataOrderDataLoading} = useGetMyOrdersQuery({status : "complete"});
+  const scheduledQuery = {
+    limit: limit,
+    page: scheduledPage || 1,
+    status: "inProgress",
+  };
+  const completedQuery = {
+    limit: limit,
+    page: completedPage || 1,
+    status: "complete",
+  };
+
+  const { data: inProgressOrderData, isLoading: isInProgressOrderDataLoading } =
+    useGetMyOrdersQuery(scheduledQuery);
+  const {
+    data: compoletedOrderData,
+    isLoading: isCompoletededOrderDataOrderDataLoading,
+  } = useGetMyOrdersQuery(completedQuery);
+
+  console.log(compoletedOrderData?.data?.meta?.total);
+  console.log(inProgressOrderData?.data?.meta?.total);
 
   return (
     <div className="xl:space-y-8 space-y-5">
@@ -26,8 +44,16 @@ const OrderPageContainer = () => {
           Scheduled Orders
         </h3>
 
-        <UserDashboardTable data={inProgressOrderData?.data?.orders} loading={isInProgressOrderDataLoading} />
-        <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
+        <UserDashboardTable
+          data={inProgressOrderData?.data?.orders}
+          loading={isInProgressOrderDataLoading}
+        />
+        <PaginationSection
+          totalItems={inProgressOrderData?.data?.meta?.total}
+          pagePostsLimitProps={limit}
+          className="mt-3"
+          setName="scheduledPage"
+        ></PaginationSection>
       </div>
       {/* ALL Scheduled Orders */}
       <div
@@ -40,11 +66,19 @@ const OrderPageContainer = () => {
           Completed Orders
         </h3>
 
-        <UserDashboardTable data={accpectedOrderData?.data?.orders} loading={isAccpectedOrderDataOrderDataLoading}/>
-        <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
+        <UserDashboardTable
+          data={compoletedOrderData?.data?.orders}
+          loading={isCompoletededOrderDataOrderDataLoading}
+        />
+        <PaginationSection
+          totalItems={compoletedOrderData?.data?.meta?.total}
+          pagePostsLimitProps={limit}
+          className="mt-3"
+          setName="completePage"
+        ></PaginationSection>
       </div>
       {/* ALL Canceled  Orders */}
-      <div
+      {/* <div
         style={{
           boxShadow: "0px 0px 8.925px 0px rgba(96, 96, 96, 0.16)",
         }}
@@ -55,7 +89,7 @@ const OrderPageContainer = () => {
         </h3>
         <UserDashboardTable data={compoletedOrderData?.data?.orders}  loading={isCompoletededOrderDataOrderDataLoading} />
         <PaginationSection totalItems={10} className="mt-3"></PaginationSection>
-      </div>
+      </div> */}
     </div>
   );
 };

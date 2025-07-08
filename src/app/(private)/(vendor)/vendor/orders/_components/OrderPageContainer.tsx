@@ -1,7 +1,9 @@
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Orders from "./Orders";
 
 const OrderPageContainer = () => {
+  
   return (
     <Tabs defaultValue="orders">
       <TabsList className="grid w-full gap-x-3 grid-cols-4 border-b-4 bg-transparent rounded-none ">

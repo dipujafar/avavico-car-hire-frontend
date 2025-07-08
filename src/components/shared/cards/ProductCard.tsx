@@ -24,7 +24,8 @@ export default function ProductCard({
   const [openAddCarModal, setOpenAddCarModal] = useState(false);
   const router = useRouter();
   const [deleteCar] = useDeleteCarMutation();
-  const {data: averageReview, isLoading: isReviewLoading} = useGetSingleCarAvarageReviewQuery(data?.id, {skip: !data?.id});
+  const { data: averageReview, isLoading: isReviewLoading } =
+    useGetSingleCarAvarageReviewQuery(data?.id, { skip: !data?.id });
 
   const handleCardClick = () => {
     router.push(`/car-fleet/${data?.id}`);
@@ -84,15 +85,27 @@ export default function ProductCard({
               <span className="text-sm font-medium">{data?.discount}% Off</span>
             </div>
 
-           {isReviewLoading ? <Skeleton className="inline-flex items-center px-3 py-1 bg-gray-200 rounded-sm border shadow-sm h-[30px] w-[120px]"/> :averageReview?.data?.totalReviews > 0 && <div className="inline-flex items-center px-3 py-1 bg-white rounded-sm border shadow-sm">
-              <Star className="w-4 h-4 mr-1 text-primary-cyan fill-primary-cyan" />
-              <span className="text-sm font-medium">
-                {averageReview?.data?.overallRating} ({averageReview?.data?.totalReviews} reviews)
-              </span>
-            </div>}
+            {isReviewLoading ? (
+              <Skeleton className="inline-flex items-center px-3 py-1 bg-gray-200 rounded-sm border shadow-sm h-[30px] w-[120px]" />
+            ) : (
+              averageReview?.data?.totalReviews > 0 && (
+                <div className="inline-flex items-center px-3 py-1 bg-white rounded-sm border shadow-sm">
+                  <Star className="w-4 h-4 mr-1 text-primary-cyan fill-primary-cyan" />
+                  <span className="text-sm font-medium">
+                    {averageReview?.data?.overallRating} (
+                    {averageReview?.data?.totalReviews} reviews)
+                  </span>
+                </div>
+              )
+            )}
           </div>
 
-          <div className={cn("space-y-1", (!data?.discount && !averageReview?.data?.totalReviews) && "py-3")}>
+          <div
+            className={cn(
+              "space-y-1",
+              !data?.discount && !averageReview?.data?.totalReviews && "py-3"
+            )}
+          >
             <div>
               <h2 className="xl:text-2xl text-xl font-bold truncate">
                 {data?.carName}
@@ -159,10 +172,7 @@ export default function ProductCard({
               </div>
             </div>
           ) : (
-            <Button
-              className="hover:bg-primary-cyan bg-[#F2F4F6] hover:text-white text-black font-bold duration-300"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <Button className="hover:bg-primary-cyan bg-[#F2F4F6] hover:text-white text-black font-bold duration-300">
               Rent Now
             </Button>
           )}

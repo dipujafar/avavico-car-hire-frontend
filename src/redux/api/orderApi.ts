@@ -25,8 +25,23 @@ const orderApi = baseApi.injectEndpoints({
                 params
             }),
             providesTags: [tagTypes.order],
+        }),
+        getOrderSingleOrder: builder.query({
+            query: (id) => ({
+                url: `/order/order_details/${id}`,
+                method: "GET",
+            }),
+            providesTags: [tagTypes.order],
+        }),
+        getOrderReceive: builder.query({
+            query: (params) => ({
+                url: `/vendor/my-rents`,
+                method: "GET",
+                params
+            }),
+            providesTags: [tagTypes.order],
         })
     }),
 });
 
-export const { useGetAllOrdersQuery, useAddNewOrderMutation, useGetMyOrdersQuery } = orderApi;
+export const { useGetAllOrdersQuery, useAddNewOrderMutation, useGetMyOrdersQuery, useGetOrderSingleOrderQuery, useGetOrderReceiveQuery } = orderApi;

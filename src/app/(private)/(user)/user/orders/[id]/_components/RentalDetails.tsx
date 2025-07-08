@@ -1,21 +1,16 @@
 import { Car, Users, Fuel, Zap, CheckCircle, CreditCard } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { MiterIcon2, PuleIcon2, SeatsIcon, SettingIcon3, WalletIcon } from "@/components/icons";
+import { ICar } from "@/types";
 
 interface RentalDetailsProps {
-  miles: number;
-  seats: number;
-  fuelType: string;
-  transmission: string;
   paymentStatus: string;
   paymentMethod: string;
+  carData: ICar
 }
 
 export function RentalDetails({
-  miles = 100,
-  seats = 4,
-  fuelType = "Diesel",
-  transmission = "Automatic",
+  carData ,
   paymentStatus = "Payment Successful",
   paymentMethod = "Paid via Credit Card ending in 1234",
 }: RentalDetailsProps) {
@@ -23,22 +18,22 @@ export function RentalDetails({
     {
       icon: <MiterIcon2 className="size-5"></MiterIcon2>,
       label: "Miles",
-      value: miles,
+      value: carData?.mileage?.rate,
     },
     {
       icon: <PuleIcon2 className="size-4"></PuleIcon2>,
       label: "Fuel Type",
-      value: fuelType,
+      value: carData?.fuelType,
     },
     {
       icon: <SeatsIcon className="size-6"></SeatsIcon>,
       label: "Seats",
-      value: `${seats} Seats`,
+      value: `${carData?.seat} Seats`,
     },
     {
       icon: <SettingIcon3 className="size-5"></SettingIcon3>,
       label: "Transmission",
-      value: transmission,
+      value: carData?.gearType,
     },
   ];
 
@@ -68,10 +63,10 @@ export function RentalDetails({
           <p className="text-green-600 font-medium">{paymentStatus}</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <WalletIcon className="h-5 w-5 text-gray-500" />
           <p className="text-sm text-[#4B5563]">{paymentMethod}</p>
-        </div>
+        </div> */}
       </div>
     </Card>
   );

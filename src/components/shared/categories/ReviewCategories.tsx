@@ -1,9 +1,7 @@
-"use client";
+"use client";;
 import { Checkbox } from "@/components/ui/checkbox";
 import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
 import { childrenVariants, parentVariants } from "@/animation/FramerMotionValiants";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { Rating } from "@/components/ui/rating";
 
 const rating = [

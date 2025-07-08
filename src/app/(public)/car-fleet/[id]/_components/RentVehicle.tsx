@@ -17,6 +17,7 @@ import { getDiscountAmount } from "@/utils/getDiscountAmount";
 import { toast } from "sonner";
 import { Error_Modal } from "@/modals";
 import LoadingSpin from "@/components/ui/loading-spin";
+import { title } from "process";
 
 type Extra = {
   id: string;
@@ -112,9 +113,10 @@ export function RentVehicle({ data }: { data: ICar }) {
   // Calculate subtotal
   const subtotal = baseRental + extrasCost;
 
+  const discount = getDiscountAmount(Number(subtotal), Number(data?.discount)) || 0;
+
   // Calculate grand total
-  const grandTotal =
-    subtotal - getDiscountAmount(Number(data?.price), Number(data?.discount));
+  const grandTotal = subtotal - discount;
 
   // post api to rent car
 
@@ -124,6 +126,24 @@ export function RentVehicle({ data }: { data: ICar }) {
       return;
     }
 
+    if (user?.role === "Vendor") {
+      Error_Modal({
+        title:
+          "A vendor are not allowed to rent a car. Please login with a user account.",
+      });
+      return;
+    }
+
+    const extraData = {
+      childSeat: extras.find((extra) => extra.id === "childSeat")?.checked,
+      additionalDriver: extras.find((extra) => extra.id === "additionalDriver")
+        ?.checked,
+      youngDriver: extras.find((extra) => extra.id === "youngDriver")?.checked,
+      oneWayFees: extras.find((extra) => extra.id === "oneWayFees")?.checked,
+      gps: extras.find((extra) => extra.id === "gpsNavigation")?.checked,
+      crossBorder: extras.find((extra) => extra.id === "crossBorder")?.checked,
+    };
+
     const orderData = {
       data: {
         carId: data?.id,
@@ -131,6 +151,10 @@ export function RentVehicle({ data }: { data: ICar }) {
         dropOff: dropoffDate,
         pickUpLocation: pickupLocation,
         dropOffLocation: dropoffLocation,
+        subTotal: subtotal,
+        addExtra: extraData,
+        discount: discount,
+        total: grandTotal,
       },
     };
 
@@ -206,7 +230,7 @@ export function RentVehicle({ data }: { data: ICar }) {
                     />
                     <label
                       htmlFor={extra?.id}
-                      className=" xl:text-base text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#737373]"
+                      className=" xl:text-base text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#4e4c4c]"
                     >
                       {extra?.label}
                     </label>
@@ -233,10 +257,7 @@ export function RentVehicle({ data }: { data: ICar }) {
               <div className="font-medium">Discount</div>
               <div className="font-medium text-primary-cyan">
                 -$
-                {getDiscountAmount(
-                  Number(data?.price),
-                  Number(data?.discount)
-                )?.toFixed(2)}{" "}
+                {discount}
                 <span className="text-xs ">({data?.discount}%)</span>
               </div>
             </div>
@@ -251,7 +272,9 @@ export function RentVehicle({ data }: { data: ICar }) {
 
           <div className="p-4 border-b-2 space-y-3">
             <div className="flex gap-x-4 items-center justify-between">
-              <div className="font-medium w-32 text-sm ">Pickup Location : </div>
+              <div className="font-medium w-32 text-sm ">
+                Pickup Location :{" "}
+              </div>
               <div className="flex-1">
                 <Input
                   placeholder="Enter easiest location"
@@ -261,7 +284,9 @@ export function RentVehicle({ data }: { data: ICar }) {
               </div>
             </div>
             <div className="flex gap-x-4 items-center justify-between">
-              <div className="font-medium w-32 text-sm">Dropoff Location : </div>
+              <div className="font-medium w-32 text-sm">
+                Dropoff Location :{" "}
+              </div>
               <div className="flex-1">
                 <Input
                   placeholder="Enter easiest location"
@@ -280,10 +305,12 @@ export function RentVehicle({ data }: { data: ICar }) {
               pickupLocation === "" ||
               dropoffLocation === "" ||
               !pickupDate ||
-              !dropoffDate || isLoading
+              !dropoffDate ||
+              isLoading
             }
           >
-            Rent Now <AnimatedArrow></AnimatedArrow> {isLoading && <LoadingSpin/>}
+            Rent Now <AnimatedArrow></AnimatedArrow>{" "}
+            {isLoading && <LoadingSpin />}
           </Button>
         </CardFooter>
       </Card>

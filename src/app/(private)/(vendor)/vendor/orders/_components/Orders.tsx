@@ -1,6 +1,7 @@
 "use client";
 import { OrderCarRentalCard } from "@/components/shared/cards/OrderCarRentalCard"
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
+import { useGetOrderReceiveQuery } from "@/redux/api/orderApi";
 const carRentals = [
   {
     id: "1",
@@ -40,7 +41,9 @@ const carRentals = [
   },
 ]
 
-export default function Orders({status}: {status: string}) {
+export default function Orders({status, total}: {status: string, total: number}) {
+  const {data: orderData} = useGetOrderReceiveQuery(undefined);
+  
   return (
     <div className="py-4">
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
@@ -53,7 +56,7 @@ export default function Orders({status}: {status: string}) {
           />
         ))}
       </div>
-      <PaginationSection totalItems={10}></PaginationSection>
+      <PaginationSection totalItems={orderData?.data?.meta?.total}></PaginationSection>
     </div>
   )
 }

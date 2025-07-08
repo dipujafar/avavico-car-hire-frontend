@@ -47,10 +47,10 @@ export default function RatingReviews({ averageReview, isReviewLoading, classNam
         {/* Left side - Overall rating */}
         <div className="flex-shrink-0 flex flex-col items-center justify-center p-4 border-2 border-[#DDE1DE] rounded-lg min-w-[200px]">
           <div className="text-2xl font-bold text-[#101010]">
-            {averageReview?.overallRating} / 5
+            {averageReview?.overallRating || 0} / 5
           </div>
           <div className="text-sm text-[#8E8E8E] mb-2">
-            ({averageReview?.totalReviews} reviews)
+            ({averageReview?.totalReviews || 0} reviews)
           </div>
           <div className="flex gap-0.5">
            <StarRating rating={averageReview?.overallRating || 0} size="md" />
@@ -59,7 +59,7 @@ export default function RatingReviews({ averageReview, isReviewLoading, classNam
 
         {/* Right side - Category ratings */}
         <div className="flex-grow space-y-3 max-w-sm">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <div key={category.name} className="space-y-1">
               <div className="flex justify-between text-sm">
                 <span>{category.name}</span>

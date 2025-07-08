@@ -102,9 +102,9 @@ export default function CarDetails({
           >
             <Star className="h-4 w-4 fill-current text-[#1EC1E2]" />
           </motion.span>
-          <span className="font-medium">{averageReview?.overallRating}</span>
+          <span className="font-medium">{averageReview?.overallRating || 0}</span>
           <span className="text-[#737373]">
-            ({averageReview?.totalReviews} reviews)
+            ({averageReview?.totalReviews || 0} reviews)
           </span>
         </div>
       </div>
