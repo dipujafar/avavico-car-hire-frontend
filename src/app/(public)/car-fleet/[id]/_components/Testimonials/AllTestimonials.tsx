@@ -5,28 +5,36 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGetSingleCarReviewesQuery } from "@/redux/api/reviewsApi";
 import { AllTestimonialsSkeleton } from "@/components/skeletons/CarDetailsPage/AllTestimonialsSkeleton";
+import Empty from "@/components/ui/empty";
 
-
-export function AllTestimonials({
-  id
-}: {
-  id: string
-}) {
+export function AllTestimonials({ id }: { id: string }) {
   const [showReview, setShowReview] = useState(2);
-  const {data: testimonialData, isLoading} = useGetSingleCarReviewesQuery(id, {skip: !id});
+  const { data: testimonialData, isLoading } = useGetSingleCarReviewesQuery(
+    id,
+    { skip: !id }
+  );
 
   if (isLoading) {
-    return <AllTestimonialsSkeleton/>
+    return <AllTestimonialsSkeleton />;
+  }
+
+  if(testimonialData?.data?.length === 0){
+    return (
+      <div>
+        <Empty message="No Reviews Found"/>
+      </div>
+    )
   }
 
   return (
     <div className="space-y-4">
-      {testimonialData?.data?.slice(0, showReview)?.map((testimonial : IReview) => (
-        <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-      ))}
+      {testimonialData?.data
+        ?.slice(0, showReview)
+        ?.map((testimonial: IReview) => (
+          <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        ))}
 
-
-{/* slice testimonials */}
+      {/* slice testimonials */}
       {testimonialData?.data?.length > 2 && (
         <div className="flex justify-end">
           {testimonialData?.data?.length <= showReview ? (

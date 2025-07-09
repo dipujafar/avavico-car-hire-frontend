@@ -1,10 +1,8 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -178,7 +176,7 @@ export function AddCarModal({
       rentingLocation: {
         country: data?.country,
         state: data?.state,
-        city: data?.city || data?.state,
+        city: data?.city ?  data?.city === "No city found" ? data?.state : data?.city : data?.state,
         streetAddress: data?.streetAddress,
         zipCode: data?.zipCode,
       },

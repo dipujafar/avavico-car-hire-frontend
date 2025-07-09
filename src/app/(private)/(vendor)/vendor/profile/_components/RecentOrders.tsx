@@ -3,9 +3,14 @@ import Link from "next/link";
 import { orderData } from "@/utils/order-data";
 import UserDashboardTable from "@/components/shared/Table/UserDashboardTable";
 import { Button } from "@/components/ui/button";
+import { useGetOrderReceiveQuery } from "@/redux/api/orderApi";
 
 
 const RecentOrders = () => {
+  const limit = 5;
+   const {data: orderData} = useGetOrderReceiveQuery({limit});
+
+   console.log(orderData?.data?.orders);
   return (
     <div
       style={{
@@ -15,7 +20,7 @@ const RecentOrders = () => {
     >
       <div className="mb-5 flex items-center justify-between ">
         <h3 className="md:text-2xl text-xl font-medium text-[#474747]">
-          My Recent Orders
+          Recent Orders
         </h3>
         <Link
           href="/vendor/orders"
@@ -26,18 +31,7 @@ const RecentOrders = () => {
         </Link>
       </div>
       <UserDashboardTable
-        data={orderData}
-        showLength={5}
-        button={
-          <Button
-            style={{ boxShadow: " 0px 1px 2px 0px rgba(0, 0, 0, 0.20)" }}
-            size="sm"
-            onClick={() => console.log("Accept")}
-            className="bg-cyan-500 hover:bg-cyan-600 shadow-2xl"
-          >
-            Accept
-          </Button>
-        }
+        data={orderData?.data?.orders}
       />
     </div>
   );

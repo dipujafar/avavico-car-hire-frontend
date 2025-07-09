@@ -1,7 +1,12 @@
 "use client";
-import { OrderCarRentalCard } from "@/components/shared/cards/OrderCarRentalCard"
+import { OrderCarRentalCard } from "@/components/shared/cards/OrderCarRentalCard";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
+import VendorOrderSkeleton from "@/components/Skeletons/VendorOrderSkeleton";
+import Empty from "@/components/ui/empty";
+import { findOutRunningOrders } from "@/lib/utils";
 import { useGetOrderReceiveQuery } from "@/redux/api/orderApi";
+import { IOrderData } from "@/types";
+import { useSearchParams } from "next/navigation";
 const carRentals = [
   {
     id: "1",
@@ -39,15 +44,40 @@ const carRentals = [
     duration: "3 days",
     price: 200.0,
   },
-]
+];
 
-export default function Orders({status, total}: {status: string, total: number}) {
-  const {data: orderData} = useGetOrderReceiveQuery(undefined);
-  
-  return (
-    <div className="py-4">
+export default function Orders({ status }: { status: string }) {
+  if (status === "processing") {
+    const { data: orderData, isLoading } = useGetOrderReceiveQuery({
+      limit: 999,
+    });
+
+    const runningData = findOutRunningOrders(orderData?.data?.orders);
+
+    if (isLoading) {
+      return (
+        <div className="space-y-5">
+          {" "}
+          {Array(5)
+            .fill(0)
+            .map((_, index) => (
+              <VendorOrderSkeleton key={index} />
+            ))}
+        </div>
+      );
+    }
+
+    if (runningData?.length === 0) {
+      return (
+        <div className="md:min-h-[400px] min-h-[250px] flex justify-center items-center">
+          <Empty message="No processing orders yet"></Empty>
+        </div>
+      );
+    }
+
+    return (
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
-        {carRentals.map((carRental) => (
+        {runningData?.map((carRental: IOrderData) => (
           <OrderCarRentalCard
             status={status}
             key={carRental.id}
@@ -56,7 +86,56 @@ export default function Orders({status, total}: {status: string, total: number})
           />
         ))}
       </div>
-      <PaginationSection totalItems={orderData?.data?.meta?.total}></PaginationSection>
+    );
+  }
+
+  //  ------------------------------------- if oder status is not processing -------------------------------
+  const limit = 5;
+  const page = useSearchParams()?.get("page");
+  const query: Record<string, string | number> = {};
+  query["limit"] = limit;
+  query["page"] = page || 1;
+  query["status"] = status;
+  const { data: orderData, isLoading } = useGetOrderReceiveQuery(query);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-5">
+        {" "}
+        {Array(5)
+          .fill(0)
+          .map((_, index) => (
+            <VendorOrderSkeleton key={index} />
+          ))}
+      </div>
+    );
+  }
+
+  if (!orderData?.data?.meta?.total) {
+    return (
+      <div className="md:min-h-[400px] min-h-[250px] flex justify-center items-center">
+        <Empty message="No data found"></Empty>
+      </div>
+    );
+  }
+
+  return (
+    <div className="py-4">
+      <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
+        {orderData?.data?.orders?.map((carRental: IOrderData) => (
+          <OrderCarRentalCard
+            status={status}
+            key={carRental.id}
+            carRental={carRental}
+            onAccept={(id) => console.log(`Accepted rental for car ID: ${id}`)}
+          />
+        ))}
+      </div>
+      <PaginationSection
+        totalItems={orderData?.data?.meta?.total}
+        pagePostsLimitProps={limit}
+        id="vendor-orders"
+      ></PaginationSection>
     </div>
-  )
+  );
 }

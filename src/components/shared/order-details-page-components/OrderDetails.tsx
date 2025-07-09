@@ -48,7 +48,6 @@ export default function OrderDetails({
         )
       : 0;
 
-  console.log(days);
 
   return (
     <div
@@ -71,7 +70,7 @@ export default function OrderDetails({
               height={300}
               placeholder="blur"
               blurDataURL={"/blurImage.jpg"}
-              className="w-full max-h-[217px] object-cover"
+              className="w-full h-[250px] object-cover"
             />
           </Link>
         </div>

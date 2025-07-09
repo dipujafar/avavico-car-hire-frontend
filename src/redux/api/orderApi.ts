@@ -40,7 +40,15 @@ const orderApi = baseApi.injectEndpoints({
                 params
             }),
             providesTags: [tagTypes.order],
-        })
+        }),
+        updateOrderInfo: builder.mutation({
+            query: (data) => ({
+                url: `/order/update_order`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: [tagTypes.order],
+        }), 
     }),
 });
 

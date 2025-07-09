@@ -1,6 +1,9 @@
 "use client";
 import CCountUp from "@/components/shared/CCountUp";
 import Container from "@/components/shared/Container";
+import { Skeleton } from "@/components/ui/skeleton";
+import useStaticSectionData from "@/hooks/useStaticSectionData";
+import { useGetAllStatsQuery } from "@/redux/api/statsApi";
 import { motion } from "motion/react";
 
 const fadeUpVariants = {
@@ -20,30 +23,8 @@ const fadeUpVariants = {
   },
 };
 
-const staticSectionData = [
-  {
-    _id: 1,
-    number: 12000,
-    title: "Completed Orders",
-  },
-  {
-    _id: 2,
-    number: 7250,
-    title: "Happy Customers",
-  },
-  {
-    _id: 3,
-    number: 235,
-    title: "Vehicles Fleet",
-  },
-  {
-    _id: 4,
-    number: 8,
-    title: "Years Experience",
-  },
-];
-
 const StaticSection = () => {
+  const { staticSectionData, isLoading } = useStaticSectionData();
   return (
     <div className="bg-[url('/static_section_bg.png')]  bg-cover origin-center lg:py-20 py-10 overflow-hidden">
       <Container className="flex flex-col xl:flex-row gap-y-2 justify-between gap-x-10 text-white">
@@ -90,9 +71,9 @@ const StaticSection = () => {
               key={item._id}
               className="flex flex-col items-center gap-x-4 bg-[#121212] 2xl:px-16 xl:px-10 md:px-5 px-1 py-8 rounded-lg"
             >
-              <p className="sm:text-[32px] text-2xl text-primary-cyan font-bold">
+             { isLoading? <Skeleton className="h-7 bg-gray-400 w-full mb-2.5"/>: <p className="sm:text-[32px] text-2xl text-primary-cyan font-bold">
                 <CCountUp end={item?.number} />+
-              </p>
+              </p>}
               <h3 className="font-medium sm:text-base text-sm">{item.title}</h3>
             </motion.div>
           ))}

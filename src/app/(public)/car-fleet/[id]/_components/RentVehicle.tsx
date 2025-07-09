@@ -17,7 +17,6 @@ import { getDiscountAmount } from "@/utils/getDiscountAmount";
 import { toast } from "sonner";
 import { Error_Modal } from "@/modals";
 import LoadingSpin from "@/components/ui/loading-spin";
-import { title } from "process";
 
 type Extra = {
   id: string;
@@ -170,7 +169,7 @@ export function RentVehicle({ data }: { data: ICar }) {
     <>
       <Card>
         <h3 className="text-xl font-bold px-4 border-b pb-2 text-[#101010]">
-          Rent This Vehicle
+          Rent This Vehicle 
         </h3>
 
         <CardContent className="p-0">

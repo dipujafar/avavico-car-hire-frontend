@@ -25,6 +25,14 @@ const reviewsAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.reviews],
     }),
+    submitReview: builder.mutation({
+      query: (data) => ({
+        url: `/review/add_review`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.reviews],
+    })
   }),
 });
 
@@ -32,4 +40,5 @@ export const {
   useGetAllReviewesQuery,
   useGetSingleCarReviewesQuery,
   useGetSingleCarAvarageReviewQuery,
+  useSubmitReviewMutation
 } = reviewsAPi;

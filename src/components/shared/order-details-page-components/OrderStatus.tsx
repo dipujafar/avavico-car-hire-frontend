@@ -5,10 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useSearchParams } from "next/navigation";
 import { CancelIcon, SuccessIcon } from "@/components/icons";
-import { ReviewModal } from "./ReviewModal";
 import { useState } from "react";
+import { ReviewModal } from "./ReviewModal";
 
-export function OrderStatus() {
+export function OrderStatus({cardId, orderId}: {cardId: string, orderId: string}) {
   const status = useSearchParams().get("status");
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const onCancel = () => {
@@ -36,6 +36,8 @@ export function OrderStatus() {
         <ReviewModal
           open={isReviewModalOpen}
           setOpen={setIsReviewModalOpen}
+          carId={cardId}
+          orderId={orderId}
         ></ReviewModal>
       </div>
     );

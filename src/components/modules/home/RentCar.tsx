@@ -11,9 +11,10 @@ import CarRentalSkeleton from "@/components/skeletons/CarRentalSkeleton";
 import {motion} from "motion/react";
 import { fadeUpVariants } from "@/animation/motionVariant";
 import Link from "next/link";
+import { envConfig } from "@/config";
 
 // You'll need to add your Google Maps API key as an environment variable
-const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
+const GOOGLE_MAPS_API_KEY = "AIzaSyDhzY2k-tIrpnoBut75TTDJTuE1kURA_fU";
 
 // Libraries we need to load
 const libraries = ["places"];

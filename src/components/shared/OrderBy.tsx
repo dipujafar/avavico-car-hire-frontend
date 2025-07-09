@@ -4,11 +4,11 @@ import { IUser } from "@/types";
 import CustomAvatar from "@/components/shared/CustomeAvater";
 
 
-export default function ListedBy({ data }: { data: IUser }) {
+export default function OrderBy({ data }: { data: IUser }) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <h3 className="text-xl font-bold  border-b py-2 text-[#101010]">
-        Listed by
+        Ordered by
       </h3>
 
       <div className="mb-4 pt-2 flex items-center gap-3">
@@ -21,7 +21,7 @@ export default function ListedBy({ data }: { data: IUser }) {
 
         <div>
           <p className="font-bold text-lg line-clamp-1">
-            {data?.companyName || data?.firstName + " " + data?.lastName}
+            {data?.userName || data?.firstName + " " + data?.lastName}
           </p>
           <p className="text-sm text-[#737373] line-clamp-1">
             {data?.location?.state} {data?.location?.city && ", "}{" "}

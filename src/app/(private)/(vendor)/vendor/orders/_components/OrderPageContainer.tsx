@@ -5,7 +5,7 @@ import Orders from "./Orders";
 const OrderPageContainer = () => {
   
   return (
-    <Tabs defaultValue="orders">
+    <Tabs defaultValue="orders" id="vendor-orders">
       <TabsList className="grid w-full gap-x-3 grid-cols-4 border-b-4 bg-transparent rounded-none ">
         <TabsTrigger
           value="orders"
@@ -33,16 +33,16 @@ const OrderPageContainer = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="orders">
-        <Orders status="pending"></Orders>
+        <Orders status="inProgress"></Orders>
       </TabsContent>
       <TabsContent value="processing">
-        <Orders status="in progress"></Orders>
+        <Orders status="processing"></Orders>
       </TabsContent>
       <TabsContent value="completed">
-        <Orders status="completed"></Orders>
+        <Orders status="complete"></Orders>
       </TabsContent>
       <TabsContent value="canceled">
-        <Orders status="canceled"></Orders>
+        <Orders status="cancel"></Orders>
       </TabsContent>
     </Tabs>
   );

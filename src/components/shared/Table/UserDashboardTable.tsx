@@ -88,7 +88,7 @@ const UserDashboardTable = ({
                 button
               ) : (
                 <Link
-                  href={`/user/orders/${data?.id}?status=${data.status}`}
+                  href={`/user/orders/${data?.id}?status=${data?.status}`}
                   className="underline text-primary-cyan hover:text-cyan-600"
                 >
                   View Details

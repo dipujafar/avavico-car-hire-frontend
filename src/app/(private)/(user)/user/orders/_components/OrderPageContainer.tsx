@@ -28,9 +28,6 @@ const OrderPageContainer = () => {
     isLoading: isCompoletededOrderDataOrderDataLoading,
   } = useGetMyOrdersQuery(completedQuery);
 
-  console.log(compoletedOrderData?.data?.meta?.total);
-  console.log(inProgressOrderData?.data?.meta?.total);
-
   return (
     <div className="xl:space-y-8 space-y-5">
       {/* ALL Scheduled Orders */}
@@ -55,7 +52,7 @@ const OrderPageContainer = () => {
           setName="scheduledPage"
         ></PaginationSection>
       </div>
-      {/* ALL Scheduled Orders */}
+      {/* ALL Completed Orders */}
       <div
         style={{
           boxShadow: "0px 0px 8.925px 0px rgba(96, 96, 96, 0.16)",

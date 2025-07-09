@@ -2,13 +2,18 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-
-import { ArrowRight } from "lucide-react"
 import { StarRating } from "@/components/ui/star-rating"
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow"
-export function ReviewModal({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
+import { useAppSelector } from "@/redux/hooks"
+import { useSubmitReviewMutation } from "@/redux/api/reviewsApi"
+import { Error_Modal } from "@/modals"
+import { toast } from "sonner"
+import LoadingSpin from "@/components/ui/loading-spin"
+export function ReviewModal({ open, setOpen, carId, orderId }: { open: boolean; setOpen: (open: boolean) => void, carId: string, orderId: string }) {
+  const user: any = useAppSelector((state) => state.auth.user);
+  const [comment, setComment] = useState("");
+  const [submitReview, {isLoading}] = useSubmitReviewMutation();
   const [ratings, setRatings] = useState<Record<string, number>>({
     Price: 0,
     Safety: 0,
@@ -16,7 +21,7 @@ export function ReviewModal({ open, setOpen }: { open: boolean; setOpen: (open: 
     Service: 0,
     Entertainment: 0,
     Support: 0,
-  })
+  });
 
   const handleRatingChange = (category: string, value: number) => {
     setRatings((prev) => ({
@@ -24,6 +29,24 @@ export function ReviewModal({ open, setOpen }: { open: boolean; setOpen: (open: 
       [category]: value,
     }))
   }
+
+
+  const handlePostReview = async () =>{
+    if(!comment){
+      toast.error("Write something about your experience");
+      return
+    }
+    const data = {carId, orderId, userId: user?.id, comment, price: ratings?.Price, safety: ratings?.Safety, accessibility: ratings?.Accessibility, service: ratings?.Service, entertainment: ratings?.Entertainment, support: ratings?.Support}
+    try {
+      submitReview(data).unwrap();
+      toast.success("Review submitted successfully");
+    }
+    catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
+  }
+
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -70,18 +93,14 @@ export function ReviewModal({ open, setOpen }: { open: boolean; setOpen: (open: 
 
           <div className="mb-4">
             <h3 className="font-medium mb-4">Leave feedback</h3>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <Input placeholder="Your name" />
-              <Input placeholder="Email address" />
-            </div>
-            <Textarea placeholder="Your comment" className="min-h-[120px] resize-none" />
+            <Textarea onChange={(e) => setComment(e.target.value)} placeholder="Your comment" className="min-h-[120px] resize-none" />
           </div>
         </div>
 
         <div className="px-6 pb-6">
-          <Button className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-md px-4 py-2  flex items-center justify-between group">
+          <Button disabled={isLoading} onClick={handlePostReview} className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-md px-4 py-2  flex items-center justify-between group">
             Submit review
-           <AnimatedArrow></AnimatedArrow>
+           <AnimatedArrow></AnimatedArrow> {isLoading && <LoadingSpin/>}
           </Button>
         </div>
       </DialogContent>
