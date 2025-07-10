@@ -77,7 +77,7 @@ export default function CarDetails({
           <h2 className="xl:text-4xl md:text-3xl text-2xl  font-bold tracking-tight">
             {data?.carName}
           </h2>
-          <p className="text-black/70">{data?.model}</p>
+          <p className="text-black/70">{data?.brand} -- {data?.model}</p>
           <div className="flex items-center text-primary-gray">
             <MapPin className="w-4 h-4 mr-1" />
             <span className="truncate">

@@ -236,6 +236,8 @@ export function AddCarModal({
           id: defaultData?.id,
           data: formData,
         }).unwrap();
+        toast.success("Car Successfully Updated.");
+        form.reset();
       } catch (err: any) {
         Error_Modal({ title: err?.data?.message });
       }

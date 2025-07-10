@@ -46,7 +46,15 @@ export interface ICar {
   discount: string;
   brand: string;
   id: string;
+  carPicDates: ICarPicDates[];
 }
+
+export type ICarPicDates = {
+  pickUp: string;
+  dropOff: string;
+  _id: string;
+  id: string;
+};
 
 export interface Vendor {
   sub: string;

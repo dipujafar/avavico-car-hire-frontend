@@ -111,7 +111,7 @@ export default function ProductCard({
                 {data?.carName}
               </h2>
               <h2 className="text-sm text-primary-gray truncate">
-                {data?.model}
+              {data?.brand} --  {data?.model}
               </h2>
             </div>
 

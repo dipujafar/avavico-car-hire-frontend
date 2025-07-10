@@ -204,7 +204,7 @@ const SignInForm = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex-col gap-y-3">
+      {/* <CardFooter className="flex-col gap-y-3">
         <div className="flex  items-center justify-center w-full gap-x-2 text-primary-gray">
           <span className="w-16 h-[0.5px] bg-primary-gray"></span>
           <p className="w-fit">Or, Log in with </p>
@@ -214,7 +214,7 @@ const SignInForm = () => {
           <GoogleIcon />
           <AppleIcon />
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

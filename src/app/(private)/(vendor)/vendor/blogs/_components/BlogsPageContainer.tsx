@@ -12,6 +12,7 @@ import BlogCardSkeleton from "@/components/skeletons/BlogSkeleton/BlogCardSkelet
 
 
 
+
 const BlogsPageContainer = () => {
   const [openAddBlogModal, setOpenAddBlogModal] = useState(false);
   const pagePostsLimit = 9;

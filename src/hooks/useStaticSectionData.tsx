@@ -1,6 +1,5 @@
 import { getYearsSince } from "@/lib/utils";
 import { useGetAllStatsQuery } from "@/redux/api/statsApi";
-import React from "react";
 
 export default function useStaticSectionData() {
   const { data, isLoading } = useGetAllStatsQuery(undefined);
@@ -14,12 +13,12 @@ export default function useStaticSectionData() {
     },
     {
       _id: 2,
-      number: data?.data?.happyCustomers,
+      number: data?.data?.happyClients,
       title: "Happy Customers",
     },
     {
       _id: 3,
-      number: data?.data?.cars,
+      number: data?.data?.vehiclesFleet,
       title: "Vehicles Fleet",
     },
     {

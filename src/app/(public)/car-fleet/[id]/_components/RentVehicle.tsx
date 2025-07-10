@@ -17,6 +17,7 @@ import { getDiscountAmount } from "@/utils/getDiscountAmount";
 import { toast } from "sonner";
 import { Error_Modal } from "@/modals";
 import LoadingSpin from "@/components/ui/loading-spin";
+import { useRouter } from "next/navigation";
 
 type Extra = {
   id: string;
@@ -28,13 +29,14 @@ type Extra = {
 
 export function RentVehicle({ data }: { data: ICar }) {
   const [dropoffDate, setDropoffDate] = useState<Date | undefined>();
-  const [pickupDate, setPickupDate] = useState<Date | undefined>(new Date());
+  const [pickupDate, setPickupDate] = useState<Date | undefined>();
   const [pickupLocation, setPickupLocation] = useState<string>("");
   const [dropoffLocation, setDropoffLocation] = useState<string>("");
   const [addOrder, { isLoading }] = useAddNewOrderMutation();
   const user: any = useAppSelector((state) => state.auth.user);
   const isLoggedIn = Cookies.get("avavico-car-hire-access-token");
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const router = useRouter();
 
   const [extras, setExtras] = useState<Extra[]>([
     {
@@ -112,7 +114,8 @@ export function RentVehicle({ data }: { data: ICar }) {
   // Calculate subtotal
   const subtotal = baseRental + extrasCost;
 
-  const discount = getDiscountAmount(Number(subtotal), Number(data?.discount)) || 0;
+  const discount =
+    getDiscountAmount(Number(subtotal), Number(data?.discount)) || 0;
 
   // Calculate grand total
   const grandTotal = subtotal - discount;
@@ -158,8 +161,11 @@ export function RentVehicle({ data }: { data: ICar }) {
     };
 
     try {
-      await addOrder(orderData).unwrap();
-      toast.success("Car rented successfully");
+      const res = await addOrder(orderData).unwrap();
+      if(res?.data){
+        router?.push(res?.data)
+      }
+      // toast.success("Car rented successfully");
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }
@@ -169,7 +175,7 @@ export function RentVehicle({ data }: { data: ICar }) {
     <>
       <Card>
         <h3 className="text-xl font-bold px-4 border-b pb-2 text-[#101010]">
-          Rent This Vehicle 
+          Rent This Vehicle
         </h3>
 
         <CardContent className="p-0">
@@ -181,6 +187,7 @@ export function RentVehicle({ data }: { data: ICar }) {
                   value={pickupDate}
                   onChange={setPickupDate}
                   className="bg-gray-100"
+                  bookings={data?.carPicDates}
                 />
               </div>
             </div>
@@ -188,11 +195,13 @@ export function RentVehicle({ data }: { data: ICar }) {
               <div className="font-medium">Drop-Off</div>
               <div className="border rounded-md ">
                 <DateTimePicker
+                  disabled={!pickupDate}
                   value={dropoffDate}
                   onChange={setDropoffDate}
                   disableBefore={pickupDate}
                   placeholder="Drop Off"
                   className="bg-gray-100"
+                  bookings={data?.carPicDates}
                 />
               </div>
             </div>

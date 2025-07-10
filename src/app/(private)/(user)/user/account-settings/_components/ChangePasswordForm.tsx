@@ -2,9 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import LoadingSpin from "@/components/ui/loading-spin";
+import { Error_Modal } from "@/modals";
+import { useChangePasswordMutation } from "@/redux/api/authApi";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type ChangePasswordFormInputs = {
   oldPassword: string;
@@ -24,10 +28,24 @@ const ChangePasswordForm = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
+
   const onSubmit: SubmitHandler<ChangePasswordFormInputs> = async (
     data: ChangePasswordFormInputs
   ) => {
-    console.log(data);
+
+    const formattedData = {
+      currentPassword: data?.oldPassword,
+      newPassword: data?.newPassword,
+    };
+
+    try {
+      await changePassword(formattedData).unwrap();
+      toast.success("Password changed successfully!");
+      reset();
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
   };
 
   return (
@@ -157,10 +175,11 @@ const ChangePasswordForm = () => {
 
           {/* submit button */}
           <Button
+            disabled={isLoading}
             type="submit"
             className="mt-5 rounded-full bg-primary-cyan px-10 hover:bg-cyan-600"
           >
-            Change Password
+            Change Password {isLoading && <LoadingSpin />}
           </Button>
         </form>
       </div>

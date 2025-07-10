@@ -14,32 +14,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DayPicker, type DayPickerProps } from "react-day-picker"
 
 // ---------- utils start ----------
-/**
- * regular expression to check for valid hour format (01-23)
- */
+/** * regular expression to check for valid hour format (01-23) */
 function isValidHour(value: string) {
   return /^(0[0-9]|1[0-9]|2[0-3])$/.test(value)
 }
 
-/**
- * regular expression to check for valid 12 hour format (01-12)
- */
+/** * regular expression to check for valid 12 hour format (01-12) */
 function isValid12Hour(value: string) {
   return /^(0[1-9]|1[0-2])$/.test(value)
 }
 
-/**
- * regular expression to check for valid minute format (00-59)
- */
+/** * regular expression to check for valid minute format (00-59) */
 function isValidMinuteOrSecond(value: string) {
-  return /^[0-5][0-9]$/.test(value)
+  return /^[0-5][0-5][0-9]$/.test(value)
 }
 
 type GetValidNumberConfig = { max: number; min?: number; loop?: boolean }
 
 function getValidNumber(value: string, { max, min = 0, loop = false }: GetValidNumberConfig) {
   let numericValue = Number.parseInt(value, 10)
-
   if (!Number.isNaN(numericValue)) {
     if (!loop) {
       if (numericValue > max) numericValue = max
@@ -50,7 +43,6 @@ function getValidNumber(value: string, { max, min = 0, loop = false }: GetValidN
     }
     return numericValue.toString().padStart(2, "0")
   }
-
   return "00"
 }
 
@@ -172,11 +164,7 @@ function getArrowByType(value: string, step: number, type: TimePickerType) {
   }
 }
 
-/**
- * handles value change of 12-hour input
- * 12:00 PM is 12:00
- * 12:00 AM is 00:00
- */
+/** * handles value change of 12-hour input * 12:00 PM is 12:00 * 12:00 AM is 00:00 */
 function convert12HourTo24Hour(hour: number, period: Period) {
   if (period === "PM") {
     if (hour <= 11) {
@@ -191,11 +179,7 @@ function convert12HourTo24Hour(hour: number, period: Period) {
   return hour
 }
 
-/**
- * time is stored in the 24-hour form,
- * but needs to be displayed to the user
- * in its 12-hour representation
- */
+/** * time is stored in the 24-hour form, * but needs to be displayed to the user * in its 12-hour representation */
 function display12HourValue(hours: number) {
   if (hours === 0 || hours === 12) return "12"
   if (hours >= 22) return `${hours - 12}`
@@ -225,8 +209,35 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   yearRange = 50,
+  bookings = [],
   ...props
-}: DayPickerProps & { yearRange?: number }) {
+}: DayPickerProps & {
+  yearRange?: number
+  bookings?: Array<{ pickUp: string; dropOff: string; _id: string; id: string }>
+}) {
+  // Add this function inside the Calendar component, before the MONTHS definition
+  const isDateReserved = React.useCallback(
+    (date: Date) => {
+      if (!bookings || bookings.length === 0) return false
+
+      // Create a date without time for comparison
+      const checkDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+      return bookings.some((booking) => {
+        const pickUpDate = new Date(booking.pickUp)
+        const dropOffDate = new Date(booking.dropOff)
+
+        // Create dates without time for comparison
+        const startDate = new Date(pickUpDate.getFullYear(), pickUpDate.getMonth(), pickUpDate.getDate())
+        const endDate = new Date(dropOffDate.getFullYear(), dropOffDate.getMonth(), dropOffDate.getDate())
+
+        // Check if the date falls within the booking range (inclusive)
+        return checkDate >= startDate && checkDate <= endDate
+      })
+    },
+    [bookings],
+  )
+
   const MONTHS = React.useMemo(() => {
     let locale: Pick<Locale, "options" | "localize" | "formatLong"> = enUS
     const { options, localize, formatLong } = props.locale || {}
@@ -264,6 +275,21 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
+      // @ts-ignore
+      disabled={(date) => {
+        // Combine existing disabled logic with reserved dates
+        const isDisabledByProps = typeof props.disabled === "function" ? props.disabled(date) : props.disabled || false
+        const isReserved = isDateReserved(date)
+        return isDisabledByProps || isReserved
+      }}
+      modifiers={{
+        reserved: isDateReserved,
+        ...props.modifiers,
+      }}
+      modifiersClassNames={{
+        reserved: "bg-red-100 text-red-800 font-bold",
+        ...props.modifiersClassNames,
+      }}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4  sm:space-y-0 justify-center",
         month: "flex flex-col items-center space-y-4",
@@ -347,11 +373,30 @@ function Calendar({
             </div>
           )
         },
+        DayButton: ({ day, ...props }) => {
+          const isReserved = isDateReserved(day.date)
+          return (
+            <button
+              {...props}
+              disabled={isReserved || props.disabled}
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "h-9 w-9 p-0 font-normal aria-selected:opacity-100 rounded-l-md rounded-r-md relative",
+                isReserved && "bg-red-100 text-red-800 font-bold cursor-not-allowed pointer-events-none opacity-60",
+                props.className,
+              )}
+            >
+              {day.date.getDate()}
+              {isReserved && <span className="absolute top-0 right-0 text-xs font-bold text-red-600">R</span>}
+            </button>
+          )
+        },
       }}
       {...props}
     />
   )
 }
+
 Calendar.displayName = "Calendar"
 
 interface PeriodSelectorProps {
@@ -372,11 +417,7 @@ const TimePeriodSelect = React.forwardRef<HTMLButtonElement, PeriodSelectorProps
 
     const handleValueChange = (value: Period) => {
       setPeriod?.(value)
-
-      /**
-       * trigger an update whenever the user switches between AM and PM;
-       * otherwise user must manually change the hour each time
-       */
+      /** * trigger an update whenever the user switches between AM and PM; * otherwise user must manually change the hour each time */
       if (date) {
         const tempDate = new Date(date)
         const hours = display12HourValue(date.getHours())
@@ -403,6 +444,7 @@ const TimePeriodSelect = React.forwardRef<HTMLButtonElement, PeriodSelectorProps
     )
   },
 )
+
 TimePeriodSelect.displayName = "TimePeriodSelect"
 
 interface TimePickerInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -437,16 +479,12 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
     const [flag, setFlag] = React.useState<boolean>(false)
     const [prevIntKey, setPrevIntKey] = React.useState<string>("0")
 
-    /**
-     * allow the user to enter the second digit within 2 seconds
-     * otherwise start again with entering first digit
-     */
+    /** * allow the user to enter the second digit within 2 seconds * otherwise start again with entering first digit */
     React.useEffect(() => {
       if (flag) {
         const timer = setTimeout(() => {
           setFlag(false)
         }, 2000)
-
         return () => clearTimeout(timer)
       }
     }, [flag])
@@ -456,14 +494,10 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
     }, [date, picker])
 
     const calculateNewValue = (key: string) => {
-      /*
-       * If picker is '12hours' and the first digit is 0, then the second digit is automatically set to 1.
-       * The second entered digit will break the condition and the value will be set to 10-12.
-       */
+      /* * If picker is '12hours' and the first digit is 0, then the second digit is automatically set to 1. * The second entered digit will break the condition and the value will be set to 10-12. */
       if (picker === "12hours") {
         if (flag && calculatedValue.slice(1, 2) === "1" && prevIntKey === "0") return `0${key}`
       }
-
       return !flag ? `0${key}` : calculatedValue.slice(1, 2) + key
     }
 
@@ -481,7 +515,6 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
       }
       if (e.key >= "0" && e.key <= "9") {
         if (picker === "12hours") setPrevIntKey(e.key)
-
         const newValue = calculateNewValue(e.key)
         if (flag) onRightFocus?.()
         setFlag((prev) => !prev)
@@ -515,16 +548,14 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
     )
   },
 )
+
 TimePickerInput.displayName = "TimePickerInput"
 
 interface TimePickerProps {
   date?: Date | null
   onChange?: (date: Date | undefined) => void
   hourCycle?: 12 | 24
-  /**
-   * Determines the smallest unit that is displayed in the datetime picker.
-   * Default is 'second'.
-   * */
+  /** * Determines the smallest unit that is displayed in the datetime picker. * Default is 'second'. * */
   granularity?: Granularity
 }
 
@@ -616,6 +647,7 @@ const TimePicker = React.forwardRef<TimePickerRef, TimePickerProps>(
     )
   },
 )
+
 TimePicker.displayName = "TimePicker"
 
 type Granularity = "day" | "hour" | "minute" | "second"
@@ -628,33 +660,18 @@ type DateTimePickerProps = {
   /** showing `AM/PM` or not. */
   hourCycle?: 12 | 24
   placeholder?: string
-  /**
-   * The year range will be: `This year + yearRange` and `this year - yearRange`.
-   * Default is 50.
-   * For example:
-   * This year is 2024, The year dropdown will be 1974 to 2024 which is generated by `2024 - 50 = 1974` and `2024 + 50 = 2074`.
-   * */
+  /** * The year range will be: `This year + yearRange` and `this year - yearRange`. * Default is 50. * For example: * This year is 2024, The year dropdown will be 1974 to 2024 which is generated by `2024 - 50 = 1974` and `2024 + 50 = 2074`. * */
   yearRange?: number
-  /**
-   * The format is derived from the `date-fns` documentation.
-   * @reference https://date-fns.org/v3.6.0/docs/format
-   **/
+  /** * The format is derived from the `date-fns` documentation. * @reference https://date-fns.org/v3.6.0/docs/format **/
   displayFormat?: { hour24?: string; hour12?: string }
-  /**
-   * The granularity prop allows you to control the smallest unit that is displayed by DateTimePicker.
-   * By default, the value is `second` which shows all time inputs.
-   **/
+  /** * The granularity prop allows you to control the smallest unit that is displayed by DateTimePicker. * By default, the value is `second` which shows all time inputs. **/
   granularity?: Granularity
   className?: string
-  /**
-   * Show the default month and time when popup the calendar. Default is the current Date().
-   **/
+  /** * Show the default month and time when popup the calendar. Default is the current Date(). **/
   defaultPopupValue?: Date
-  /**
-   * Disable dates before this date. If not provided, defaults to today (new Date()).
-   * Pass null to disable this feature entirely.
-   **/
   disableBefore?: Date | null
+  /** Array of booking data to check for reserved dates */
+  bookings?: Array<{ pickUp: string; dropOff: string; _id: string; id: string }>
 } & Pick<DayPickerProps, "locale" | "weekStartsOn" | "showWeekNumber" | "showOutsideDays">
 
 type DateTimePickerRef = {
@@ -676,45 +693,36 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
       granularity = "second",
       placeholder = "Pick a date",
       className,
-      disableBefore = new Date(), // Default to today
+      disableBefore = new Date(),
+      bookings = [],
       ...props
     },
     ref,
   ) => {
     const [month, setMonth] = React.useState<Date>(value ?? defaultPopupValue)
     const buttonRef = useRef<HTMLButtonElement>(null)
-    const [displayDate, setDisplayDate] = React.useState<Date | undefined>(value ?? undefined);
+    const [displayDate, setDisplayDate] = React.useState<Date | undefined>(value ?? undefined)
 
     onMonthChange ||= onChange
 
-    /**
-     * Makes sure display date updates when value change on
-     * parent component
-     */
+    /** * Makes sure display date updates when value change on * parent component */
     React.useEffect(() => {
       setDisplayDate(value)
     }, [value])
 
-    /**
-     * Function to check if a date should be disabled
-     */
+    /** * Function to check if a date should be disabled */
     const isDateDisabled = React.useCallback(
       (date: Date) => {
         if (!disableBefore) return false
-
         // Create a new date with time set to start of day for comparison
         const dateToCheck = new Date(date.getFullYear(), date.getMonth(), date.getDate())
         const minDate = new Date(disableBefore.getFullYear(), disableBefore.getMonth(), disableBefore.getDate())
-
         return dateToCheck < minDate
       },
       [disableBefore],
     )
 
-    /**
-     * carry over the current time when a user clicks a new day
-     * instead of resetting to 00:00
-     */
+    /** * carry over the current time when a user clicks a new day * instead of resetting to 00:00 */
     const handleMonthChange = (newDay: Date | undefined) => {
       if (!newDay) {
         return
@@ -790,6 +798,7 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
             mode="single"
             selected={displayDate}
             month={month}
+            bookings={bookings}
             onSelect={(newDate) => {
               if (newDate) {
                 newDate.setHours(month?.getHours() ?? 0, month?.getMinutes() ?? 0, month?.getSeconds() ?? 0)
@@ -823,6 +832,7 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
     )
   },
 )
+
 DateTimePicker.displayName = "DateTimePicker"
 
 export { DateTimePicker, TimePickerInput, TimePicker }

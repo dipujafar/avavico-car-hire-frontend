@@ -53,7 +53,7 @@ export default function OrderDetailsContainer({ id }: { id: string }) {
           paymentStatus="Payment Successful"
         />
 
-        {user?.role === "User" && <OrderStatus orderId={orderDetailsData?.data?.order?.id} cardId={orderDetailsData?.data?.order?.carId?.id}></OrderStatus>}
+        {user?.role === "User" && <OrderStatus orderId={orderDetailsData?.data?.order?.id} cardId={orderDetailsData?.data?.order?.carId?.id} orderData={orderDetailsData?.data?.order}></OrderStatus>}
         {user?.role === "User" && <ListedBy data={orderDetailsData?.data?.order?.carId?.vendor}></ListedBy>}
         {user?.role === "Vendor" && <OrderBy data={orderDetailsData?.data?.order?.userId}></OrderBy>}
         <NeedHelp></NeedHelp>
