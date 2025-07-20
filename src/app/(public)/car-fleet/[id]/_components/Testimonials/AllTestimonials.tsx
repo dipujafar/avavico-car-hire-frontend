@@ -4,7 +4,7 @@ import { TestimonialCard } from "./TestimonialCard";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGetSingleCarReviewesQuery } from "@/redux/api/reviewsApi";
-import { AllTestimonialsSkeleton } from "@/components/skeletons/CarDetailsPage/AllTestimonialsSkeleton";
+import { AllTestimonialsSkeleton } from "@/components/Skeletons/CarDetailsPage/AllTestimonialsSkeleton";
 import Empty from "@/components/ui/empty";
 
 export function AllTestimonials({ id }: { id: string }) {

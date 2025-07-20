@@ -18,6 +18,7 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
       >
         <motion.div
           key={"destinations_image1"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-2 row-span-3  flex items-center justify-center zoom-in shadow-lg rounded-md"
         >
@@ -36,6 +37,7 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
 
         <motion.div
           key={"destinations_image2"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-2 row-span-2  flex items-center justify-center zoom-in shadow-lg rounded-md"
         >
@@ -56,6 +58,7 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
 
         <motion.div
           key={"destinations_image3"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-2 row-span-3  flex items-center justify-center zoom-in shadow-lg rounded-md"
         >
@@ -76,6 +79,7 @@ const DisplayBlogImage = ({ data }: { data: string }) => {
 
         <motion.div
           key={"destinations_image4"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-2 row-span-2  flex items-center justify-center zoom-in shadow-lg rounded-md"
         >

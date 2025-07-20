@@ -53,6 +53,7 @@ const ReviewCategories = ({ title }: { title: string }) => {
           className="overflow-hidden"
         >
           <motion.div
+          // @ts-ignore
             variants={parentVariants}
             initial="initial"
             animate="animate"

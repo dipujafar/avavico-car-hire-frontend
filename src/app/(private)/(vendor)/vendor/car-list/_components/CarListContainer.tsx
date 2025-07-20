@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { AddCarModal } from "./AddCarModal";
 import { useGetOwnCarsQuery } from "@/redux/api/carApi";
-import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
+import { CarCardSkeleton } from "@/components/Skeletons/CarCardSkeleton";
 import { ICar } from "@/types";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import { useSearchParams } from "next/navigation";

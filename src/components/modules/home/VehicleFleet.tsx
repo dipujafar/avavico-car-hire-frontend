@@ -8,7 +8,7 @@ import { motion } from "motion/react";
 import { useGetAllCarsQuery } from "@/redux/api/carApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ICar } from "@/types";
-import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
+import { CarCardSkeleton } from "@/components/Skeletons/CarCardSkeleton";
 import Empty from "@/components/ui/empty";
 
 const fadeUpVariants = {
@@ -78,6 +78,7 @@ const VehicleFleet = () => {
 
       {/* display all cars */}
       <motion.div
+      // @ts-ignore
         variants={fadeUpVariants}
         key={allCardData?.data?.car?.length}
         initial="initial"
@@ -87,6 +88,7 @@ const VehicleFleet = () => {
       >
         {allCardData?.data?.car?.length ? (
           allCardData?.data?.car?.map((car: ICar) => (
+            // @ts-ignore
             <motion.div variants={fadeUpVariants} key={car.id}>
               {/*  @ts-ignore */}
               <ProductCard data={car}></ProductCard>

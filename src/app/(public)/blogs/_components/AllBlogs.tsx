@@ -3,7 +3,7 @@
   import Container from "@/components/shared/Container";
   import PaginationSection from "@/components/shared/pagination/PaginationSection";
   import SectionTitle from "@/components/shared/SectionTitle";
-  import BlogCardSkeleton from "@/components/skeletons/BlogSkeleton/BlogCardSkeleton";
+  import BlogCardSkeleton from "@/components/Skeletons/BlogSkeleton/BlogCardSkeleton";
   import Empty from "@/components/ui/empty";
   import { useGetAllBlogsQuery } from "@/redux/api/blogApi";
   import { IBlog } from "@/types";

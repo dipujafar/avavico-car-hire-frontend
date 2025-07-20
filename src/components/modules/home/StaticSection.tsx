@@ -3,7 +3,6 @@ import CCountUp from "@/components/shared/CCountUp";
 import Container from "@/components/shared/Container";
 import { Skeleton } from "@/components/ui/skeleton";
 import useStaticSectionData from "@/hooks/useStaticSectionData";
-import { useGetAllStatsQuery } from "@/redux/api/statsApi";
 import { motion } from "motion/react";
 
 const fadeUpVariants = {
@@ -58,6 +57,7 @@ const StaticSection = () => {
 
       <Container>
         <motion.div
+        // @ts-ignore
           variants={fadeUpVariants}
           key={"static"}
           initial="initial"
@@ -67,6 +67,7 @@ const StaticSection = () => {
         >
           {staticSectionData.map((item) => (
             <motion.div
+            // @ts-ignore
               variants={fadeUpVariants}
               key={item._id}
               className="flex flex-col items-center gap-x-4 bg-[#121212] 2xl:px-16 xl:px-10 md:px-5 px-1 py-8 rounded-lg"

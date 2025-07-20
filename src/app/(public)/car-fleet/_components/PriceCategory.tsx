@@ -63,9 +63,11 @@ const PriceCategory = ({ highPrice }: { highPrice: number }) => {
         initial={show ? "visible" : "hidden"}
         animate={show ? "visible" : "hidden"}
         exit="hidden"
+         // @ts-ignore
         variants={containerVariants}
       >
         <motion.div
+        // @ts-ignore
           variants={parentVariants}
           initial="initial"
           whileInView="animate"

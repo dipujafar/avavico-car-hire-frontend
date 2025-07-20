@@ -32,6 +32,7 @@ export default function HowItWorks() {
         </div>
 
         <motion.div
+        // @ts-ignore
           variants={fadeUpVariants}
           key={"static"}
           initial="initial"
@@ -42,6 +43,7 @@ export default function HowItWorks() {
           {/* Step 1 */}
           <motion.div
             key={"step1"}
+            // @ts-ignore
             variants={fadeUpVariants}
             className="flex flex-col items-center text-center p-6 bg-white rounded-md"
           >
@@ -58,6 +60,7 @@ export default function HowItWorks() {
           {/* Step 2 */}
           <motion.div
             key={"step2"}
+            // @ts-ignore
             variants={fadeUpVariants}
             className="flex flex-col items-center text-center p-6 bg-white rounded-md"
           >
@@ -74,6 +77,7 @@ export default function HowItWorks() {
           {/* Step 3 */}
           <motion.div
             key={"step3"}
+            // @ts-ignore
             variants={fadeUpVariants}
             className="flex flex-col items-center text-center p-6 bg-white rounded-md"
           >

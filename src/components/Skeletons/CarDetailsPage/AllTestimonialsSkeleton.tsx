@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export function AllTestimonialsSkeleton({ count = 2 }: { count?: number }) {
-  const [showReview, setShowReview] = useState(2)
+  const [showReview, setShowReview] = useState(2);
 
-  const skeletonsToShow = Math.min(count, showReview)
+  const skeletonsToShow = Math.min(count, showReview);
 
   return (
     <div className="space-y-4">
@@ -40,5 +40,5 @@ export function AllTestimonialsSkeleton({ count = 2 }: { count?: number }) {
         </Button>
       </div>
     </div>
-  )
+  );
 }

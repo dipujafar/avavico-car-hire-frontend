@@ -59,6 +59,7 @@ const PageTopBanner = ({
             ></div>
             <div className="absolute   top-1/2 left-1/2 -translate-x-1/2 transform -translate-y-1/2 w-full ">
               <motion.section
+              // @ts-ignore
                 variants={fadeUpVariants()}
                 initial="initial"
                 animate="animate"
@@ -66,6 +67,7 @@ const PageTopBanner = ({
               >
                 <motion.h1
                   key="title"
+                  // @ts-ignore
                   variants={fadeUpVariants(0)}
                   className="lg:text-5xl md:text-3xl text-2xl font-bold text-center max-w-5xl mx-auto"
                 >
@@ -73,6 +75,7 @@ const PageTopBanner = ({
                 </motion.h1>
                 <motion.p
                   key="sub-title"
+                  // @ts-ignore
                   variants={fadeUpVariants(0.6)}
                   className="md:text-lg font-medium text-center max-w-5xl mx-auto "
                 >

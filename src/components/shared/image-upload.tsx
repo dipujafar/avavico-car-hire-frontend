@@ -15,7 +15,8 @@ interface ImageUploadProps {
   value: UploadedImage[]
   maxImages?: number,
   defaultImages?: string[] | null,
-  setDefaultImages?: React.Dispatch<React.SetStateAction<string[]>> | any
+  setDefaultImages?: React.Dispatch<React.SetStateAction<string[]>> | any,
+  handleDeleteImage?: any
 }
 
 export const ImageUpload = ({ onChange, value = [], maxImages = 4, defaultImages, setDefaultImages,  handleDeleteImage }: ImageUploadProps) => {

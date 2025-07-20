@@ -8,7 +8,9 @@ import { useGetMyBlogsQuery } from "@/redux/api/blogApi";
 import PaginationSection from "@/components/shared/pagination/PaginationSection";
 import { useSearchParams } from "next/navigation";
 import Empty from "@/components/ui/empty";
-import BlogCardSkeleton from "@/components/skeletons/BlogSkeleton/BlogCardSkeleton";
+import BlogCardSkeleton from "@/components/Skeletons/BlogSkeleton/BlogCardSkeleton";
+
+
 
 
 

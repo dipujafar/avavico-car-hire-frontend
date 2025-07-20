@@ -90,6 +90,7 @@ const Categories = ({
             className="overflow-hidden"
           >
             <motion.div
+            // @ts-ignore
               variants={parentVariants}
               initial="initial"
               whileInView="animate"

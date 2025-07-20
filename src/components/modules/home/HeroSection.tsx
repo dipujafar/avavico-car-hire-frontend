@@ -10,6 +10,8 @@ import { fadeUpVariants } from "@/animation/motionVariant";
 const HeroSection = () => {
   return (
     <motion.section
+      key="hero-section"
+      // @ts-ignore
       variants={fadeUpVariants()}
       initial="initial"
       animate="animate"
@@ -35,6 +37,7 @@ const HeroSection = () => {
 
           <motion.p
             key="hero-title"
+            // @ts-ignore
             variants={fadeUpVariants(1.9)}
             className="xl:text-[28px] md:text-xl text-sm text-white max-w-2xl"
           >

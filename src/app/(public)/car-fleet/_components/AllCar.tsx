@@ -1,6 +1,6 @@
 "use client";
 import ProductCard from "@/components/shared/cards/ProductCard";
-import { CarCardSkeleton } from "@/components/skeletons/CarCardSkeleton";
+import { CarCardSkeleton } from "@/components/Skeletons/CarCardSkeleton";
 import Empty from "@/components/ui/empty";
 import { ICar } from "@/types";
 import { motion } from "motion/react";
@@ -56,6 +56,7 @@ const AllCar = ({
     <>
       <motion.div
         key={carsData?.reduce((acc, car) => acc + car.id, "")}
+        // @ts-ignore
         variants={fadeUpVariants}
         initial="initial"
         whileInView="animate"
@@ -63,6 +64,7 @@ const AllCar = ({
         className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3     gap-4 xl:gap-6 "
       >
         {carsData?.map((carData) => (
+          // @ts-ignore
           <motion.div variants={fadeUpVariants} key={carData.id}>
             {/*  @ts-ignore */}
             <ProductCard data={carData}></ProductCard>

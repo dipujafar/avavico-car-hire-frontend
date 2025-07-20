@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import Container from "@/components/shared/Container";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { DateTimePicker } from "@/components/ui/date-picker";
-import CarRentalSkeleton from "@/components/skeletons/CarRentalSkeleton";
+import CarRentalSkeleton from "@/components/Skeletons/CarRentalSkeleton";
 import { motion } from "motion/react";
 import { fadeUpVariants } from "@/animation/motionVariant";
 import Link from "next/link";
@@ -109,6 +109,7 @@ export default function RentCar() {
     >
       <Container>
         <motion.section
+            // @ts-ignore
           variants={fadeUpVariants()}
           initial="initial"
           animate="animate"
@@ -116,6 +117,7 @@ export default function RentCar() {
         >
           <motion.div
             key={"rent-car"}
+            // @ts-ignore
             variants={fadeUpVariants(2.0)}
             className="w-full  bg-white rounded-lg  border 2xl:p-3 xl:p-3 lg:p-2 md:p-4 p-2"
           >

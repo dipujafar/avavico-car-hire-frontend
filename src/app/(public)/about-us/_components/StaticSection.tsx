@@ -67,6 +67,7 @@ const StaticSection = () => {
 
       <Container>
         <motion.div
+        // @ts-ignore
           variants={fadeUpVariants}
           key={"static"}
           initial="initial"
@@ -76,6 +77,7 @@ const StaticSection = () => {
         >
           {staticSectionData.map((item) => (
             <motion.div
+            // @ts-ignore
               variants={fadeUpVariants}
               key={item._id}
               className="flex flex-col items-center gap-x-4 bg-[#F4F4F4] px-16 py-8 rounded-lg"

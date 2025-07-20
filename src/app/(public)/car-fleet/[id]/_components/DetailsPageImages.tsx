@@ -18,6 +18,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
       >
         <motion.div
           key={"destinations_image1"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-4 row-span-2  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
@@ -38,6 +39,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image2"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-2 row-span-1  shadow-md rounded-md flex items-center justify-center zoom-in"
         >
@@ -58,6 +60,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image3"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-2 row-span-1  shadow-md rounded-md flex items-center justify-center zoom-in"
         >
@@ -78,6 +81,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image4"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
@@ -98,6 +102,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image5"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
@@ -118,6 +123,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image6"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
@@ -138,6 +144,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image7"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
@@ -158,6 +165,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image8"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >
@@ -178,6 +186,7 @@ const DetailsPageImages = ({ carImages = [] }: { carImages: string[] }) => {
 
         <motion.div
           key={"destinations_image9"}
+          // @ts-ignore
           variants={scaleUpChildVariant}
           className="col-span-1 row-span-1  shadow-md rounded-md  flex items-center justify-center zoom-in"
         >

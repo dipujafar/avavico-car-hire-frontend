@@ -1,9 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Star } from "lucide-react";
+"use client";;
 import { cn } from "@/lib/utils";
-import { useGetSingleCarAvarageReviewQuery } from "@/redux/api/reviewsApi";
-import RatingReviewsSkeleton from "@/components/skeletons/CarDetailsPage/RatingReviewsSkeleton";
+import RatingReviewsSkeleton from "@/components/Skeletons/CarDetailsPage/RatingReviewsSkeleton";
 import { IAvarageRating } from "@/types";
 import StarRating from "@/components/shared/StarRating";
 

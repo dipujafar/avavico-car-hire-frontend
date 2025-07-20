@@ -78,6 +78,7 @@ export default function RentalSteps() {
         >
           {rentalStepsData.map((step) => (
             <motion.div
+            // @ts-ignore
               variants={scaleUpChildVariant}
               key={step.id}
               className="flex items-start gap-4"
