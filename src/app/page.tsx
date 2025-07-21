@@ -6,12 +6,16 @@ import RentalSteps from "@/components/modules/home/RentalSteps";
 import RentCar from "@/components/modules/home/RentCar";
 import StaticSection from "@/components/modules/home/StaticSection";
 import VehicleFleet from "@/components/modules/home/VehicleFleet";
+import ReceiveFeedbackSection from "@/components/modules/home/ReceiveFeedbackSection";
+import NewsletterForm from "@/components/modules/home/NewsletterForm";
+import ShowMessage from "@/components/modules/home/ShowMessage";
 
 export default function Home() {
   return (
     <div className="xl:space-y-20 md:space-y-14 space-y-10 md:pb-16  pb-8">
       <div>
         <div className="relative">
+          <ShowMessage />
           <HeroSection></HeroSection>
           <div className="lg:absolute my-5 lg:my-0 -bottom-24 w-full">
             <RentCar></RentCar>
@@ -23,8 +27,10 @@ export default function Home() {
       <Destinations></Destinations>
       <StaticSection></StaticSection>
       <VehicleFleet></VehicleFleet>
+      <ReceiveFeedbackSection />
       <RentalSteps></RentalSteps>
       <CustomersFeedbacks></CustomersFeedbacks>
+      <NewsletterForm />
     </div>
   );
 }

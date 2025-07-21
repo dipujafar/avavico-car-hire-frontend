@@ -23,6 +23,9 @@ import {
 } from "@/components/ui/form";
 import { MessageSquare, Send, CheckCircle, Loader2 } from "lucide-react";
 import { z } from "zod";
+import { useAddFeedbackMutation } from "@/redux/api/feedbacksApi";
+import { Error_Modal } from "@/modals";
+import AllReceivedFeedbacks from "./AllReceivedFeedbacks";
 
 export const feedbackSchema = z.object({
   name: z
@@ -41,9 +44,10 @@ export const feedbackSchema = z.object({
 
 export type FeedbackFormData = z.infer<typeof feedbackSchema>;
 
-export default function FeedbackSection() {
+export default function ReceiveFeedbackSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [addFeedback, { isLoading }] = useAddFeedbackMutation();
 
   const form = useForm<FeedbackFormData>({
     resolver: zodResolver(feedbackSchema),
@@ -59,10 +63,7 @@ export default function FeedbackSection() {
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Here you would typically send the data to your backend
-      console.log("Feedback submitted:", data);
+      await addFeedback({ message: data?.comment, ...data }).unwrap();
 
       setIsSubmitted(true);
       form.reset();
@@ -71,9 +72,8 @@ export default function FeedbackSection() {
       setTimeout(() => {
         setIsSubmitted(false);
       }, 5000);
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
-      // Handle error (you could show a toast notification here)
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
     } finally {
       setIsSubmitting(false);
     }
@@ -81,7 +81,7 @@ export default function FeedbackSection() {
 
   if (isSubmitted) {
     return (
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 space-y-10">
         <div className="container mx-auto px-4">
           <Card className="max-w-2xl mx-auto text-center">
             <CardContent className="pt-8 pb-8">
@@ -91,39 +91,29 @@ export default function FeedbackSection() {
               </h3>
               <p className="text-gray-600">
                 Your feedback has been submitted successfully. We appreciate
-                your input and will use it to improve our car rental platform.
+                your input and you will notify once our service is completely
+                available.
               </p>
             </CardContent>
           </Card>
         </div>
+        <AllReceivedFeedbacks />
       </section>
     );
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 space-y-10">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-4">
-            <MessageSquare className="w-8 h-8 text-blue-600 mr-2" />
-            <h2 className="text-3xl font-bold text-gray-900">
-              We Value Your Feedback
-            </h2>
-          </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Help us build the best car rental platform by sharing your thoughts,
-            suggestions, or experiences. Your input shapes our future!
-          </p>
-        </div>
-
-        <Card className="max-w-2xl mx-auto shadow-lg">
+        <Card className="max-w-5xl mx-auto shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl text-gray-900">
               Share Your Thoughts
             </CardTitle>
-            <CardDescription className="text-gray-600">
-              Tell us what you think about our car rental service or what
-              features you'd like to see
+            <CardDescription className="text-gray-600 max-w-2xl mx-auto">
+              Tell us what you think about our car rental service. We will
+              appreciate your feedback. You will notify once our service is
+              completely available.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -144,7 +134,7 @@ export default function FeedbackSection() {
                         <FormControl>
                           <Input
                             placeholder="Enter your full name"
-                            className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                            className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 py-5 bg-slate-50"
                             {...field}
                           />
                         </FormControl>
@@ -165,7 +155,7 @@ export default function FeedbackSection() {
                           <Input
                             type="email"
                             placeholder="Enter your email address"
-                            className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                            className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 py-5 bg-slate-50"
                             {...field}
                           />
                         </FormControl>
@@ -187,7 +177,7 @@ export default function FeedbackSection() {
                         <Textarea
                           placeholder="Share your thoughts, suggestions, or experiences with our car rental platform..."
                           rows={5}
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 resize-none"
+                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 resize-none md:h-[100px] bg-slate-50"
                           {...field}
                         />
                       </FormControl>
@@ -199,17 +189,17 @@ export default function FeedbackSection() {
                 <div className="text-center">
                   <Button
                     type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-medium"
-                    disabled={isSubmitting}
+                    className="bg-[#0092B8] hover:bg-[#4e808f] text-white px-8 py-3 text-lg font-medium group"
+                    disabled={isLoading}
                   >
-                    {isSubmitting ? (
+                    {isLoading ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                         Submitting...
                       </>
                     ) : (
                       <>
-                        <Send className="w-5 h-5 mr-2" />
+                        <Send className="w-5 h-5 mr-2 group-hover:rotate-45 duration-300" />
                         Submit Feedback
                       </>
                     )}
@@ -219,14 +209,8 @@ export default function FeedbackSection() {
             </Form>
           </CardContent>
         </Card>
-
-        <div className="text-center mt-8">
-          <p className="text-sm text-gray-500">
-            Your privacy is important to us. We'll only use your information to
-            improve our services and may contact you for follow-up questions.
-          </p>
-        </div>
       </div>
+      <AllReceivedFeedbacks />
     </section>
   );
 }
