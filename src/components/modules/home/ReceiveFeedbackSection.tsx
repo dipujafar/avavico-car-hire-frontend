@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -105,12 +104,12 @@ export default function ReceiveFeedbackSection() {
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 space-y-10">
       <div className="container mx-auto px-4">
-        <Card className="max-w-5xl mx-auto shadow-lg">
+        <Card className="max-w-5xl mx-auto shadow-none">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-gray-900">
+            <CardTitle className="text-2xl xl:text-3xl text-gray-900">
               Share Your Thoughts
             </CardTitle>
-            <CardDescription className="text-gray-600 max-w-2xl mx-auto">
+            <CardDescription className="text-gray-600 max-w-2xl text-lg mx-auto">
               Tell us what you think about our car rental service. We will
               appreciate your feedback. You will notify once our service is
               completely available.
@@ -175,7 +174,7 @@ export default function ReceiveFeedbackSection() {
                       </FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Share your thoughts, suggestions, or experiences with our car rental platform..."
+                          placeholder="Share your thoughts, suggestions, or expectations for our service."
                           rows={5}
                           className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 resize-none md:h-[100px] bg-slate-50"
                           {...field}

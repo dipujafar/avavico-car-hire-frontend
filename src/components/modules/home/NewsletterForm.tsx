@@ -47,45 +47,50 @@ export default function NewsletterForm() {
   }
 
   return (
-    <Container className="w-full  p-6 max-w-6xl">
-      <div className="text-center mb-6">
-        <SectionTitle
-          title="Subscribe Our Newsletter"
-          subtitle="Get the latest updates and news delivered to your inbox."
-          subTitleClassName="text-center  max-w-full"
-          //   className="xl:text-4xl md:text-3xl text-2xl font-semibold text-gray-800 mb-2"
-        ></SectionTitle>
-      </div>
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 md:h-[500px] h-[300px] flex justify-center items-center">
+      <Container className="w-full  p-6 max-w-6xl">
+        <div className="text-center mb-6">
+          <SectionTitle
+            title="Subscribe Our Newsletter"
+            subtitle="Get the latest updates and news delivered to your inbox."
+            subTitleClassName="text-center  max-w-full"
+            //   className="xl:text-4xl md:text-3xl text-2xl font-semibold text-gray-800 mb-2"
+          ></SectionTitle>
+        </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex  gap-x-3">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel className="sr-only">Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Your email"
-                    className="w-full px-4 py-5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent flex-1 bg-gray-50 shadow-lg"
-                    {...field}
-                  />
-                </FormControl>
-                {/* <FormMessage /> */}
-              </FormItem>
-            )}
-          />
-          <Button
-            disabled={isLoading}
-            type="submit"
-            className=" bg-gray-800 hover:bg-gray-700 text-white font-medium h-[40px] px-4 rounded-md transition-colors  shadow-lg"
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex  gap-x-3"
           >
-            Subscribe
-          </Button>
-        </form>
-      </Form>
-    </Container>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="sr-only">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Your email"
+                      className="w-full px-4 py-5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent flex-1 bg-gray-50 shadow-lg lg:h-[50px] h-[40px]"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
+            <Button
+              disabled={isLoading}
+              type="submit"
+              className=" bg-gray-800 hover:bg-gray-700 text-white font-medium  px-4 rounded-md transition-colors  shadow-lg lg:h-[50px] h-[40px]"
+            >
+              Subscribe
+            </Button>
+          </form>
+        </Form>
+      </Container>
+    </div>
   );
 }

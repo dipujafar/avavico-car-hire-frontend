@@ -54,7 +54,7 @@ const AllReceivedFeedbacks = () => {
                     )}
                   >
                     <Quote
-                      className="rotate-180 absolute top-2 left-1 text-gray-500"
+                      className="rotate-180 absolute top-2 left-1 text-gray-500 text-xl"
                       size={20}
                     />
                     {category?.message}
