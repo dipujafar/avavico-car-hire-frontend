@@ -15,7 +15,7 @@ import { envConfig } from "@/config";
 import { useRouter } from "next/navigation";
 
 // You'll need to add your Google Maps API key as an environment variable
-const GOOGLE_MAPS_API_KEY = "AIzaSyDhzY2k-tIrpnoBut75TTDJTuE1kURA_fU";
+const GOOGLE_MAPS_API_KEY = envConfig?.googleMapsApiKey as string;
 
 // Libraries we need to load
 const libraries = ["places"];
@@ -36,8 +36,8 @@ export default function RentCar() {
   const router = useRouter();
 
   // Input display values
-  const [pickupInputValue, setPickupInputValue] = useState("New York, USA");
-  const [dropoffInputValue, setDropoffInputValue] = useState("Delaware, USA");
+  const [pickupInputValue, setPickupInputValue] = useState("Dublin, Ireland");
+  const [dropoffInputValue, setDropoffInputValue] = useState("Dublin, Ireland");
 
   // Refs for the autocomplete instances
   const pickupAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(
@@ -109,7 +109,7 @@ export default function RentCar() {
     >
       <Container>
         <motion.section
-            // @ts-ignore
+          // @ts-ignore
           variants={fadeUpVariants()}
           initial="initial"
           animate="animate"
@@ -145,7 +145,6 @@ export default function RentCar() {
                     onPlaceChanged={handlePickupPlaceSelect}
                     options={{
                       types: ["(cities)"],
-                      componentRestrictions: { country: "us" },
                     }}
                   >
                     <Input
@@ -172,12 +171,11 @@ export default function RentCar() {
                     onPlaceChanged={handleDropoffPlaceSelect}
                     options={{
                       types: ["(cities)"],
-                      componentRestrictions: { country: "us" },
                     }}
                   >
                     <Input
                       className="pl-5 h-12 border-none shadow-none "
-                      placeholder="Enter dropoff location border-none "
+                      placeholder="Enter dropoff location"
                       value={dropoffInputValue}
                       onChange={(e) => setDropoffInputValue(e.target.value)}
                     />

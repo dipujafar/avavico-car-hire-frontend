@@ -38,18 +38,30 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-x-4 mt-5">
-              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
-                <FacebookIcon className="rounded-full" ></FacebookIcon>
+              <Link
+                href={"#"}
+                className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500"
+              >
+                <FacebookIcon className="rounded-full"></FacebookIcon>
               </Link>
 
-              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+              <Link
+                href={"#"}
+                className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500"
+              >
                 <TwitterIcon className="rounded-full"></TwitterIcon>
               </Link>
-              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+              <Link
+                href={"#"}
+                className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500"
+              >
                 <InstagramIcon className="rounded-full"></InstagramIcon>
               </Link>
 
-              <Link href={"#"} className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500">
+              <Link
+                href={"#"}
+                className="size-8 flex justify-center items-center rounded-2xl border border-gray-600 hover:bg-primary-cyan/60 hover:border-none duration-500"
+              >
                 <LinkedInIcon className="rounded-full"></LinkedInIcon>
               </Link>
             </div>
@@ -120,7 +132,34 @@ const Footer = () => {
                     href="mailto:info@avavico.com"
                     className="hover:text-primary-cyan duration-300"
                   >
-                    info@avavicocarhire.com
+                    Info@avavico.com
+                  </Link>
+                </li>
+                <li className="flex items-center gap-x-2">
+                  <MailIcon></MailIcon>
+                  <Link
+                    href="mailto:info@avavico.com"
+                    className="hover:text-primary-cyan duration-300"
+                  >
+                    Sales@avavico.com
+                  </Link>
+                </li>
+                <li className="flex items-center gap-x-2">
+                  <MailIcon></MailIcon>
+                  <Link
+                    href="mailto:info@avavico.com"
+                    className="hover:text-primary-cyan duration-300"
+                  >
+                    Suppliers@avavico.com
+                  </Link>
+                </li>
+                <li className="flex items-center gap-x-2">
+                  <MailIcon></MailIcon>
+                  <Link
+                    href="mailto:info@avavico.com"
+                    className="hover:text-primary-cyan duration-300"
+                  >
+                    Victor@avavico.com
                   </Link>
                 </li>
               </ul>
