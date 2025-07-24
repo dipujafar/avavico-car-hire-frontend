@@ -47,12 +47,12 @@ export default function NewsletterForm() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 md:h-[500px] h-[300px] flex justify-center items-center">
+    <div className="bg-[#F2F4F6] md:h-[500px] h-[300px] flex justify-center items-center">
       <Container className="w-full  p-6 max-w-6xl">
         <div className="text-center mb-6">
           <SectionTitle
             title="Subscribe Our Newsletter"
-            subtitle="Get the latest updates and news delivered to your inbox."
+            subtitle="Get the latest updates and news delivered to your inbox. Also you will notify once our service is completely available"
             subTitleClassName="text-center  max-w-full"
             //   className="xl:text-4xl md:text-3xl text-2xl font-semibold text-gray-800 mb-2"
           ></SectionTitle>

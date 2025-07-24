@@ -102,7 +102,7 @@ export default function ReceiveFeedbackSection() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 space-y-10">
+    <section className="py-16 bg-[#F2F4F6] space-y-10">
       <div className="container mx-auto px-4">
         <Card className="max-w-5xl mx-auto shadow-none">
           <CardHeader className="text-center">
