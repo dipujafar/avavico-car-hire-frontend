@@ -5,12 +5,12 @@ const quickLink = [
   {
     id: 1,
     label: "Terms & Conditions",
-    href: "#",
+    href: "/terms-conditions",
   },
   {
     id: 2,
     label: "Privacy Policy",
-    href: "#",
+    href: "/privacy-policy",
   }
  
 ];
