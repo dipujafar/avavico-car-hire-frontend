@@ -41,11 +41,10 @@ const HeroSection = () => {
             variants={fadeUpVariants(1.9)}
             className="xl:text-[28px] md:text-xl text-sm text-white max-w-2xl"
           >
-            Discover the Best, Most Affordable and Convenient Car Rental Deals
-            Across{" "}
+            Discover the Best, Most Affordable and Convenient Car Rental Deals{" "}
             <span className="text-primary-cyan relative">
               {" "}
-              Europe{" "}
+              Worldwide{" "}
               <span className="absolute -bottom-4 md:left-0 -left-6">
                 {" "}
                 <BorderIcon />
