@@ -115,7 +115,7 @@ const Footer = () => {
               <ul className="lg:space-y-4 space-y-2  text-primary-gray ">
                 <li className="flex items-center gap-x-2">
                   <MapIcon></MapIcon>
-                  <p>CoreIreland</p>
+                  <p>Cork, Ireland</p>
                 </li>
                 <li className="flex items-center gap-x-2">
                   <PhoneIcon></PhoneIcon>
