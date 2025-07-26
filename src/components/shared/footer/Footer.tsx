@@ -115,7 +115,7 @@ const Footer = () => {
               <ul className="lg:space-y-4 space-y-2  text-primary-gray ">
                 <li className="flex items-center gap-x-2">
                   <MapIcon></MapIcon>
-                  <p>Dublin, Ireland</p>
+                  <p>CoreIreland</p>
                 </li>
                 <li className="flex items-center gap-x-2">
                   <PhoneIcon></PhoneIcon>
@@ -123,7 +123,7 @@ const Footer = () => {
                     href="tel:+1 234 567 8900"
                     className="hover:text-primary-cyan duration-300"
                   >
-                    +1 234 567 8900
+                   +353870020900
                   </Link>
                 </li>
                 <li className="flex items-center gap-x-2">

@@ -9,6 +9,7 @@ import VehicleFleet from "@/components/modules/home/VehicleFleet";
 import ReceiveFeedbackSection from "@/components/modules/home/ReceiveFeedbackSection";
 import NewsletterForm from "@/components/modules/home/NewsletterForm";
 import ShowMessage from "@/components/modules/home/ShowMessage";
+import ShowMessageForCarRentalCompany from "@/components/modules/home/ShowMessageForCarRentalCompany";
 
 export default function Home() {
   return (
