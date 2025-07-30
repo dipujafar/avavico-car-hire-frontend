@@ -180,3 +180,9 @@
 .makeStyles-copyContainer-5{
   @apply !hidden
 }
+
+
+.skiptranslate{
+  display: none !important;
+}
+  

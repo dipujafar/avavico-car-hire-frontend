@@ -8,6 +8,7 @@ import "react-pagination-bar/dist/index.css";
 import { Toaster } from "sonner";
 import Providers from "@/lib/provider/Providers";
 import { envConfig } from "@/config";
+import Script from "next/script";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -44,6 +45,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script src="/scripts/lang-config.ts" strategy="beforeInteractive" />
+      <Script src="/scripts/translation.ts" strategy="beforeInteractive" />
+      <Script
+        src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
+        strategy="afterInteractive"
+      />
       <body className={`${figtree.className}  antialiased`}>
         <Providers>
           <div className="sticky top-0 z-50 ">

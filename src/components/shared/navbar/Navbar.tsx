@@ -12,6 +12,7 @@ import { useAppSelector } from "@/redux/hooks";
 import Cookies from "js-cookie";
 import CustomAvatar from "../CustomeAvater";
 import { useGetUserProfileQuery } from "@/redux/api/userProfileApi";
+import { LanguageSwitcher } from "../LangSwitcher/lang-switcher";
 
 const navigationItems = [
   { name: "Home", href: "/" },
@@ -43,7 +44,6 @@ export default function Navbar() {
     skip: !isLoggedIn || !user,
   });
   const router = useRouter();
-
 
   const userRedirect = () => {
     if (user && user?.role === "User") {
@@ -135,11 +135,16 @@ export default function Navbar() {
                   )}
                 </div>
               ))}
+              <LanguageSwitcher />
+            
             </nav>
 
             {/* Action Buttons */}
             {user && isLoggedIn ? (
-              <div onClick={userRedirect} className="hidden lg:flex items-center cursor-pointer">
+              <div
+                onClick={userRedirect}
+                className="hidden lg:flex items-center cursor-pointer"
+              >
                 <CustomAvatar
                   img={userData?.data?.photo?.[0]}
                   name={
@@ -226,7 +231,10 @@ export default function Navbar() {
                 ))}
 
                 {user && isLoggedIn ? (
-                  <Button onClick={userRedirect} className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full">
+                  <Button
+                    onClick={userRedirect}
+                    className="bg-primary-cyan hover:bg-cyan-600 text-white rounded-md w-full"
+                  >
                     Dashboard
                   </Button>
                 ) : (

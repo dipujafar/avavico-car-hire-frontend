@@ -9,22 +9,22 @@ const featuredDestinations = [
   {
     title: "Unbeatable Price",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Luctus cum purus.",
+      "Get the best value with our competitive rates—no hidden fees, just transparent pricing and great deals on every ride.",
   },
   {
     title: "High Quality",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Luctus cum purus.",
+      "Choose from a wide selection of well-maintained vehicles, from economy cars to luxury SUVs, all fully inspected and road-ready.",
   },
   {
     title: "24/7 Customer Service",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Luctus cum purus.",
+      "Have questions or need assistance? Our dedicated support team is here for you any time, day or night.",
   },
   {
     title: "Unlimited Miles",
     description:
-      "Lorem ipsum dolor sit amet,  adipiscing elit. Luctus cum purus. consectetur",
+      "Drive as far as you need with our unlimited mileage option—perfect for road trips, long-distance travel, or simply exploring more.",
   },
 ];
 
@@ -34,8 +34,7 @@ const Destinations = () => {
       <SectionTitle title="Ride To Destinations"></SectionTitle>
       <SectionTitle
         title="With Maximum Comfort"
-        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit lorem sagittis, proin 
-        ut lectus sed ut. Enim egestas enim id duis."
+        subtitle="Experience the freedom of the open road with our top-rated car rentals. Whether you're traveling for business or leisure, we ensure a smooth, comfortable journey every time."
       ></SectionTitle>
 
       {/* display all destinations featured */}

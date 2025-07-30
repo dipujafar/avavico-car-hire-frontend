@@ -38,7 +38,7 @@ const SectionTitle = ({
         key={subtitle}
         variants={fadeUpWithBlurVariants()}
         className={cn(
-          "lg:text-lg text-primary-gray max-w-2xl",
+          "lg:text-lg text-primary-gray max-w-3xl",
           subTitleClassName
         )}
       >
