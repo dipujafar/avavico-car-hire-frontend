@@ -53,7 +53,6 @@
     "motion": "^12.9.4",
     "next": "15.3.1",
     "nextjs-toploader": "^3.8.16",
-    "nookies": "^2.5.2",
     "react": "^19.0.0",
     "react-countup": "^6.5.3",
     "react-day-picker": "^9.6.7",
