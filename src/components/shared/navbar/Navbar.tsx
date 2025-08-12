@@ -135,7 +135,7 @@ export default function Navbar() {
                   )}
                 </div>
               ))}
-              {/* <LanguageSwitcher /> */}
+              <LanguageSwitcher />
             
             </nav>
 
