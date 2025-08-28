@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { CheckCircle } from "lucide-react";
 import confetti from "canvas-confetti";
-
 import { Button } from "@/components/ui/button";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useSearchParams } from "next/navigation";
