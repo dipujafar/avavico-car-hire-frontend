@@ -41,7 +41,7 @@ const storage =
 
 const persistConfig = {
   key: "auth",
-  storage,
+storage,
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authSlice);

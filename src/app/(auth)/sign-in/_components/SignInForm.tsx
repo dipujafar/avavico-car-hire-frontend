@@ -22,7 +22,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { AppleIcon, GoogleIcon } from "@/components/icons";
 import AnimatedArrow from "@/components/animatedArrows/AnimatedArrow";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
