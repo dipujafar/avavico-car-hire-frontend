@@ -3,21 +3,6 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { scaleUpChildVariant, scaleUpVariant } from "@/animation/motionVariant";
 
-// Define the type for each step
-type RentalStep = {
-  id: string;
-  number: string;
-  title: string;
-  description: string;
-};
-
-// Define the props for our component
-interface RentalStepsProps {
-  steps: RentalStep[];
-  imageUrl: string;
-  heading: string;
-}
-
 // Sample data array
 const rentalStepsData = [
   {
